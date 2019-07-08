@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.carmanage.carMapper">
+	<select id="getCarList" resultType="com.motoband.carmanage.carlist"
+		parameterType="String">
+	SELECT
+	t1.modelid,
+	t1.`name`,
+	t1.cc,
+	t1.typeid,
+	t1.state,
+	t2.`name` AS typename,
+	t1.brandid,
+	t3.`name` AS brandname,
+	t4.bpid,
+	t4.`name` AS brandparentname
+FROM
+	motomodel t1 
+ left join  mototype t2 on t2.typeid = t1.typeid 
+ left join  motobrand t3 on t3.brandid = t1.brandid
+ left join 	motobrandparent t4 on t4.bpid = t3.bpid
+ <where>
+		<if test="null!= nowtypeid">
+			AND t1.typeid=#{nowtypeid}
+		</if>
+		<if test="null!= nowbrandid">
+			AND t1.brandid=#{nowbrandid}
+		</if>
+</where>
+		<if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY   t1.state asc, ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY t1.state asc,t1.modelid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+	</select>
+	<select id="getCarListCount" parameterType="String" resultType="int">
+	    select count(1) FROM motomodel t1 
+ left join  mototype t2 on t2.typeid = t1.typeid 
+ left join  motobrand t3 on t3.brandid = t1.brandid
+ left join 	motobrandparent t4 on t4.bpid = t3.bpid
+ <where>
+		<if test="null!= nowtypeid">
+			AND t1.typeid=#{nowtypeid}
+		</if>
+		<if test="null!= nowbrandid">
+			AND t1.brandid=#{nowbrandid}
+		</if>
+</where>
+	 </select>
+	<select id="getMotoBrandList" resultType="com.motoband.carmanage.motobrand">
+		SELECT * FROM motobrand where state=0
+	</select>
+	<select id="getBrandListByBpid" resultType="com.motoband.carmanage.motobrand" parameterType="String">
+		SELECT * FROM motobrand where bpid=#{bpid}  ORDER BY name ASC
+	</select>
+	<select id="getMotobrandByid" parameterType="String" resultType="com.motoband.carmanage.motobrand">
+	    SELECT * FROM motobrand  where brandid=#{brandid}
+	</select>
+	<select id="getMotTypeList" resultType="com.motoband.carmanage.mototype">
+		SELECT * FROM mototype
+	</select>
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<select id="checkCarName" parameterType="String"
+		resultType="com.motoband.carmanage.carModel">
+		SELECT * FROM motomodel WHERE name=#{newcarname}
+	</select>
+	<insert id="saveNewCar" parameterType="com.motoband.carmanage.carModel">
+		INSERT INTO motomodel (name,cc,typeid,brandid)
+		VALUES(#{name},#{cc},#{typeid},#{brandid})
+	</insert>
+	
+	<select id="checkCarType" parameterType="String"
+		resultType="String">
+		SELECT name FROM mototype WHERE name=#{newCarTypeName}
+	</select>
+	<insert id="insertNewCarType" parameterType="String">
+		INSERT INTO mototype (name)
+		VALUES(#{newcartype})
+	</insert>
+	<select id="checkCarBrand" parameterType="String"
+		resultType="String">
+		SELECT name FROM motobrand WHERE name=#{newCarBrand}
+	</select>
+	
+	<insert id="insertNewCarBrand" parameterType="String">
+		INSERT INTO motobrand (name,bpid)
+		VALUES(#{newcarbrand},#{bpid})
+	</insert>
+	<select id="getCarModelById" resultType="com.motoband.carmanage.carModel" parameterType="String">
+	SELECT * FROM motomodel WHERE modelid=#{motoid}
+	</select>
+	<update id="saveCarMessage" parameterType="com.motoband.carmanage.carModel">
+	UPDATE motomodel SET `name`=#{name},cc=#{cc},typeid=#{typeid},brandid=#{brandid} WHERE modelid=#{modelid}
+	</update>
+	<select id="checkCarNewName" parameterType="String"
+		resultType="com.motoband.carmanage.carModel">
+		SELECT * FROM motomodel WHERE modelid!=#{car_id} AND `name`=#{newcarname}
+	</select>
+	<delete id="delCarMessage" parameterType="String">
+	   DELETE FROM motomodel WHERE modelid=#{car_id}
+	</delete>
+	<select id="selectCarbrandParentname" resultType="com.motoband.brandparentmanage.BrandparentModel">
+	   select mp.bpid,mp.name from motobrandparent mp where state=0 order by bpid asc
+	</select>
+	<select id="getCarModelList"  resultType="com.motoband.carmanage.carModel" parameterType="map">
+	  select * from motomodel 
+	  <if test="null != brandids" >
+	      where brandid in
+	      <foreach collection="brandids" index="index" item="item" open="(" separator="," close=")" >
+             ${item}
+         </foreach>
+	  </if>
+	</select>
+	<select id="getMotomodelByBrandid"  resultType="com.motoband.carmanage.carModel" parameterType="String">
+	  select * from motomodel  where brandid=#{brandid}   ORDER BY name ASC
+	</select>
+
+<select id="getNewmotomodelListCount" resultType="Integer">
+    select count(1) from motomodel_new 
+</select>
+<select id="getNewmotomodelList" parameterType="String" resultType="com.motoband.carmanage.NewMotoModel">
+   select a.*,b.name as brandname1,c.name as brandparentname from motomodel_new a
+   left join motobrand b on b.brandid=a.brandid
+   left join motobrandparent c on c.bpid=a.bpid
+         <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY bpid asc,brandid asc
+		</if>
+		<!-- <if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if> -->
+		
+		limit #{start},#{limit}
+</select>
+
+<select id="getNewmotomodelByid" parameterType="String" resultType="com.motoband.carmanage.NewMotoModel">
+     select * from motomodel_new where mid=#{mid}
+</select>
+<select id="getNewmotomodelpicListBymid" parameterType="String" resultType="String">
+     select picurl from motomodel_new_pic where mid=#{mid}  order by orderindex desc
+</select>
+<delete id="deletnewmotomodelpicBymid" parameterType="String">
+  delete from  motomodel_new_pic where mid=#{mid}
+</delete>
+<insert id="insertnewmotomodelpic" parameterType="com.motoband.carmanage.NewMotoModelPicModel">
+ INSERT INTO motomodel_new_pic(mid,picurl,orderindex) 
+        VALUES   
+        <foreach collection="piclist" item="plist" separator=",">  
+            (#{plist.mid},#{plist.picurl},#{plist.orderindex})  
+        </foreach> 
+</insert>
+<insert id="insertOrUpdateNewMotomodel" parameterType="com.motoband.carmanage.NewMotoModel">
+ insert into motomodel_new(mid,modelid,brandid,`name`,bpid,price,style,maxpower,maxtorque,
+ cc,gearbox,sitheight,lwh,tankcapacity,oilway,transmissionway,frontbrake,rearbrake,frontwheelsize,rearwheelsize,haveabs,caryear,firstpic,otherelectronic,haveonboard)
+ values(#{mid},#{modelid},#{brandid},#{name},#{bpid},#{price},#{style},#{maxpower},#{maxtorque},
+ #{cc},#{gearbox},#{sitheight},#{lwh},#{tankcapacity},#{oilway},#{transmissionway},#{frontbrake},#{rearbrake},#{frontwheelsize},#{rearwheelsize},
+ #{haveabs},#{caryear},#{firstpic},#{otherelectronic},#{haveonboard})
+ ON DUPLICATE KEY UPDATE
+ modelid=#{modelid},brandid=#{brandid},name=#{name},bpid=#{bpid},price=#{price},style=#{style},maxpower=#{maxpower},maxtorque=#{maxtorque},
+ cc=#{cc},gearbox=#{gearbox},sitheight=#{sitheight},lwh=#{lwh},tankcapacity=#{tankcapacity},oilway=#{oilway},transmissionway=#{transmissionway},frontbrake=#{frontbrake},
+ rearbrake=#{rearbrake},frontwheelsize=#{frontwheelsize},rearwheelsize=#{rearwheelsize},haveabs=#{haveabs},caryear=#{caryear},firstpic=#{firstpic},otherelectronic=#{otherelectronic},haveonboard=#{haveonboard}
+</insert>
+<delete id="deleteNewMotomodelbymid" parameterType="String">
+  delete from motomodel_new where mid=#{mid}
+</delete>
+
+</mapper>

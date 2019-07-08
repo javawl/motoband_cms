@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.activitymanage.ActivityMapper">
+<select id="getActivityListCount" resultType="Integer">
+select count(1) from motoactivity
+</select>
+<select id="getActivityList" parameterType="String" resultType="com.motoband.activitymanage.ActivityModel">
+select * from motoactivity ma
+   <if test="order == 1">
+       order by ma.orderindex asc
+    </if>
+    <if test="order == 0">
+       order by ma.orderindex DESC
+    </if>
+    limit #{start},#{limit}
+</select>
+<select id="getActivityByaid" parameterType="String" resultType="com.motoband.activitymanage.ActivityModel">
+ select * from motoactivity ma where ma.aid=#{aid}
+</select>
+<update id="updateActivity" parameterType="com.motoband.activitymanage.ActivityModel">
+	UPDATE motoactivity
+	SET
+	<if test="title !=null">
+		title = #{title},
+	</if>
+	<if test="subtitle !=null">
+		subtitle = #{subtitle},
+	</if>
+	<if test="picurl !=null">
+		picurl = #{picurl},
+	</if>
+	<if test="type !=null">
+		type = #{type},
+	</if>
+	<if test="orderindex !=null">
+		orderindex = #{orderindex},
+	</if>
+		keyword = #{keyword},
+	<if test="boxid > 0">
+    boxid =#{boxid},
+   </if>
+   <if test="boxid == 0">
+    boxid = null,
+   </if>
+   <if test="pid > 0">
+    pid =#{pid},
+   </if>
+   <if test="pid == 0">
+    pid = null,
+   </if>
+   <if test="gpid > 0">
+    gpid =#{gpid},
+   </if>
+    <if test="gpid == 0">
+    gpid = null,
+   </if>
+		runid = #{runid},
+		mallurl = #{mallurl},
+		url = #{url},
+	<if test="state !=null">
+		state = #{state}
+	</if>
+	WHERE
+	aid = #{aid}
+</update>
+<insert id="insActivity" parameterType="com.motoband.activitymanage.ActivityModel">
+   insert into motoactivity(title,subtitle,picurl, type , orderindex, keyword ,
+   <if test="gpid > 0 ">
+    gpid,
+  </if>
+  <if test="pid > 0 ">
+    pid,
+  </if>
+     runid ,
+  <if test="boxid > 0 ">
+    boxid,
+  </if>
+   mallurl,url,state) 
+   values(#{title},#{subtitle},#{picurl},#{type},#{orderindex},#{keyword},
+   <if test="gpid > 0 ">
+    #{gpid},
+  </if>
+  <if test="pid > 0 ">
+    #{pid},
+  </if>
+   #{runid},
+   <if test="boxid > 0 ">
+    #{ boxid},
+  </if>
+   #{mallurl},#{url},#{state})
+</insert>
+</mapper>

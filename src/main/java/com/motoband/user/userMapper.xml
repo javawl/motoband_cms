@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.user.userMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<select id="getUserlist" resultType="com.motoband.user.userlist">
+		SELECT
+		a.user_guid,a.user_name,a.user_loginname,b.role_name,a.user_sex,a.user_tel
+		FROM CMS_user a,CMS_role b WHERE a.role_guid=b.role_guid
+	</select>
+	<insert id="insNewUser" parameterType="com.motoband.user.userModel">
+		INSERT INTO CMS_user VALUES (#{user_guid},#{user_name},#{user_loginname},#{user_password},#{role_guid},#{user_sex},#{user_tel})
+	</insert>
+	
+	<select id="getUserMessageByGuid" parameterType="String" resultType="com.motoband.user.userModel">
+		SELECT 	*
+		FROM CMS_user  WHERE user_guid=#{user_guid}
+	</select>
+	<select id="getRoleList" resultType="com.motoband.rolemanage.rolelist">
+		SELECT * FROM CMS_role  
+	</select>
+	
+	<update id="updateUserMessageByGuid" parameterType="com.motoband.user.userModel" >
+	UPDATE CMS_user SET user_name=#{user_name} ,user_loginname=#{user_loginname},user_sex=#{user_sex},user_tel=#{user_tel},role_guid=#{role_guid} WHERE user_guid=#{user_guid}
+	</update>
+	<select id="checkLoginName" parameterType="String" resultType="com.motoband.user.userModel">
+		SELECT * FROM CMS_user WHERE user_loginname=#{user_loginname}
+	</select>
+	<update id="updateOwnMessage" parameterType="String">
+	UPDATE CMS_user SET user_name=#{user_name} ,user_sex=#{user_sex},user_tel=#{user_tel} WHERE user_guid=#{user_guid}
+	</update>
+	
+	<select id="checkPasswordByGuid" parameterType="String" resultType="com.motoband.user.userModel">
+		SELECT * FROM CMS_user WHERE user_guid=#{user_guid} and user_password=#{oldpassword}
+	</select>
+	
+	<update id="updatePasswordByGuid" parameterType="String">
+	UPDATE CMS_user SET user_password=#{newpassword} WHERE user_guid=#{user_guid}
+	</update>
+
+	<delete id="delUserMessage" parameterType="String">
+		DELETE FROM CMS_user WHERE user_guid=#{user_guid}
+	</delete>
+	
+	<update id="resetUserPsw" parameterType="String">
+	UPDATE CMS_user SET user_password=#{user_password} WHERE user_guid=#{user_guid}
+	</update>
+</mapper>

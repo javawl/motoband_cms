@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.motoschool.MotoschoolMapper">
+<select id="getMotoschoolPackageListCount" resultType="Integer">
+select count(1) from motoschool_package 
+</select>
+<select id="getMotoschoolPackageList" parameterType="String" resultType="com.motoband.motoschool.MotoschoolPackageModel">
+select * from motoschool_package mp
+<if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY mp.orderindex
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<select id="getPackageBypid" parameterType="String" resultType="com.motoband.motoschool.MotoschoolPackageModel">
+ select *  from motoschool_package  mp where mp.pid=#{pid}
+</select>
+<update id="updatePackage" parameterType="com.motoband.motoschool.MotoschoolPackageModel">
+  update motoschool_package 
+  <set>
+    <if test="title !=null">title=#{title},</if>
+    <if test="subtitle !=null">subtitle=#{subtitle},</if>
+    <if test="desc !=null">`desc`=#{desc},</if>
+    <if test="picurl !=null">picurl=#{picurl},</if>
+    <if test="orderindex !=null">orderindex=#{orderindex},</if>
+    <if test="state !=null">state=#{state}</if>
+  </set>
+  where pid=#{pid}
+</update>
+<insert id="insPackage" parameterType="com.motoband.motoschool.MotoschoolPackageModel">
+  insert into motoschool_package (title,subtitle,`desc`,picurl,orderindex,state) values(#{title},#{subtitle},#{desc},#{picurl},#{orderindex},#{state})
+</insert>
+<select id="getPackageTitleList" resultType="com.motoband.motoschool.MotoschoolPackageModel">
+  select mp.pid,mp.title from motoschool_package mp
+</select>
+
+<select id="getMotoschoolVideoListCount" resultType="Integer">
+ select count(1) from motoschool_video
+</select>
+<select id="getMotoschoolVideoList" parameterType="String" resultType="com.motoband.motoschool.MotoschoolVideoModel" >
+select mv.*,mp.title as schoolpackagetitle from motoschool_video mv
+left join motoschool_package mp on mp.pid= mv.pid
+        <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY mv.orderindex
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<select id="getVideoBysid" parameterType="String" resultType="com.motoband.motoschool.MotoschoolVideoModel" >
+  select * from motoschool_video mv  where mv.sid=#{sid}
+</select>
+<update id="updateVideo" parameterType="com.motoband.motoschool.MotoschoolVideoModel">
+  update motoschool_video 
+  <set>
+	<if test="title !=null ">title=#{title},</if>
+	<if test="pid !=null ">pid=#{pid},</if>
+	<if test="desc !=null ">`desc`=#{desc},</if>
+	<if test="picurl !=null ">picurl=#{picurl},</if>
+	<if test="videourl !=null ">videourl=#{videourl},</if>
+	<if test="vu !=null ">vu=#{vu},</if>
+	<if test="orderindex !=null ">orderindex=#{orderindex},</if>
+	<if test="state !=null ">state=#{state}</if>
+  </set>
+  where sid =#{sid}
+</update>
+<insert id="insVideo" parameterType="com.motoband.motoschool.MotoschoolVideoModel" >
+   insert into motoschool_video (title,pid,`desc`,picurl,videourl,vu,orderindex,state) values(#{title},#{pid},#{desc},#{picurl},#{videourl},#{vu},#{orderindex},#{state})
+</insert>
+
+
+<select id="getMotoschoolBoxListCount" resultType="Integer">
+ select count(1) from motoschool_box
+</select>
+<select id="getMotoschoolBoxList" parameterType="String" resultType="com.motoband.motoschool.MotoschoolBoxModel" >
+select mb.*,b.title  as boxtitle,mp.title as schoolpackagetitle from motoschool_box  mb
+left join motobox b on b.boxid=mb.boxid
+left join motoschool_package mp on mp.pid= mb.pid
+       <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY mb.orderindex
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<select id="getBoxBybid" parameterType="String" resultType="com.motoband.motoschool.MotoschoolBoxModel">
+    select * from motoschool_box  mb where mb.bid=#{bid}
+</select>
+<update id="updateBox" parameterType="com.motoband.motoschool.MotoschoolBoxModel">
+  update motoschool_box 
+  <set>
+     <if test="boxid !=null">boxid=#{boxid},</if>
+     <if test="pid !=null">pid=#{pid},</if>
+     <if test="orderindex !=null">orderindex=#{orderindex},</if>
+     <if test="state !=null">state=#{state}</if>
+  </set>
+  where bid=#{bid}
+</update>
+<insert id="insBox" parameterType="com.motoband.motoschool.MotoschoolBoxModel">
+  insert into motoschool_box(boxid,pid,orderindex,state) values (#{boxid},#{pid},#{orderindex},#{state})
+</insert>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.reportlogmanage.ReportlogMapper">
+<select id="getReportloglistCount" resultType="Integer">
+select count(1) from reportlog 
+</select>
+<select id="getReportloglist" parameterType="String" resultType="com.motoband.reportlogmanage.ReportlogModel">
+select * from reportlog rl
+<if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY rl.id
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		limit #{start},#{limit}
+</select>
+</mapper>

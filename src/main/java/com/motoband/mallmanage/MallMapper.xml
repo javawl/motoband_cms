@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.mallmanage.MallMapper">
+<select id="getMallParentTypeList" resultType="com.motoband.mallmanage.MallParentTypeModel">
+  select * from motomall_parenttype
+</select>
+<select id="getTypeListByParenttypeid" resultType="com.motoband.mallmanage.MallTypeModel" parameterType="String">
+   select * from motomall_type where parentid=#{parentid}
+</select>
+<select id="getMallStyleList" resultType="com.motoband.mallmanage.MallStyleModel">
+   select * from motomall_style
+</select>
+<select id="getMallBrandList"  parameterType="String"  resultType="com.motoband.mallmanage.MallBrandModel">
+ select * from motomall_brand
+   <if test="name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallProductListCount" resultType="Integer" parameterType="map" >
+select COUNT(1) from motomall_product
+<where>
+<if test="search_parenttype !=null and search_parenttype !='' ">parenttype=#{search_parenttype}</if>
+<if test="search_type !=null and search_type !='' ">  and type=#{search_type}</if>
+<if test="search_level !=null and search_level !='' ">  and `level`=#{search_level}</if>
+<if test="search_price_start !=null and search_price_start !='' ">  and newprice >= #{search_price_start}</if>
+<if test="search_price_end !=null and search_price_end !='' ">  and #{search_price_end}>= newprice</if>
+<if test="search_input !=null and search_input !='' ">  and title like CONCAT('%', #{search_input}, '%')</if>
+<if test="search_probrand_arr !=null">
+  and 
+ <foreach collection="search_probrand_arr" index="index" item="item" open="(" close=")" separator="OR">
+       probrand=  ${item} 
+</foreach>
+</if>
+<if test="search_style_arr_str !=null">
+  and 
+ <foreach collection="search_style_arr_str" index="index" item="item" open="(" close=")" separator="OR">
+       style like CONCAT('%', #{item}, '%')
+</foreach>
+</if>
+<if test="search_state_arr !=null">
+  and 
+ <foreach collection="search_state_arr" index="index" item="item" open="(" close=")" separator="OR">
+       state =  ${item} 
+</foreach>
+</if>
+</where>
+</select>
+<select id="getMallProductList" parameterType="map" resultType="com.motoband.mallmanage.MallProductModel">
+select * from motomall_product 
+<where>
+<if test="search_parenttype !=null and search_parenttype !='' ">parenttype=#{search_parenttype}</if>
+<if test="search_type !=null and search_type !='' ">  and type=#{search_type}</if>
+<if test="search_level !=null and search_level !='' ">  and `level`=#{search_level}</if>
+<if test="search_price_start !=null and search_price_start !='' ">  and newprice/100 >= #{search_price_start}</if>
+<if test="search_price_end !=null and search_price_end !='' ">  and #{search_price_end}>= newprice/100</if>
+<if test="search_input !=null and search_input !='' ">  and title like CONCAT('%', #{search_input}, '%')</if>
+<if test="search_probrand_arr !=null">
+  and 
+ <foreach collection="search_probrand_arr" index="index" item="item" open="(" close=")" separator="OR">
+       probrand=  ${item} 
+</foreach>
+</if>
+<if test="search_style_arr_str !=null">
+  and 
+ <foreach collection="search_style_arr_str" index="index" item="item" open="(" close=")" separator="OR">
+       style like CONCAT('%', #{item}, '%')
+</foreach>
+</if>
+<if test="search_state_arr !=null">
+  and 
+ <foreach collection="search_state_arr" index="index" item="item" open="(" close=")" separator="OR">
+       state =  ${item} 
+</foreach>
+</if>
+
+</where>
+  order by ptime    
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+  limit #{start},#{limit}
+</select>
+<update id="updateProductState" parameterType="String">
+  update motomall_product set state=#{state} where id=#{id}
+</update>
+<delete id="deleteProductByid" parameterType="String">
+  delete from motomall_product where id=#{id}
+</delete>
+<select id="getMallLabelList" resultType="com.motoband.mallmanage.MallLabelModel">
+  select * from motomall_label
+</select>
+<!-- <insert id="insertMallProduct" parameterType="com.motoband.mallmanage.MallProductModel">
+insert into motomall_product(id,title,`des`,ptime,picurl,probrand,parenttype,type,style,label,
+brand,model,keyword,mallurl,`level`,source,ispackage,isrecommend,oldprice,newprice,state,count,brandids,modelids) values 
+(#{id},#{title},#{des},#{ptime},#{picurl},#{probrand},
+#{parenttype},#{type},#{style},#{label},#{brand},#{model},#{keyword},#{mallurl},
+#{level},#{source},#{ispackage},#{isrecommend},#{oldprice},#{newprice},#{state},#{count},#{brandids},#{modelids})
+</insert> -->
+<insert id="insertMallProduct" parameterType="com.motoband.mallmanage.MallProductModel">
+  <selectKey keyProperty="pcount" resultType="java.lang.Integer" order="BEFORE">
+    select count(1) from motomall_product where id = #{id}
+  </selectKey>
+  <if test="pcount > 0">
+   update motomall_product
+	<set>
+	  <if test="title !=null">title=#{title},</if>
+	  <if test="des !=null">des=#{des},</if>
+	  <if test="ptime !=null">ptime=#{ptime},</if>
+	  <if test="picurl !=null">picurl=#{picurl},</if>
+	  <if test="probrand !=null">probrand=#{probrand},</if>
+	  <if test="parenttype !=null">parenttype=#{parenttype},</if>
+	  <if test="type !=null">type=#{type},</if>
+	  <if test="style !=null">style=#{style},</if>
+	  <if test="label !=null">label=#{label},</if>
+	  <if test="brand !=null">brand=#{brand},</if>
+	  <if test="model !=null">model=#{model},</if>
+	  <if test="keyword !=null">keyword=#{keyword},</if>
+	  <if test="mallurl !=null">mallurl=#{mallurl},</if>
+	  <if test="level !=null">`level`=#{level},</if>
+	  <if test="source !=null">source=#{source},</if>
+	  <if test="ispackage !=null">ispackage=#{ispackage},</if>
+	  <if test="isrecommend !=null">isrecommend=#{isrecommend},</if>
+	  <if test="oldprice !=null">oldprice=#{oldprice},</if>
+	  <if test="newprice !=null">newprice=#{newprice},</if>
+	  <if test="state !=null">state=#{state},</if>
+	  <if test="brandids !=null">brandids=#{brandids},</if>
+	  <if test="modelids !=null">modelids=#{modelids},</if>
+	   <if test="count !=null">count=#{count}</if>
+	</set>
+	<where>
+	  id=#{id}
+	</where>
+  </if>
+  <if test="pcount==0">
+    insert into motomall_product(id,title,`des`,ptime,picurl,probrand,parenttype,type,style,label,
+    brand,model,keyword,mallurl,`level`,source,ispackage,isrecommend,oldprice,newprice,state,count,brandids,modelids) values 
+    (#{id},#{title},#{des},#{ptime},#{picurl},#{probrand},
+    #{parenttype},#{type},#{style},#{label},#{brand},#{model},#{keyword},#{mallurl},
+    #{level},#{source},#{ispackage},#{isrecommend},#{oldprice},#{newprice},#{state},#{count},#{brandids},#{modelids})
+  </if>
+</insert>
+
+
+<select id="getMallStyleModelByid" parameterType="String" resultType="com.motoband.mallmanage.MallStyleModel">
+  select * from motomall_style  where styleid=#{styleid}
+</select>
+<select id="getMallLabelModelByid" parameterType="String" resultType="com.motoband.mallmanage.MallLabelModel">
+ select * from motomall_label where labelid=#{labelid}
+</select>
+<select id="getMallParentTypeModelByPid" parameterType="Integer" resultType="com.motoband.mallmanage.MallParentTypeModel">
+   select * from motomall_parenttype where parentid=#{parentid}
+</select>
+<select id="getMallTypeModelByid" parameterType="Integer" resultType="com.motoband.mallmanage.MallTypeModel">
+   select * from motomall_type where typeid=#{typeid}
+</select>
+<select id="getMallBrandModelBybid" parameterType="Integer" resultType="com.motoband.mallmanage.MallBrandModel">
+  select * from motomall_brand where brandid=#{brandid}
+</select>
+<select id="getMallParenttypeListCount" parameterType="String" resultType="Integer">
+  select count(1) from motomall_parenttype 
+  <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallParentTypeListPage" parameterType="String" resultType="com.motoband.mallmanage.MallParentTypeModel">
+  select * from motomall_parenttype 
+   <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY parentid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallParentType" parameterType="String">
+  insert into motomall_parenttype(name,brandids) values (#{name},#{brandids})
+</insert>
+<select id="getMalltypeListCount"  parameterType="String" resultType="Integer">
+ select count(1) from motomall_type 
+  <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallTypeList" resultType="com.motoband.mallmanage.MallTypeModel">
+    select * from motomall_type 
+</select>
+<select id="getMallTypeListPage" parameterType="String" resultType="com.motoband.mallmanage.MallTypeModel">
+ select * from motomall_type 
+   <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY typeid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallType" parameterType="String">
+insert into motomall_type(name,parentid) values (#{name},#{parentid})
+</insert>
+<select id="getMallBrandListCount" parameterType="String" resultType="Integer">
+  select count(1) from motomall_brand
+  <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallBrandListPage" parameterType="String" resultType="com.motoband.mallmanage.MallBrandModel">
+  select * from motomall_brand
+   <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY brandid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallBrand" parameterType="String">
+insert into motomall_brand(name) values (#{name})
+</insert>
+
+<select id="getMallLabelListCount" parameterType="String" resultType="Integer">
+select count(1) from motomall_label
+ <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallLabelListPage" parameterType="String" resultType="com.motoband.mallmanage.MallLabelModel">
+select * from motomall_label
+ <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY labelid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallLabel" parameterType="String" >
+insert into  motomall_label(name,color) values(#{name},#{color})
+</insert>
+<select id="getMallStyleListCount" parameterType="String" resultType="Integer" >
+  select count(1) from motomall_style
+  <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallStyleListPage" parameterType="String" resultType="com.motoband.mallmanage.MallStyleModel">
+ select * from motomall_style
+ <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY styleid
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallStyle" parameterType="String" >
+  insert into motomall_style(name) values(#{name}) 
+</insert>
+<select id="getMallNotifyListCount" parameterType="String" resultType="Integer" >
+  select count(1) from motomall_notify
+   <if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+</select>
+<select id="getMallNotifyListPage" parameterType="String" resultType="com.motoband.mallmanage.MallNotifyModel" >
+select * from motomall_notify
+<if test="name !=null and name !='' ">
+    <where>
+        name like CONCAT('%', #{name}, '%')
+    </where>
+  </if>
+  <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY ptime
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<insert id="insMallNotify" parameterType="com.motoband.mallmanage.MallNotifyModel" keyProperty="notifyid" useGeneratedKeys="true">
+
+insert into  motomall_notify(name,ptime,picurl,mallurl,source) values(#{name},#{ptime},#{picurl},#{mallurl},#{source})
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="notifyid">
+SELECT LAST_INSERT_ID()
+</selectKey> 
+</insert>
+<select id="getMallProductById" parameterType="String" resultType="com.motoband.mallmanage.MallProductModel">
+select * from motomall_product where id=#{id}
+</select>
+<update id="updateMallProduct" parameterType="com.motoband.mallmanage.MallProductModel">
+update motomall_product
+<set>
+  <if test="title !=null">title=#{title},</if>
+  <if test="des !=null">des=#{des},</if>
+  <if test="ptime !=null">ptime=#{ptime},</if>
+  <if test="picurl !=null">picurl=#{picurl},</if>
+  <if test="probrand !=null">probrand=#{probrand},</if>
+  <if test="parenttype !=null">parenttype=#{parenttype},</if>
+  <if test="type !=null">type=#{type},</if>
+  <if test="style !=null">style=#{style},</if>
+  <if test="label !=null">label=#{label},</if>
+  <if test="brand !=null">brand=#{brand},</if>
+  <if test="model !=null">model=#{model},</if>
+  <if test="keyword !=null">keyword=#{keyword},</if>
+  <if test="mallurl !=null">mallurl=#{mallurl},</if>
+  <if test="level !=null">`level`=#{level},</if>
+  <if test="source !=null">source=#{source},</if>
+  <if test="ispackage !=null">ispackage=#{ispackage},</if>
+  <if test="isrecommend !=null">isrecommend=#{isrecommend},</if>
+  <if test="oldprice !=null">oldprice=#{oldprice},</if>
+  <if test="newprice !=null">newprice=#{newprice},</if>
+  <if test="state !=null">state=#{state},</if>
+  <if test="brandids !=null">brandids=#{brandids},</if>
+  <if test="modelids !=null">modelids=#{modelids},</if>
+   <if test="count !=null">count=#{count}</if>
+</set>
+<where>
+  id=#{id}
+</where>
+</update>
+<select id="getMallLabelByName" parameterType="String" resultType="com.motoband.mallmanage.MallLabelModel"> 
+ select * from motomall_label where name=#{name}
+</select>
+<select id="getMallStyleByName" parameterType="String" resultType="com.motoband.mallmanage.MallStyleModel" >
+ select * from motomall_style where name=#{name}
+</select>
+<select id="getMallBrandByName" parameterType="String" resultType="com.motoband.mallmanage.MallBrandModel">
+select * from motomall_brand where name=#{name}
+</select>
+<select id="getMallNotifyByid" parameterType="String" resultType="com.motoband.mallmanage.MallNotifyModel">
+  select * from motomall_notify where notifyid=#{notifyid}
+</select>
+<select id="delMallNotifyByid" parameterType="String" >
+delete from motomall_notify where notifyid=#{notifyid}
+</select>
+<update id="updateMallNotify" parameterType="map">
+update motomall_notify
+<set>
+<if test="name !=null">name=#{name},</if>
+<if test="ptime !=null">ptime=#{ptime},</if>
+<if test="picurl !=null">picurl=#{picurl},</if>
+<if test="mallurl !=null">mallurl=#{mallurl},</if>
+<if test="source !=null">source=#{source}</if>
+</set>
+<where>
+notifyid=#{notifyid}
+</where>
+</update>
+<select id="getMallProductRecommendCount" resultType="Integer">
+select COUNT(1) from motomall_product where isrecommend=1
+</select>
+<select id="getMallProductRecommendList" parameterType="String" resultType="com.motoband.mallmanage.MallProductModel">
+select * from motomall_product where isrecommend=1
+        <if test="orderConditions !=''  and orderConditions !=null">
+		    ORDER BY  ${orderConditions}
+		</if>
+		<if test="orderConditions ==''  or orderConditions ==null">
+		    ORDER BY ptime
+		</if>
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		
+		limit #{start},#{limit}
+</select>
+<select id="getProductCountByBrandId" parameterType="String" resultType="Integer">
+  select COUNT(1) from motomall_product where probrand=#{brandid}
+</select>
+<select id="getMallProductByProbrand" parameterType="String" resultType="com.motoband.mallmanage.MallProductModel">
+select * from motomall_product where probrand=#{probrand}
+</select>
+<update id="updateMallParentType" parameterType="String">
+ update  motomall_parenttype
+ set name=#{name},brandids=#{brandids}
+ where parentid=#{parentid}
+</update>
+<select id="getMallbaseCount" parameterType="String" resultType="Integer">
+select count(1) from mallbase 
+<if test="groupid >= 0">
+     where groupid =#{groupid} 
+</if>
+</select>
+<select id="getMallbaselist" parameterType="String" resultType="com.motoband.mallmanage.MallBaseModel">
+select a.*,b.title as groupname,b.type as grouptype ,b.subtitle as groupsubname  from mallbase a
+left join equippinggroup b on b.groupid=a.groupid
+<if test="groupid >= 0">
+     where a.groupid =#{groupid} 
+</if>
+  order by a.state desc,a.orderindex desc
+  limit #{start},#{limit}
+</select>
+<select id="getEquippingGroupList" parameterType="String" resultType="com.motoband.mallmanage.EquippingGroupModel">
+select * from equippinggroup  
+<if test="state >= 0">
+     where state =#{state} 
+</if>
+ order by state desc,orderindex desc
+</select>
+<select id="getmallbasebymid" parameterType="String" resultType="com.motoband.mallmanage.MallBaseModel" >
+    select * from mallbase where mid=#{mid}
+</select>
+<insert id="insertOrupdateMallbase" parameterType="com.motoband.mallmanage.MallBaseModel">
+ insert into mallbase (mid,title,picurl,url,price,state,orderindex,groupid,subtitle,oldprice)
+  values (#{mid},#{title},#{picurl},#{url},#{price},#{state},#{orderindex},#{groupid},#{subtitle},#{oldprice})
+  ON DUPLICATE KEY UPDATE
+  title=#{title},picurl=#{picurl},url=#{url},price=#{price},state=#{state},
+  orderindex=#{orderindex},groupid=#{groupid},subtitle=#{subtitle},oldprice=#{oldprice}
+</insert>
+<select id="getEquippingGroupCount" parameterType="String" resultType="Integer">
+select count(1) from equippinggroup  
+<if test="state >= 0">
+     where state =#{state} 
+</if>
+</select>
+<select id="getEquippingGrouplistWithLimit" parameterType="String" resultType="com.motoband.mallmanage.EquippingGroupModel">
+select * from equippinggroup  
+<if test="state >= 0">
+     where state =#{state} 
+</if>
+ order by state desc,orderindex desc
+ limit #{start},#{limit}
+</select>
+<select id="getEquippinggroupByGroupid" parameterType="String" resultType="com.motoband.mallmanage.EquippingGroupModel">
+select * from equippinggroup  where groupid=#{groupid}
+</select>
+<insert id="insertOrupdateEquippingGroup" parameterType="com.motoband.mallmanage.EquippingGroupModel">
+insert into equippinggroup(groupid,title,type,orderindex,state,subtitle,url)
+values(#{groupid},#{title},#{type},#{orderindex},#{state},#{subtitle},#{url})
+ ON DUPLICATE KEY UPDATE
+ title=#{title},type =#{type}, orderindex=#{orderindex}, state=#{state},subtitle=#{subtitle},url=#{url}
+</insert>
+<update id="insertMallProductKeyword" parameterType="String">
+ update motomall_product set keyword=#{keyword} where id=#{id}
+</update>
+</mapper>

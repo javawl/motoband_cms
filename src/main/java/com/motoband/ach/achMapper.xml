@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.ach.achMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+
+	<select id="getAchievementList" resultType="com.motoband.ach.achievement">
+		select * from
+		achievement order by ach_code desc
+	</select>
+	<insert id="addAchievement" parameterType="com.motoband.ach.achievement">
+		INSERT INTO
+		achievement (achid,ach_name,ach_des,ach_img,ach_disableimg,ach_code,groupname,mallurl,achtype,score)
+		VALUES (#{achid},#{ach_name},#{ach_des},#{ach_img},#{ach_disableimg},#{ach_code},#{groupname},#{mallurl},#{achtype},#{score})
+		
+	</insert>
+	<update id="updateAchievement" parameterType="com.motoband.ach.achievement">
+		UPDATE achievement
+		SET
+		ach_name=#{ach_name},ach_des=#{ach_des},ach_img=#{ach_img},ach_disableimg=#{ach_disableimg},ach_code=#{ach_code},groupname=#{groupname},mallurl=#{mallurl},achtype=#{achtype},score=#{score}  
+		where achid=#{achid}
+	</update>
+
+</mapper>

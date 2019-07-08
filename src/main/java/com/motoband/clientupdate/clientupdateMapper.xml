@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.clientupdate.clientupdateMapper">
+	<select id="getClientUpdateList" parameterType="String" resultType="com.motoband.clientupdate.updateconf">
+		SELECT * FROM
+		updateconf where ctype=#{ctype} order by id desc  
+	</select>
+	<insert id="insertConfigdata" parameterType="com.motoband.configdata.configdata">
+		INSERT INTO config
+		(servicename,configkey,configvalue,comments)
+		VALUES(#{servicename},#{configkey},#{configvalue},#{comments})
+	</insert>
+	<select id="getConfigDataByID" parameterType="Integer"
+		resultType="com.motoband.configdata.configdata">
+		SELECT * FROM config WHERE id=#{configdata_id}
+	</select>
+	<update id="saveConfigdataMessage" parameterType="com.motoband.configdata.configdata">
+		UPDATE config
+		SET
+		servicename=#{servicename},configkey=#{configkey},configvalue=#{configvalue},comments=#{comments}
+		WHERE id=#{id}
+	</update>
+	<delete id="delConfigdataMessage" parameterType="String">
+		DELETE FROM config WHERE id=#{id}
+	</delete>
+	<insert id="insertclientupdate" parameterType="com.motoband.clientupdate.updateconf">
+		insert into
+		updateconf (cversion,tcversion,ctype,content,downloadurl,state,ishighversion)
+		values(#{cversion},#{tcversion},#{ctype},#{content},#{downloadurl},#{state},#{ishighversion})
+	</insert>
+<select id="getUpdateConf" resultType="com.motoband.clientupdate.updateconf" parameterType="String">
+   select * from updateconf  where id=#{id}
+</select>
+<update id="updateUpdateConf" parameterType="com.motoband.clientupdate.updateconf">
+   update updateconf set cversion=#{cversion} ,tcversion=#{tcversion} ,ctype=#{ctype}, content=#{content},downloadurl=#{downloadurl},state=#{state},ishighversion=#{ishighversion}
+   where id=#{id} 
+</update>
+<delete id="deleteclientupdate" parameterType="String">
+  delete from updateconf  where id=#{id}
+</delete>
+</mapper>

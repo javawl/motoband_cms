@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.motouser.motouserMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<select id="searchUserRideLine" resultType="com.motoband.motouser.ridelineModel"
+		parameterType="String">
+		SELECT * FROM rideline where userid=#{userid} order by
+		starttime desc
+	</select>
+	<select id="searchUserRideDateLog" resultType="com.motoband.motouser.ridedatelog"
+		parameterType="String">
+		(select * from ridedatalog_2016_1 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_2 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_3 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_4 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_5 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_6 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_7 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_8 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_9 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_10 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_11 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2016_12 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_1 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_2 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_3 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_4 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_5 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_6 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_7 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_8 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_9 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_10 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_11 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2017_12 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_1 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_2 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_3 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_4 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_5 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_6 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_7 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_8 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_9 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_10 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_11 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2018_12 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_1 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_2 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_3 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_4 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_5 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_6 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_7 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_8 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_9 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_10 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_11 where userid=#{userid} )
+		UNION
+		(select * from ridedatalog_2019_12 where userid=#{userid} )
+	
+		 order by reporttime
+		desc
+	</select>
+	<select id="searchUserGarage" resultType="com.motoband.motouser.garageModel"
+		parameterType="String">
+		SELECT * FROM usergarage where userid=#{userid}
+	</select>
+	<select id="searchByusernickname" parameterType="String"
+		resultType="com.motoband.motouser.MBUserModel">
+		SELECT * FROM mbuser where nickname like
+		CONCAT('%','${usernickname}','%' )  order by case when nickname =#{usernickname} then 1 else 2 end,nickname
+	</select>
+	<select id="searchByusermobileno" parameterType="String"
+		resultType="com.motoband.motouser.MBUserModel">
+		SELECT * FROM mbuser where mobileno=#{mobileno}
+	</select>
+	<select id="getUserByID" parameterType="String"
+		resultType="com.motoband.motouser.MBUserModel">
+		select * from mbuser where userid=#{uid}
+	</select>
+	<insert id="addUserBoxApprove" parameterType="String">
+		INSERT INTO
+		mbuserapprove (userid,media) VALUES (#{uid},#{media})
+	</insert>
+	<select id="searchUserAddtime" parameterType="String"
+		resultType="long">
+		SELECT addtime from mbuser where userid=#{targetid}
+	</select>
+	<select id="getachievement" resultType="com.motoband.motouser.AchievementModel">
+		select * from achievement a where a.achid=#{achid}
+	</select>
+	<select id="getuserachievement" resultType="com.motoband.motouser.UserAchievementModel" parameterType="String">
+	   select ua.*,a.ach_name from  userachievement ua 
+        left join achievement a on a.achid=ua.achid
+        where ua.userid=#{userid}
+	</select>
+	<select id="getUserByUserType" resultType="com.motoband.motouser.MBUserModel" parameterType="Integer">
+	     select * from mbuser mu where mu.usertype=#{usertype}
+	</select>
+	<update id="updateUsertypeAndapprovedes" parameterType="String" >
+	   update mbuser 
+	   <set>
+	     <if test="usertype !=null">
+	       usertype =#{usertype},
+	      </if>
+	      <if test="approvedes !=null">
+	         approvedes=#{approvedes}
+	      </if>
+	   </set>
+
+	   where userid=#{userid}
+	</update>
+	<update id="updateUserPSWByUserid" parameterType="String">
+	 update mbuser set password=#{password} where userid=#{userid}
+	</update>
+	<select id="getUserLevels" resultType="com.motoband.motouser.MBUserlevelModel">
+	  select * from mbuserlevel
+	</select>
+	<select id="getUserLevelByLevel" resultType="com.motoband.motouser.MBUserlevelModel" parameterType="String">
+	  select * from mbuserlevel where level=#{level}
+	</select>
+	<select id="getAutomatedOperationUseridList" resultType="String">
+	  select userid from mbuser where channel='motoband'
+	</select>
+	<select id="getOpenScreenListCount" resultType="integer">
+	 select count(1) from openscreen
+	</select>
+	<select id="getOpenScreenList" parameterType="String" resultType="com.motoband.motouser.OpenScreenModel">
+	select * from openscreen
+	order by addtime
+	 <if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+	</select>
+	<insert id="insertOrUpdateOpenscreen" parameterType="com.motoband.motouser.OpenScreenModel" >
+	insert into openscreen(osid,userid,nickname,pic,addtime) 
+	values (#{osid},#{userid},#{nickname},#{pic},#{addtime})
+	ON DUPLICATE KEY UPDATE
+	userid=#{userid},nickname=#{nickname},pic=#{pic}
+	</insert>
+	<delete id="delopenscreen"  parameterType="String" >
+	delete from openscreen where osid=#{osid}
+	</delete>
+	  <update id="updatePrivilegelongForUser" parameterType="Map">
+      update mbuser set userprivilegelong=#{userprivilegelong} where userid=#{userid}
+     </update>
+     
+     <select id="checkvipmember" parameterType="Map" resultType="Integer">
+         select IFNULL((select count(1) from vipcardmember where userid=#{userid} and viptype=#{viptype} and endtime>unix_timestamp(now())*1000) ,0)
+     </select>
+     
+     <insert id="insertVipCardMember" parameterType="com.motoband.motouser.VipCardMemberModel">
+		INSERT INTO vipcardmember (userid,vipcardid,starttime,endtime,level,viptype) VALUES
+		(#{userid},#{vipcardid},#{starttime},#{endtime},#{level},#{viptype})
+		ON DUPLICATE KEY UPDATE  
+		userid=#{userid},vipcardid=#{vipcardid},starttime=#{starttime},endtime=#{endtime},level=#{level},viptype=#{viptype}
+	</insert>
+	<select id="getVipCardMemberByuserid" parameterType="String" resultType="com.motoband.motouser.VipCardMemberModel">
+	  select * from vipcardmember where userid =#{userid} and  endtime>UNIX_TIMESTAMP()*1000 and UNIX_TIMESTAMP()*1000>starttime  order by level desc
+	</select>
+     
+     <select id="getMessageTasks" resultType="com.motoband.motouser.MessageTaskModel">
+        select * from  cms_msg_tasklist order by createtime desc limit 50
+     </select>
+     
+     <select id="getUserTaskCount" parameterType="String" resultType="Integer">
+        select count(1) from cms_msg_usertask  
+        <where>
+           taskid=#{taskid}
+         <if test="state >= 0 ">
+            and state=#{state}
+         </if>
+        </where>
+     </select>
+     <insert id="addMessageTask" parameterType="com.motoband.motouser.MessageTaskModel">
+        insert into cms_msg_tasklist
+		(name,taskid,title,subtitle,des,linktype,imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,createtime)
+		values(#{name},#{taskid},#{title},#{subtitle},#{des},#{linktype},
+		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},#{buserid},#{createtime})
+		
+     </insert>
+     
+     <insert id="addMessageTaskUserAll" parameterType="String">
+        insert into cms_msg_usertask (userid,taskid) select userid,#{taskid} as taskid from mbuser where channel not like '%X'
+     </insert>
+     
+     <insert id="batchaddMessageTaskUser" parameterType="Map" useGeneratedKeys="false">
+         insert into cms_msg_usertask (userid,taskid) values
+         <foreach collection="list" item="item" index="index" separator=",">
+    				(
+    					#{item},
+    					#{taskid}
+    				)
+    		     </foreach>		
+     </insert>
+     
+     <select id="getMessageTaskUserByTaskid" parameterType="Map" resultType="String">
+     select userid from cms_msg_usertask where taskid=#{taskid} order by id asc limit #{pici},80000
+     </select>
+     
+     <select id="getTaskMsgByTaskid" resultType="com.motoband.motouser.MessageTaskModel"  parameterType="String">
+          select * from  cms_msg_tasklist  where taskid=#{taskid}
+     </select>
+     
+     <update id="updateUsertaskmsg" parameterType="Map">
+       update cms_msg_usertask set state=#{state} where taskid=#{taskid} and userid in 
+        <foreach collection="userids" index="index" item="item" open="(" separator="," close=")">
+              #{item}
+         </foreach>
+     </update>
+     
+     <update id="updatetaskmsgliststate" parameterType="Map" >
+       update cms_msg_tasklist set state=#{state},updatetime=#{updatetime},sumcount=#{sumcount},successcount=#{successcount},failcount=#{failcount} where taskid=#{taskid} 
+     </update>
+     
+     <select id="getUnFinishTask" resultType="com.motoband.motouser.MessageTaskModel">
+          select taskid from  cms_msg_tasklist  where state=0
+     </select>
+     
+   	 <select id="getUnFinishTaskUsers" resultType="String">
+          select userid from  cms_msg_usertask  where taskid=#{taskid} and !state=1
+     </select>
+     
+     <select id="getMessageTaskAllUserByTaskid" parameterType="Map" resultType="Integer">
+    	 select count(1) from cms_msg_usertask where taskid=#{taskid}
+     </select>
+     
+     <select id="getMessageTaskSucessUserByTaskid" parameterType="Map" resultType="Integer">
+    	 select count(1) from cms_msg_usertask where taskid=#{taskid} and state=1
+     </select>
+     
+     <select id="getMessageTaskFailUserByTaskid" parameterType="Map" resultType="Integer">
+    	 select count(1) from cms_msg_usertask where taskid=#{taskid} and state=2
+     </select>
+     
+     <delete id="deleteVip" >
+     	delete from vipcardmember where userid=#{userid} and vipcardid=#{viptype}
+     </delete>
+</mapper>

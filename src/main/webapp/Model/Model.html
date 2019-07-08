@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="Content-Language" content="zh-CN" />
+			<meta name="viewport" content="width=device-width,initial-scale=1">
+			<meta content="yes" name="apple-mobile-web-app-capable">
+			<meta content="black" name="apple-mobile-web-app-status-bar-style">
+			<meta content="telephone=no" name="format-detection">
+
+			<title></title>
+			<style type="text/css">
+				body {
+					padding: 4%;
+					max-width: 960px;
+					font-size: 65%;
+					margin: 0 auto;
+				}
+
+				em {
+					color: #8c8c8c;
+					font-style: normal;
+					vertical-align: middle;
+					margin-right: 30px;
+				}
+				@media screen and (min-width:1200px){
+					#title{
+						margin-bottom: 20px; font-size:10em;padding:0;
+					}
+				}
+				@media screen and (min-width: 960px) and (max-width: 1199px) {
+					#title{
+						margin-bottom: 20px; font-size:8em;padding:0;
+					}
+				}
+				@media screen and (min-width: 768px) and (max-width: 959px) {
+					#title{
+						margin-bottom: 20px; font-size:6em;padding:0;
+					}
+				}
+				@media only screen and (min-width: 480px) and (max-width: 767px){
+					#title{
+						margin-bottom: 20px; font-size:4em;padding:0;
+					}
+				}
+				@media only screen and (max-width: 479px) {
+					#title {
+						margin-bottom: 20px;
+						font-size: 2em;
+						padding: 0;
+					}
+				}
+			</style>
+			<script>
+				window.onload = function() {
+					var aEles = document.getElementsByTagName('*');
+					for (var i = 0; i < aEles.length; i++) {
+						aEles[i].style.fontFamily = "'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif";
+
+					}
+				}
+			</script>
+		</head>
+
+	<body>
+		<div id="" style="width: 100%;">
+			<h1 id="title">###title###</h1></div>
+		<div style="padding-bottom:20px"><em>###time###</em><em>###writer###</em></div>
+		  ###content###
+	</body>
+
+</html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.confmanage.confMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<select id="getConflist" resultType="com.motoband.confmanage.conflist">
+		SELECT * FROM CMS_privilege
+		WHERE privilege_parentguid='0'
+	</select>
+	<insert id="insertPrivilege" parameterType="com.motoband.confmanage.conflist">
+		INSERT INTO
+		CMS_privilege(
+		privilege_guid,
+		privilege_name,
+		privilege_key,
+		privilege_parentguid,
+		privilege_url,
+		privilege_des
+		)VALUES(
+		#{privilege_guid},
+		#{privilege_name},
+		#{privilege_key},
+		#{privilege_parentguid},
+		#{privilege_url},
+		#{privilege_des}
+		)
+	</insert>
+	<select id="selPrivilegeByGuid" parameterType="String"
+		resultType="com.motoband.admin.admin.Privilege">
+		SELECT * FROM CMS_privilege
+		WHERE
+		privilege_guid=#{conf_guid}
+	</select>
+	<select id="selchildPrivilegesByGuid" parameterType="String"
+		resultType="com.motoband.admin.admin.Privilege">
+		SELECT * FROM CMS_privilege
+		WHERE
+		privilege_parentguid=#{conf_guid}
+	</select>
+	<update id="saveConfByGuid" parameterType="String">
+		UPDATE CMS_privilege
+		SET
+		privilege_name=#{conf_name},
+		privilege_key=#{conf_key},
+		privilege_des=#{conf_des}
+		WHERE privilege_guid=#{conf_guid}
+	</update>
+	<update id="saveChildConfByPartentGuid" parameterType="String">
+		UPDATE
+		CMS_privilege t1 SET privilege_key=
+		(SELECT t2.privilegekey FROM
+		(SELECT
+		CONCAT(#{conf_key},SUBSTRING(privilege_key,LOCATE('_',privilege_key)))
+		privilegekey,privilege_guid
+		FROM CMS_privilege WHERE
+		privilege_parentguid=#{conf_guid}) t2 WHERE
+		t1.privilege_guid=t2.privilege_guid)
+		WHERE
+		t1.privilege_parentguid=#{conf_guid}
+	</update>
+	<update id="saveChildConfByChild" parameterType="String">
+		UPDATE
+		CMS_privilege SET
+		privilege_name=#{conf_name},
+		privilege_des=#{conf_des},
+		privilege_key=CONCAT(SUBSTRING(privilege_key,1,LOCATE('_',privilege_key)),#{conf_key})
+		WHERE privilege_guid=#{conf_guid}
+	</update>
+	<insert id="insertChildConf" parameterType="String">
+		INSERT INTO
+		CMS_privilege
+		SELECT #{conf_guid},
+		#{conf_name},CONCAT(SUBSTRING(privilege_key,1,LOCATE('_',privilege_key)),#{conf_key}),#{conf_parentguid},
+		NULL,#{conf_des} FROM CMS_privilege WHERE
+		privilege_guid=#{conf_parentguid}
+	</insert>
+	<delete id="delChildConf" parameterType="String">
+		DELETE FROM
+		CMS_privilege
+		WHERE privilege_guid=#{conf_guid}
+	</delete>
+	<delete id="delChildConf_Role" parameterType="String">
+		DELETE FROM
+		CMS_privilege_role
+		WHERE privilege_guid=#{conf_guid}
+	</delete>
+	<select id="checkNewConfKey" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_privilege WHERE
+		#{conf_key}=SUBSTRING(privilege_key,1,LOCATE('_',privilege_key)-1)
+	</select>
+	<select id="checkNewConfName" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_privilege WHERE #{conf_name}=privilege_name
+	</select>
+	<select id="checkNewParentConfKey" parameterType="String"
+		resultType='Integer'>
+		SELECT COUNT(*) FROM (SELECT * FROM CMS_privilege WHERE
+		privilege_parentguid='0') a WHERE
+		#{parentconf_key}=SUBSTRING(a.privilege_key,1,LOCATE('_',a.privilege_key)-1)
+		AND
+		a.privilege_guid!=#{parentconf_guid}
+	</select>
+	<select id="checkNewParentConfName" parameterType="String"
+		resultType='Integer'>
+		SELECT COUNT(*) FROM (SELECT * FROM CMS_privilege WHERE
+		privilege_parentguid='0') a WHERE
+		#{parentconf_name}=a.privilege_name
+		AND
+		a.privilege_guid!=#{parentconf_guid}
+	</select>
+	<select id="checkNewChildConfKey" parameterType="String"
+		resultType='Integer'>
+		SELECT COUNT(*) FROM (SELECT * FROM CMS_privilege WHERE
+		privilege_parentguid=(SELECT privilege_parentguid FROM CMS_privilege
+		WHERE privilege_guid=#{childchonf_guid})) a
+		WHERE
+		#{childconf_key}=SUBSTRING(a.privilege_key,LOCATE('_',a.privilege_key)+1)
+		AND
+		a.privilege_guid!=#{childchonf_guid}
+	</select>
+	<select id="checkNewChildConfName" parameterType="String"
+		resultType='Integer'>
+		SELECT COUNT(*) FROM
+		(SELECT * FROM CMS_privilege WHERE
+		privilege_parentguid=
+		(SELECT privilege_parentguid FROM CMS_privilege
+		WHERE
+		privilege_guid=#{childconf_guid})) a
+		WHERE
+		#{childconf_name}=privilege_name AND
+		a.privilege_guid!=#{childconf_guid}
+	</select>
+
+	<select id="checkchildname" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_privilege WHERE
+		privilege_parentguid=#{parent_guid} AND privilege_name=#{childname}
+	</select>
+
+	<select id="checkchildkey" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_privilege WHERE
+		privilege_parentguid=#{parent_guid} AND
+		SUBSTRING(privilege_key,LOCATE("_",privilege_key)+1)=#{childconf_key};
+	</select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+  <!--要调度的对象-->  
+    <bean id="jobBean" class="com.motoband.task.DataStatisticsTask" />  
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="jobBean" />  
+        <property name="targetMethod" value="execute" /> 
+        <!--将并发设置为false-->  
+        <property name="concurrent" value="false" />  
+    </bean>  
+  
+    <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="jobDetail" />  
+        <!--表达式，每天3点执行一次-->  
+    <property name="cronExpression" value="0 0 3 * * ?" />
+    </bean>  
+ 
+<!--   
+ 以下bean为初始脚本，跑过后废弃  -->
+    <bean id="jobBean_initdata" class="com.motoband.task.DataStatisticsTaskInitdata" />  
+    <bean id="jobDetail_initdata" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="jobBean_initdata" />  
+        <property name="targetMethod" value="execute_initdata" />  
+        <property name="concurrent" value="false" />  
+    </bean>  
+    <bean id="trigger_initdata" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="jobDetail_initdata" />  
+        <property name="cronExpression" value="0 30 18 26 5 ? 2019-2020" />  
+    </bean>  
+
+
+    <bean id="jobBean_automatedOperation" class="com.motoband.task.AutomatedOperationTask" />  
+    <bean id="jobDetail_automatedOperation" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="jobBean_automatedOperation" />  
+        <property name="targetMethod" value="execute_automatedOperation" />  
+      <!--   将并发设置为false   -->
+        <property name="concurrent" value="true" />  
+    </bean>  
+    <bean id="trigger_automatedOperation" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="jobDetail_automatedOperation" />  
+       <!--  表达式，时间固定执行一次   -->
+        <property name="cronExpression" value="0 0/1 8-23 * * ?" />  
+    </bean>  
+  
+    <!--  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   -->  
+    <bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >  
+        <property name="triggers">  
+            <list>  
+                <!--作业调度器,list下可加入其他的调度器-->  
+              <ref bean="trigger" />
+                <!--初始任务，跑过后废弃  -->
+<!--              <ref bean="trigger_initdata" />   -->
+                <!--自动化运营任务-->
+          <!--   <ref bean="trigger_automatedOperation"/>  -->
+            </list>  
+        </property>  
+    </bean>  
+
+
+</beans>

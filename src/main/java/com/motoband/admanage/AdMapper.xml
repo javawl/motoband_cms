@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.admanage.AdMapper">
+<select id="getAdList" resultType="com.motoband.admanage.AdModel">
+    SELECT * from motoband_ad ma 
+    <if test="order == 1">
+       order by ma.adid asc
+    </if>
+    <if test="order == 0">
+       order by ma.adid DESC
+    </if>
+    limit #{start},#{limit}
+ </select>
+ <select id="getAdListCount" resultType="integer">
+  select count(1) from motoband_ad ma
+</select>
+<select id="selectAdById" parameterType="Integer" resultType="com.motoband.admanage.AdModel">
+  select * from  motoband_ad ma where ma.adid=#{adid}
+</select>
+<delete id="deleteAdById" parameterType="Integer" >
+  delete from  motoband_ad  where adid=#{adid}
+</delete>
+<update id="updateAd" parameterType="com.motoband.admanage.AdModel" >
+  update motoband_ad set adtitle=#{adtitle},adtype=#{adtype},starttime=#{starttime},endtime=#{endtime},state=#{state} where adid=#{adid}
+</update>
+<insert id="insertAdImg" parameterType="com.motoband.admanage.AdimgModel">
+  insert into motoband_adimg(adid,linktype,imgurl,linkurl
+  <if test="gpid > 0 ">
+    ,gpid
+  </if>
+  ,keyword,mallurl
+  <if test="boxid > 0 ">
+    ,boxid
+  </if>
+  ,orderindex,miniprogramid) 
+  values (#{adid},#{linktype},#{imgurl},#{linkurl}
+  <if test="gpid > 0 ">
+    ,#{gpid}
+  </if>
+  ,#{keyword},#{mallurl}
+  <if test="boxid > 0 ">
+     ,#{boxid}
+  </if>
+ ,#{orderindex},#{miniprogramid})  
+</insert>
+<insert id="addAd">
+  insert into motoband_ad(adtitle,adtype,starttime,endtime,state) values (#{adtitle},#{adtype},#{starttime},#{endtime},#{state})
+</insert>
+<select id="getAdimgByadid" resultType="com.motoband.admanage.AdimgModel" parameterType="Integer">
+   select * from motoband_adimg ma where ma.adid=#{adid}  order by ma.linktype asc,ma.orderindex desc
+</select>
+<delete id="deleteAdimgById" parameterType="Integer" >
+  delete from  motoband_adimg  where adimgid=#{adimgid}
+</delete>
+<select id="getAdimgByadImgid" parameterType="Integer" resultType="com.motoband.admanage.AdimgModel">
+  select * from motoband_adimg  where adimgid=#{adimgid}
+</select>
+<update id="updateAdImg">
+   update motoband_adimg set
+   <if test="boxid > 0">
+    boxid =#{boxid},
+   </if>
+   <if test="boxid == 0">
+    boxid = null,
+   </if>
+   <if test="gpid > 0">
+    gpid =#{gpid},
+   </if>
+    <if test="gpid == 0">
+    gpid = null,
+   </if>
+   adid =#{adid},linktype =#{linktype},imgurl =#{imgurl},linkurl =#{linkurl},keyword =#{keyword},mallurl =#{mallurl},orderindex =#{orderindex},miniprogramid=#{miniprogramid}
+   where adimgid =#{adimgid}
+</update>
+<delete id="deleteAdimgByAdId" parameterType="Integer">
+  delete from motoband_adimg where adid=#{adid}
+</delete>
+<select id="getmotoGp" resultType="com.motoband.admanage.MotobandGPModel">
+   select m.gpid,m.title from  motobandgp m  order by gpid desc
+</select>
+<select id="getmotoKeywords" resultType="com.motoband.news.topic">
+  select t.topicid,t.keyword from  topic t where topictype=0 order by orderindex desc
+</select>
+<select id="getmotoBoxid" resultType="com.motoband.boxmanage.Boxlist">
+  select b.boxid from  motobox b  order by boxid desc
+</select>
+
+</mapper>

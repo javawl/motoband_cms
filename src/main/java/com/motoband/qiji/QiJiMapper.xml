@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.qiji.QiJiMapper">
+	<select id="getList" parameterType="String"
+		resultType="com.motoband.qiji.QiJiInfoModel">
+		select lid,sid,longitude,latitude,province,city,_name from qiji where
+		state=0
+		<if test="province!= null">
+			and province=#{province}
+		</if>
+		<if test="city!= null">
+			and city=#{city} 
+		</if>
+		order by lid
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+	</select>
+
+	<select id="getCount" resultType="integer"  parameterType="String">
+		select count(1) from qiji where
+		state=0 <if test="province!= null">
+			and province=#{province}
+		</if>
+		<if test="city!= null">
+			and city=#{city} 
+		</if> 
+	</select>
+
+	<select id="getQijiModelById"
+		resultType="com.motoband.qiji.QiJiInfoModel">
+		select lid,sid,longitude,latitude,province,city,_name from
+		qiji where
+		state=0 and sid = #{sid}
+	</select>
+
+	<insert id="insertOrUpdateQijiModel"
+		parameterType="com.motoband.qiji.QiJiInfoModel">
+		insert into
+		qiji(lid,sid,longitude,latitude,province,city,type,state,_name)
+		values
+		(#{lid},#{sid},#{longitude},#{latitude},#{province},#{city},#{type},#{state},#{_name})
+		ON DUPLICATE KEY UPDATE
+		longitude=#{longitude},latitude=#{latitude},_name=#{_name},province=#{province},city=#{city}
+	</insert>
+
+	<delete id="delopenqiji" parameterType="String">
+		delete FROM qiji where
+		sid=#{sid}
+	</delete>
+
+	<select id="getProvinceList" resultType="String">
+		select province from
+		qiji GROUP BY province
+	</select>
+
+	<select id="getCityBypProvince" resultType="String">
+		select city from qiji
+		where province=#{province} GROUP BY city
+	</select>
+
+</mapper>

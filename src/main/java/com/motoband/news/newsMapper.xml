@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.news.newsMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<insert id="addBanner" parameterType="com.motoband.news.banner">
+		insert into banner
+		(score,title,subtitle,url,boxid,keywords,runid,type,imgurl)
+		values(#{score},#{title},#{subtitle},#{url},#{boxid},#{keywords},#{runid},#{type},#{imgurl})
+		ON DUPLICATE
+		KEY UPDATE
+		score=#{score},title=#{title},subtitle=#{subtitle},url=#{url},keywords=#{keywords},runid=#{runid},type=#{type},imgurl=#{imgurl}
+	</insert>
+	<insert id="addBannerall" parameterType="com.motoband.news.banner">
+		insert into banner
+		(bannerid,score,title,subtitle,url,boxid,keywords,runid,type,imgurl,nid,label,pid,state,gpid,bannertype,secondcarid,yzid,buserid,miniprogramid)
+		values(#{bannerid},#{score},#{title},#{subtitle},#{url},#{boxid},#{keywords},#{runid},#{type},#{imgurl}
+		,#{nid},#{label},#{pid},#{state},#{gpid},#{bannertype},#{secondcarid},#{yzid},#{buserid},#{miniprogramid})
+		ON DUPLICATE
+		KEY UPDATE
+		score=#{score},title=#{title},subtitle=#{subtitle},url=#{url},boxid=#{boxid},keywords=#{keywords},runid=#{runid},
+		type=#{type},imgurl=#{imgurl},nid=#{nid},label=#{label},pid=#{pid},state=#{state},gpid=#{gpid},bannertype=#{bannertype},
+		secondcarid=#{secondcarid},yzid=#{yzid},buserid=#{buserid},miniprogramid=#{miniprogramid}
+	</insert>
+	<delete id="delBanner" parameterType="long">
+		delete from banner where bannerid=#{bannerid}
+	</delete>
+	<select id="getbannerbyid" parameterType="String" resultType="com.motoband.news.banner">
+	   select * from banner where bannerid=#{bannerid}
+	</select>
+	<update id="updatebanner" parameterType="com.motoband.news.banner">
+		update banner set
+		imgurl=#{imgurl},score=#{score},title=#{title},subtitle=#{subtitle},state=#{state},url=#{url},type=#{type}
+		where bannerid=#{bannerid}
+	</update>
+	<insert id="insertOrUpdateTopic">
+		insert into topic
+		(title,pic,keyword,content,status,orderindex,topictype,userid,pubtime,picwidth,picheight,pid,businessuserid)
+		values(#{title},#{pic},#{keyword},#{content},#{status},#{orderindex},#{topictype},#{userid},#{pubtime},#{picwidth},#{picheight},#{pid},#{businessuserid})
+		ON DUPLICATE
+		KEY UPDATE
+		title=#{title},pic=#{pic},keyword=#{keyword},content=#{content},status=#{status},orderindex=#{orderindex},topictype=#{topictype},
+		userid=#{userid},pubtime=#{pubtime},picwidth=#{picwidth},picheight=#{picheight},pid=#{pid},businessuserid=#{businessuserid}
+	</insert>
+	<select id="getTopicsCount"  parameterType="String" resultType="Integer">
+	select count(1) from topic where topictype =#{topictype}
+	</select>
+	<select id="getTopics" parameterType="String" resultType="com.motoband.news.topic">
+		select * from topic where topictype =#{topictype} order by
+		orderindex 
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+	</select>
+	<select id="getLabels" resultType="com.motoband.news.newsLabelModel">
+		select * from newslabel order
+		by type,orderindex desc
+	</select>
+	<select id="getBannerlist" resultType="com.motoband.news.banner">
+		SELECT b.*,mp.title as schoolpackagetitle FROM banner b left join
+		motoschool_package mp on mp.pid= b.pid   order by b.score desc
+	</select>
+
+	<select id="getnewsModelByuserid" resultType="com.motoband.news.newsModel"
+		parameterType="String">
+		select * from news_info nu where nu.userid=#{userid}
+	</select>
+	<select id="getcommentModelByuserid" resultType="com.motoband.news.CommentModel"
+		parameterType="String">
+		select * from news_comment nc where nc.userid=#{userid}
+	</select>
+	<delete id="deleteNewsCommentByCid" parameterType="String">
+		delete from news_comment where cid=#{cid}
+	</delete>
+	<insert id="insertNews" parameterType="com.motoband.news.newsModel">
+		insert into
+		news_info(nid,userid,title,content,keywords,type,picurl,videodatastr,
+		<if test="updatetime > 0">
+			updatetime,
+		</if>
+		<if test="ptime > 0">
+			ptime,
+		</if>
+		location,ridedatamodelstr,routedatamodelstr,storyliststr,citycode,recommend,
+		<if test="recommendtime > 0">
+			recommendtime,
+		</if>
+		recommenduserid,
+		<if test="gpid > 0">
+			gpid,
+		</if>
+		<if test="boxid > 0">
+			boxid,
+		</if>
+		useridliststr,achievementmodelstr)
+		values(#{nid},#{userid},#{title},#{content},#{keywords},#{type},#{picurl},#{videodatastr},
+		<if test="updatetime > 0">
+			#{updatetime},
+		</if>
+		<if test="ptime > 0">
+			#{ptime},
+		</if>
+		#{location},#{ridedatamodelstr},#{routedatamodelstr},#{storyliststr},#{citycode},#{recommend},
+		<if test="recommendtime > 0">
+			#{recommendtime},
+		</if>
+		#{recommenduserid},
+		<if test="gpid > 0">
+			#{gpid},
+		</if>
+		<if test="boxid > 0">
+			#{boxid},
+		</if>
+		#{useridliststr},#{achievementmodelstr})
+	</insert>
+	<update id="updatenewsByNid" parameterType="com.motoband.news.newsModel">
+		update news_info
+		<set>
+			<if test="userid !=null">userid=#{userid},</if>
+			<if test="title !=null">title=#{title},</if>
+			<if test="content !=null">content=#{content},</if>
+			<if test="keywords !=null">keywords=#{keywords},</if>
+			<if test="type !=null">type=#{type},</if>
+			<if test="picurl !=null">picurl=#{picurl},</if>
+			<if test="videodatastr !=null"> videodatastr=#{videodatastr},</if>
+			<if test="updatetime !=null"> updatetime=#{updatetime},</if>
+			<if test="ptime !=null"> ptime=#{ptime},</if>
+			<if test="location !=null">location=#{location},</if>
+			<if test="ridedatamodelstr !=null">ridedatamodelstr=#{ ridedatamodelstr},</if>
+			<if test="routedatamodelstr !=null">routedatamodelstr=#{routedatamodelstr},</if>
+			<if test="storyliststr !=null">storyliststr=#{storyliststr},</if>
+			<if test="citycode !=null">citycode=#{citycode},</if>
+			<if test="recommend !=null">recommend=#{recommend},</if>
+			<if test="recommendtime !=null"> recommendtime=#{recommendtime},</if>
+			<if test="recommenduserid !=null"> recommenduserid=#{recommenduserid},</if>
+			<if test="gpid !=null">gpid=#{gpid},</if>
+			<if test="boxid !=null">boxid=#{boxid},</if>
+			<if test="useridliststr !=null"> useridliststr=#{useridliststr},</if>
+			<if test="achievementmodelstr !=null">achievementmodelstr=#{achievementmodelstr},</if>
+			<if test="categoryid !=null">categoryid=#{categoryid},</if>
+			<if test="pid !=null">pid=#{pid}</if>
+			<if test="businessuserid !=null">businessuserid=#{businessuserid}</if>
+		</set>
+		<where>
+			nid=#{nid}
+		</where>
+	</update>
+	<select id="getNewscategory" resultType="com.motoband.news.NewscategoryModel">
+		select * from news_category order by orderindex desc
+	</select>
+	<select id="getBoxOrStoryTempListCount" resultType="Integer">
+		SELECT count(1) from news_info where  type=8
+	</select>
+	<select id="getBoxOrStoryTempList" parameterType="String"
+		resultType="com.motoband.news.newsModel">
+		SELECT * from news_info where   type=8 order by
+		updatetime
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+	</select>
+	<select id="getNewBannerlist" resultType="com.motoband.news.BannerModel">
+	  select * from banner_new order by state desc , bannertype asc,orderindex desc
+	</select>
+	<select id="getnewbannerbyid" parameterType="String" resultType="com.motoband.news.BannerModel">
+	 select * from banner_new where bannerid=#{bannerid}
+	</select>
+	<delete id="delnewBanner" parameterType="String">
+	  delete from banner_new where bannerid=#{bannerid}
+	</delete>
+	<insert id="addnewBannerall" parameterType="com.motoband.news.BannerModel">
+	    insert into banner_new
+		(bannerid,bannertype,title,subtitle,des,state,linktype,imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,orderindex)
+		values(#{bannerid},#{bannertype},#{title},#{subtitle},#{des},#{state},#{linktype},
+		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},#{buserid},#{orderindex})
+		ON DUPLICATE KEY UPDATE
+		bannertype=#{bannertype},title=#{title},subtitle=#{subtitle},des=#{des},state=#{state},linktype=#{linktype},
+		imgurl=#{imgurl},linkurl=#{linkurl},gpid=#{gpid},nid=#{nid},keyword=#{keyword},secondcarid=#{secondcarid},miniprogramid=#{miniprogramid},
+		buserid=#{buserid},orderindex=#{orderindex}
+	</insert>
+	<update id="updateTopicIsMain">
+		update topic set ismain=#{ismain} where topicid=#{topicid}
+	</update>
+	 
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.dataversion.dataversionMapper">
+	<select id="getMessage" resultType="com.motoband.dataversion.dataversion">
+		SELECT * FROM dataversion
+	</select>
+	<update id="updateBrandversion">
+		UPDATE dataversion SET motobrandversion=motobrandversion+1
+	</update>
+	<update id="updateModelversion">
+		UPDATE dataversion SET motomodelversion=motomodelversion+1
+	</update>
+	<update id="updateTypeversion">
+		UPDATE dataversion SET mototypeversion=mototypeversion+1
+	</update>
+	<update id="updataConfigversion">
+		UPDATE dataversion SET configversion=configversion+1
+	</update>
+	<update id="updateAchieve">
+		UPDATE dataversion SET achievementversion=achievementversion+1
+	</update>
+	<update id="updateUserLevel">
+		UPDATE dataversion SET userlevelversion	= userlevelversion+1
+	</update>
+	<update id="updateClientUpdate">
+		UPDATE dataversion SET clientupdateversion=clientupdateversion+1
+	</update>
+	<update id="updateBanner">
+		UPDATE dataversion SET bannerversion=bannerversion+1
+	</update>
+	<update id="updateHotCity">
+		UPDATE dataversion SET hotcityversion=hotcityversion+1
+	</update>
+	<update id="updateWeather">
+		UPDATE dataversion SET weatherversion=weatherversion+1
+	</update>
+	<update id="updateTopic">
+		UPDATE dataversion SET topicversion=topicversion+1
+	</update>
+	<update id="updateRuntype">
+		UPDATE dataversion SET runtypeversion=runtypeversion+1
+	</update>
+
+    <update id="updateNewslabel">
+		UPDATE dataversion SET newslabelversion=newslabelversion+1
+	</update>
+	<update id="updateMotobandgp">
+		UPDATE dataversion SET motobandgpversion=motobandgpversion+1
+	</update>
+	<update id="updateServiceconfig">
+		UPDATE dataversion SET serviceconfigversion=serviceconfigversion+1
+	</update>
+	<update id="updateBoxtype">
+		UPDATE dataversion SET boxtypeversion=boxtypeversion+1
+	</update>
+	<update id="updateInsurancemotodata">
+		UPDATE dataversion SET insurancemotodataversion=insurancemotodataversion+1
+	</update>
+	<update id="updateInsurancepackage">
+		UPDATE dataversion SET insurancepackageversion=insurancepackageversion+1
+	</update>
+	<update id="updateInsuranceproduct">
+		UPDATE dataversion SET insuranceproductversion=insuranceproductversion+1
+	</update>
+	<update id="updateAd">
+		UPDATE dataversion SET adversion=adversion+1
+	</update>
+	<update id="updateMotobrandparent">
+		UPDATE dataversion SET motobrandparentversion=motobrandparentversion+1
+	</update>
+	<update id="updateInsuranceupdate">
+		UPDATE dataversion SET insuranceupdateversion=insuranceupdateversion+1
+	</update>
+	<update id="updateActivity">
+		UPDATE dataversion SET activityversion=activityversion+1
+	</update>
+	<update id="updateSchoolpackage">
+		UPDATE dataversion SET schoolpackageversion=schoolpackageversion+1
+	</update>
+	<update id="updateSchoolvideo">
+		UPDATE dataversion SET schoolvideoversion=schoolvideoversion+1
+	</update>
+	<update id="updateSchoolbox">
+		UPDATE dataversion SET schoolboxversion=schoolboxversion+1
+	</update>
+	<update id="updateNewscategory">
+		UPDATE dataversion SET newscategoryversion=newscategoryversion+1
+	</update>
+	
+	<update id="updateMall">
+		UPDATE dataversion SET mallversion=mallversion+1
+	</update>
+	<update id="updateMallnewcar">
+		UPDATE dataversion SET mallnewcarversion=mallnewcarversion+1
+	</update>
+	<update id="updateMallsecondcar">
+		UPDATE dataversion SET mallsecondversion=mallsecondversion+1
+	</update>
+	<update id="updateMallbrand">
+		UPDATE dataversion SET mallbrandversion=mallbrandversion+1
+	</update>
+	<update id="updateMallparenttype">
+		UPDATE dataversion SET mallparenttypeversion=mallparenttypeversion+1
+	</update>
+	<update id="updateMallstyle">
+		UPDATE dataversion SET mallstyleversion=mallstyleversion+1
+	</update>
+	<update id="updateMalltype">
+		UPDATE dataversion SET malltypeversion=malltypeversion+1
+	</update>
+	<update id="updateMalllabel">
+		UPDATE dataversion SET malllabelversion=malllabelversion+1
+	</update>
+	<update id="updateMallnotify">
+		UPDATE dataversion SET mallnotifyversion=mallnotifyversion+1
+	</update>
+	<update id="updateGift">
+	   UPDATE dataversion SET giftversion=giftversion+1
+	</update>
+	<update id="updateDiscuss">
+	   UPDATE dataversion SET discussversion=discussversion+1
+	</update>
+	<update id="updateBusinessservice">
+	   UPDATE dataversion SET businessserviceversion=businessserviceversion+1
+	</update>
+	<update id="updateBusinesstype">
+	   UPDATE dataversion SET businesstypeversion=businesstypeversion+1
+	</update>
+	<update id="updateUsecarmain">
+	   UPDATE dataversion SET usecarmainversion=usecarmainversion+1
+	</update>
+	<update id="updateGiftexchange">
+	   UPDATE dataversion SET giftexchangeversion=giftexchangeversion+1
+	</update>
+	<update id="updateAdpool">
+	   UPDATE dataversion SET adpoolversion=adpoolversion+1
+	</update>
+	<update id="updateTribal">
+	   UPDATE dataversion SET tribalversion=tribalversion+1
+	</update>
+	<update id="updateEquipping">
+	   UPDATE dataversion SET equippingversion=equippingversion+1
+	</update>
+	<update id="updateTribalType">
+	   UPDATE dataversion SET tribaltypeversion=tribaltypeversion+1
+	</update>
+	<update id="updateVipcardinfo">
+	   UPDATE dataversion SET vipcardinfoversion=vipcardinfoversion+1
+	</update>
+	
+	<update id="updateQiji">
+	   UPDATE dataversion SET qijiversion=qijiversion+1
+	</update>
+	<!-- 3.7.0新增商城活动提醒版本号  -->
+<!-- 		<update id="updateMallActivityversion"> -->
+<!-- 	   UPDATE dataversion SET mallactivityversion=mallactivityversion+1 -->
+<!-- 	</update> -->
+</mapper>

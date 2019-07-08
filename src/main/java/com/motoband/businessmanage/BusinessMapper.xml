@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.businessmanage.BusinessMapper">
+<select id="getApplyCount" parameterType="String" resultType="Integer">
+   select count(1)  from business_apply 
+   <where>
+     <if test="state != -1 ">
+        state=#{state}
+     </if>
+   </where>
+</select>
+<select id="getApplys" parameterType="String" resultType="com.motoband.businessmanage.BusinessApplyModel">
+   select *  from business_apply 
+   <where>
+     <if test="state != -1 ">
+        state=#{state}
+     </if>
+   </where>
+   order by  addtime
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+</select>
+<update id="changeApplyState"  parameterType="String">
+ update business_apply 
+ <set>
+    <if test="reason !=null and reason!='' ">reason=#{reason},</if>
+    state=#{state}
+ </set>
+ where aid=#{aid}
+</update>
+<select id="getApplyByAid" parameterType="String" resultType="com.motoband.businessmanage.BusinessApplyModel">
+   select * from business_apply where aid=#{aid}
+</select>
+<insert id="insertBusinessUser" keyProperty="buid" useGeneratedKeys="true" parameterType="com.motoband.businessmanage.BusinessUserModel">
+insert into business_user(name,contactname,contactphone,type,mainbrand,address,businessarea,staffcount,
+ age,recommendbrand,license,other,state,reason,headurl,province,city,userid,password,mobileno,addtime,businessserviceliststr,latitude,longitude,aid,lbsid)
+ values(#{name},#{contactname},#{contactphone},#{type},#{mainbrand},#{address},#{businessarea},#{staffcount},
+ #{age},#{recommendbrand},#{license},#{other},#{state},#{reason},#{headurl},#{province},#{city},#{userid},#{password},#{mobileno},#{addtime},#{businessserviceliststr},#{latitude},#{longitude},#{aid},#{lbsid})
+<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="buid">
+SELECT LAST_INSERT_ID()
+</selectKey> 
+</insert>
+<insert id="insertUserinfoApply" parameterType="com.motoband.businessmanage.BusinessUserinfoApplyModel">
+insert into  business_userinfoapply(userid,baseinfostr,environmentalstr,businessserviceliststr,businessactivityliststr) values(#{userid},#{baseinfostr},#{environmentalstr},#{businessserviceliststr},#{businessactivityliststr})
+</insert>
+<update id="updateBusinessUser" parameterType="Map">
+update business_user  
+<set>
+ <if test="businesscode !=null and businesscode !='' ">businesscode=#{businesscode},</if>
+ <if test="name !=null and name !='' ">name=#{name},</if>
+ <if test="contactphone !=null and contactphone !='' ">contactphone=#{contactphone},</if>
+ <if test="address !=null and address !='' ">address=#{address},</if>
+ <if test="officestarttime !=null and officestarttime !='' ">officestarttime=#{officestarttime},</if>
+ <if test="officeendtime !=null and officeendtime !='' ">officeendtime=#{officeendtime},</if>
+ <if test="headurl !=null and headurl !='' ">headurl=#{headurl},</if>
+ <if test="province !=null and province !='' ">province=#{province},</if>
+ <if test="city !=null and city !='' ">city=#{city},</if>
+ <if test="des !=null and des !='' ">des=#{des},</if>
+ <if test="desdetail !=null and desdetail !='' ">desdetail=#{desdetail},</if>
+ <if test="latitude !=null and latitude !='' ">latitude=#{latitude},</if>
+ <if test="longitude !=null and longitude !='' ">longitude=#{longitude},</if>
+ <if test="doorpics !=null and doorpics !='' ">doorpics=#{doorpics},</if>
+ <if test="shoppics !=null and shoppics !='' ">shoppics=#{shoppics},</if>
+ <if test="businessserviceliststr !=null and businessserviceliststr !='' ">businessserviceliststr=#{businessserviceliststr},</if>
+
+ 
+ <if test="contactname !=null and contactname !='' ">contactname=#{contactname},</if>
+ <if test="type !=null and type !='' ">type=#{type},</if>
+ <if test="mainbrand !=null and mainbrand !='' ">mainbrand=#{mainbrand},</if>
+ <if test="businessarea !=null and businessarea !='' ">businessarea=#{businessarea},</if>
+ <if test="staffcount !=null and staffcount !='' ">staffcount=#{staffcount},</if>
+ <if test="age !=null and age !='' ">age=#{age},</if>
+ <if test="recommendbrand !=null and recommendbrand !='' ">recommendbrand=#{recommendbrand},</if>
+ <if test="license !=null and license !='' ">license=#{license},</if>
+ <if test="other !=null and other !='' ">other=#{other},</if>
+ <if test="isapprove !=null and isapprove !='' ">isapprove=#{isapprove},</if>
+ <if test="state !=null and state !='' ">state=#{state},</if>
+ <if test="lbsid !=null and lbsid !='' ">lbsid=#{lbsid},</if>
+ <if test="busikeyword !=null and busikeyword !='' ">busikeyword=#{busikeyword},</if>
+  businessactivityliststr=#{businessactivityliststr}
+</set>
+where userid=#{userid}
+</update>
+<select id="getBuserinfoApplyBybuserid" parameterType="String" resultType="com.motoband.businessmanage.BusinessUserinfoApplyModel">
+   select * from business_userinfoapply where userid=#{userid}
+</select>
+<update id="changeUserinfoApplyState" parameterType="com.motoband.businessmanage.BusinessUserinfoApplyModel">
+update business_userinfoapply 
+<set>
+  <if test="baseinfostr != null and baseinfostr !='' ">baseinfostr=#{baseinfostr},</if>
+  <if test="environmentalstr != null and environmentalstr !='' ">environmentalstr=#{environmentalstr},</if>
+  <if test="businessserviceliststr != null and businessserviceliststr !='' ">businessserviceliststr=#{businessserviceliststr},</if>
+  <if test="businessactivityliststr != null and businessactivityliststr !='' ">businessactivityliststr=#{businessactivityliststr},</if>
+</set>
+where userid=#{userid}
+</update>
+<select id="getUserinfoApplyCount"  resultType="Integer" >
+   select count(1) from business_userinfoapply
+</select>
+<select id="getUserinfoApplys" resultType="com.motoband.businessmanage.BusinessUserinfoApplyModel">
+select a.*,b.mobileno,b.name,b.contactphone,b.province,b.city,b.address from business_userinfoapply  a
+left join business_user b on b.userid=a.userid
+order by a.state desc
+</select>
+<update id="updateUsesrinfoApplyBigState" parameterType="String">
+update business_userinfoapply set state=#{state},updatetime=#{updatetime}  where userid=#{userid}
+</update>
+<select id="getBusinessTypeList" resultType="com.motoband.businessmanage.BusinessTypeModel">
+select * from business_type  order by orderindex  DESC
+</select>
+<select id="getBusinessServiceList"  resultType="com.motoband.businessmanage.BusinessServiceModel">
+select * from business_service  order by orderindex  DESC
+</select>
+<update id="updateApply" parameterType="com.motoband.businessmanage.BusinessApplyModel">
+    update business_apply 
+    <set>
+    <if test="name !=null and name !='' ">name=#{name},</if>
+    <if test="contactname !=null and contactname !='' ">contactname=#{contactname},</if>
+    <if test="contactphone !=null and contactphone !='' ">contactphone=#{contactphone},</if>
+    <if test="type !=null and type !='' ">type=#{type},</if>
+    <if test="mainbrand !=null and mainbrand !='' ">mainbrand=#{mainbrand},</if>
+    <if test="address !=null and address !='' ">address=#{address},</if>
+    <if test="businessarea !=null and businessarea !='' ">businessarea=#{businessarea},</if>
+    <if test="staffcount !=null and staffcount !='' ">staffcount=#{staffcount},</if>
+    <if test="age !=null and age !='' ">age=#{age},</if>
+    <if test="recommendbrand !=null and recommendbrand !='' ">recommendbrand=#{recommendbrand},</if>
+    <if test="license !=null and license !='' ">license=#{license},</if>
+    <if test="other !=null and other !='' ">other=#{other},</if>
+    <if test="province !=null and province !='' ">province=#{province},</if>
+    <if test="city !=null and city !='' ">city=#{city},</if>
+    <if test="businessserviceliststr !=null and businessserviceliststr !='' ">businessserviceliststr=#{businessserviceliststr},</if>
+    <if test="longitude !=null and longitude !='' ">longitude=#{longitude},</if>
+    <if test="latitude !=null and latitude !='' ">latitude=#{latitude},</if>
+    </set>
+    where aid=#{aid}
+</update>
+<select id="getBuserCount" resultType="Integer">
+    select count(1) from business_user  
+</select>
+<select id="getBusers" resultType="com.motoband.businessmanage.BusinessUserModel">
+ select *  from business_user  
+   order by  addtime
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+</select>
+<update id="resetBuserPassword" parameterType="String">
+  update business_user  set password=#{password}  where userid=#{userid}
+</update>
+<update id="changeToApprove" parameterType="String">
+ update business_user  set isapprove=1,lbsid=#{lbsid}  where userid=#{userid}
+</update>
+<select id="getBuserByUsesrid"  parameterType="String" resultType="com.motoband.businessmanage.BusinessUserModel" >
+    select *  from business_user  where userid=#{userid}
+</select>
+<select id="getBusinessTypeModelByid" parameterType="String" resultType="com.motoband.businessmanage.BusinessTypeModel">
+   select * from business_type  where btid=#{btid}
+</select>
+
+<select id="getUsecarmaingroupList"  parameterType="String" resultType="com.motoband.businessmanage.UsecarmaingroupModel">
+select * from usecarmaingroup 
+<if test="type == 0 ">
+   where type =0 or type =1 
+</if>
+<if test="type == 1 ">
+   where type =0 or type =1 or type =2
+</if>
+<if test="type == 2 ">
+   where type =3
+</if>
+<if test="type == 4 ">
+   where type =4
+</if>
+ORDER BY  state desc ,orderindex  DESC  
+</select>
+<select id="getUsecarmaingroupByid" parameterType="String" resultType="com.motoband.businessmanage.UsecarmaingroupModel" >
+select * from usecarmaingroup  where groupid=#{groupid}
+</select>
+<insert id="addtoUsecarmain" parameterType="com.motoband.businessmanage.UsecarmainModel">
+   insert into usecarmain(groupid,contentstr,orderindex,type) VALUES(#{groupid},#{contentstr},#{orderindex},#{type})
+</insert>
+<select id="getUsecarmainCount" parameterType="String" resultType="Integer">
+    select count(1) from usecarmain u 
+    <if test="groupid !=-1">
+    left join usecarmaingroup ug
+     on ug.groupid=u.groupid
+     where u.groupid=#{groupid}
+    </if>
+     <if test="groupid ==-1">
+    left join usecarmaingroup ug
+     on ug.groupid=u.groupid
+     where ug.type>=4
+    </if>
+</select>
+<select id="getUsecarmainlist" parameterType="String" resultType="com.motoband.businessmanage.UsecarmainModel" >
+    select u.*,ug.name as groupname,ug.type as grouptype from usecarmain u 
+    left join usecarmaingroup ug on ug.groupid=u.groupid
+    <if test="groupid !=-1">
+     where u.groupid=#{groupid}
+    </if>
+    <if test="groupid ==-1">
+      where ug.type>=4
+    </if>
+     order by  u.orderindex
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+</select>
+<delete id="deleteUsecarmainByid" parameterType="String">
+   delete from  usecarmain  where id=#{id}
+</delete>
+<update id="updateUsecarmainOrderindex" parameterType="String">
+   update usecarmain set orderindex=#{orderindex} where id=#{id}
+</update>
+<update id="uploadapprovepic"  parameterType="String">
+   update business_user set approvepic=#{approvepic}  where userid=#{userid}
+</update>
+<select id="getBusersBystate" parameterType="String" resultType="com.motoband.businessmanage.BusinessUserModel">
+ select *  from business_user  where state=#{state}
+ order by  isapprove desc 
+</select>
+<delete id="deletbusercomment" parameterType="String">
+   delete from business_comment where cid = #{cid}
+</delete>
+<update id="updateBuserCommentScore" parameterType="String" >
+update business_user set usercount=usercount-1,scorecount=scorecount-#{score}
+where userid=#{buserid}
+</update>
+<insert id="insertOrUpdateBusinessActivity" parameterType="com.motoband.businessmanage.BusinessActivityModel">
+   insert into business_activity(baid,title,content,pics,buserid,orderindex) 
+   values(#{baid},#{title},#{content},#{pics},#{buserid},#{orderindex})
+   ON DUPLICATE KEY UPDATE
+   title=#{title},content=#{content},pics=#{pics},buserid=#{buserid},orderindex=#{orderindex}
+</insert>
+<delete id="deleteAllBusinessActivity" parameterType="String">
+  delete from business_activity where buserid=#{buserid}
+</delete>
+</mapper>

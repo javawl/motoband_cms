@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.tribal.TribalMapper">
+<insert id="addOrUpdateTribal" parameterType="com.motoband.tribal.TribalModel">
+		INSERT INTO tribal (tribalid,name,logopic,bannerpic,mainadminsstr,viceadminsstr,des,type,addtime,lastupdatetime,orderindex) VALUES
+		(#{tribalid},#{name},#{logopic},#{bannerpic},#{mainadminsstr},#{viceadminsstr},#{des},#{type},#{addtime},#{lastupdatetime},#{orderindex})
+		ON DUPLICATE KEY UPDATE
+		name=#{name},logopic=#{logopic},bannerpic=#{bannerpic},mainadminsstr=#{mainadminsstr},
+		viceadminsstr=#{viceadminsstr},des=#{des},type=#{type},lastupdatetime=#{lastupdatetime}
+	</insert>
+	<select id="getTribalListAll" resultType="com.motoband.tribal.TribalModel" parameterType="String">
+	  select * from tribal
+	  <if test="type>=0">
+	    where type=#{type}
+	  </if>
+	</select>
+	<select id="getTribalById" parameterType="String"  resultType="com.motoband.tribal.TribalModel">
+	   select * from tribal where tribalid=#{tribalid}
+	</select>
+	<update id="updateTribalOrderindex" parameterType="String">
+	   update tribal set orderindex=#{orderindex} where tribalid=#{tribalid}
+	</update>
+	<select id="getTribalCountByType" parameterType="String" resultType="Integer">
+	  select count(1) from tribal
+	  <if test="type>=0">
+	    where type=#{type}
+	  </if>
+	</select>
+	<select id="getTribalListByType" parameterType="String"  resultType="com.motoband.tribal.TribalModel" >
+	 select * from tribal
+	 <where>
+	   <if test="type>=0">
+	     type=#{type}
+	  </if>
+	 </where>
+	 order by  orderindex desc
+	 limit #{start},#{limit}  
+	</select>
+	<select id="getTribalTypeList" resultType="com.motoband.tribal.TribalTypeModel">
+	   select * from tribal_type where state=1 order by orderindex desc
+	</select>
+</mapper>

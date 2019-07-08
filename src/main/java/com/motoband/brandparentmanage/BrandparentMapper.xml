@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.brandparentmanage.BrandparentMapper">
+ <select id="getBrandparentlistCount" resultType="int">
+    select count(1) from motobrandparent
+ </select>
+ <select id="getBrandparentlist" resultType="com.motoband.brandparentmanage.BrandparentModel" parameterType="String">
+     select * from motobrandparent order by state asc,orderindex 
+      <if test="order == 1 ">
+		   ASC
+	  </if>
+	  <if test="order == 0 ">
+		    DESC
+	   </if>
+      limit #{start},#{limit}
+ </select>
+ <select id="getBrandparentByid" parameterType="String"  resultType="com.motoband.brandparentmanage.BrandparentModel" >
+   select * from motobrandparent where bpid=#{bpid}
+ </select>
+ <update id="updatebrandparentByid" parameterType="com.motoband.brandparentmanage.BrandparentModel">
+   update motobrandparent set name=#{name},
+       imgurl=#{imgurl},
+       ishot = #{ishot} ,
+       orderindex =#{orderindex} 
+   where bpid=#{bpid}
+ </update>
+ <insert id="insbrandparent" parameterType="com.motoband.brandparentmanage.BrandparentModel">
+   insert into motobrandparent(name,imgurl,ishot,orderindex) values (#{name},#{imgurl}, #{ishot},#{orderindex})
+ </insert>
+ <select id="getBrandparentlistSimple" resultType="com.motoband.brandparentmanage.BrandparentModel" >
+     select * from motobrandparent order by orderindex  desc
+ </select>
+</mapper>

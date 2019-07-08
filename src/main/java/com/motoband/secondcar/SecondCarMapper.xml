@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.secondcar.SecondCarMapper">
+<select id="getSecondCarListCount" parameterType="String" resultType="Integer">
+   select count(1) from second_car 
+   <if test="createuser !=null and createuser !='' ">
+       where createuser=#{createuser}
+   </if>
+</select>
+<select id="getSecondCarList" parameterType="String" resultType="com.motoband.secondcar.SecondCarModel">
+    select * from second_car 
+    <if test="createuser !=null and createuser !='' ">
+       where createuser=#{createuser}
+    </if>
+    order by state asc,createtime
+    <if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+</select>
+<update id="addkeyword" parameterType="String">
+ update second_car set keyword=#{keyword} where secondcarid=#{secondcarid}
+</update>
+<update id="changeState" parameterType="String">
+ update second_car set state=#{state} where secondcarid=#{secondcarid}
+</update>
+<select id="getSecondcarMainZoneListCount" resultType="Integer">
+ select count(1) from secondcarmainzone
+</select>
+<select id="getSecondcarMainZoneList" resultType="com.motoband.secondcar.SecondcarMainZoneModel">
+select * from secondcarmainzone
+order by state desc,orderindex
+  <if test="order == 1 ">
+			ASC
+  </if>
+  <if test="order == 0 ">
+			DESC
+  </if>
+  limit #{start},#{limit}
+</select>
+<select id="getSecondcarMainZoneById" parameterType="String" resultType="com.motoband.secondcar.SecondcarMainZoneModel">
+  select * from secondcarmainzone where scmzid=#{scmzid}
+</select>
+<insert id="insertOrUpdateSecondcarMainZone" parameterType="com.motoband.secondcar.SecondcarMainZoneModel">
+ insert into secondcarmainzone(scmzid,picurl,searchsecondcarstr,state,orderindex,title) values(#{scmzid},#{picurl},#{searchsecondcarstr},#{state},#{orderindex},#{title})
+ ON DUPLICATE KEY UPDATE
+ picurl=#{picurl}, searchsecondcarstr=#{searchsecondcarstr}, state=#{state},orderindex=#{orderindex},title=#{title}
+ 
+</insert>
+<select id="getConsignmentListCount" parameterType="String" resultType="Integer">
+  select count(1) from consignment 
+  <where>
+      <if test="starttime!=null and starttime !='' and starttime != 0 ">
+          addtime>#{starttime}
+      </if>
+      <if test="endtime!=null and endtime !='' and endtime != 0 ">
+           and #{endtime}>addtime
+      </if>
+  </where>
+  
+</select>
+<select id="getConsignmentList" parameterType="String" resultType="com.motoband.secondcar.ConsignmentModel">
+  select * from consignment 
+  <where>
+      <if test="starttime!=null and starttime !='' and starttime != 0 ">
+          addtime>#{starttime}
+      </if>
+      <if test="endtime!=null and endtime !='' and endtime != 0 ">
+           and #{endtime}>addtime 
+      </if>
+  </where>
+  order by state asc,addtime
+  <if test="order == 1 ">
+			ASC
+  </if>
+  <if test="order == 0 ">
+			DESC
+  </if>
+  limit #{start},#{limit}
+</select>
+<select id="getSecondcarMainZoneNameList" resultType="com.motoband.secondcar.SecondcarMainZoneModel">
+select * from secondcarmainzone where state=1 and scmzid!='BA4FEFE0D7C849AF9C552BDE5F06D219'
+</select>
+<update id="addRemarkandState" parameterType="String">
+ update  consignment set remark=#{remark},state=#{state} where consignmentid=#{consignmentid}
+</update>
+</mapper>

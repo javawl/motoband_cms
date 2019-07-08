@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.rolemanage.roleMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+	<select id="getRolelist" resultType="com.motoband.rolemanage.rolelist">
+		SELECT * FROM CMS_role
+	</select>
+	<select id="getParentPrivilegelist" parameterType="String"
+		resultType="com.motoband.rolemanage.parentPrivilegelist">
+		SELECT * FROM
+		CMS_privilege WHERE privilege_parentguid='0'
+	</select>
+	<select id="getParentPriviegesNoHaveChild" resultType="com.motoband.admin.admin.Privilege">
+		SELECT *
+		FROM CMS_privilege WHERE privilege_parentguid='0' AND privilege_guid
+		NOT IN
+		(SELECT DISTINCT(privilege_parentguid) FROM CMS_privilege)
+	</select>
+	<select id="getChildPrivilegelist" resultType="com.motoband.rolemanage.Privilegelist">
+		SELECT
+		a.*,b.privilege_name privilege_parentname,b.privilege_des
+		privilege_parentdes FROM CMS_privilege a,(SELECT
+		privilege_guid,privilege_name,privilege_des FROM CMS_privilege) b
+		WHERE a.privilege_guid NOT IN
+		(SELECT DISTINCT(privilege_parentguid)
+		FROM CMS_privilege)
+		AND a.privilege_parentguid!='0'
+		AND
+		a.privilege_parentguid=b.privilege_guid
+	</select>
+	<select id="getRolePrivilegeListByroleguid" parameterType="String"
+		resultType="com.motoband.rolemanage.RolePrivilegeListByroleguid">
+		SELECT * FROM CMS_privilege_role WHERE
+		role_guid=#{role_guid}
+	</select>
+
+	<select id="getRolenameByRoleguid" parameterType="String"
+		resultType="String">
+		SELECT role_name FROM CMS_role WHERE role_guid=#{role_guid}
+	</select>
+	<select id="getParentGuidByChildGuid" parameterType="String"
+		resultType="String">
+		SELECT privilege_parentguid FROM CMS_privilege WHERE
+		privilege_guid=#{rolestring}
+	</select>
+	<delete id="delRoleConf" parameterType="String">
+		DELETE FROM
+		CMS_privilege_role WHERE role_guid=#{role_guid}
+	</delete>
+
+	<insert id="insRoleConf" parameterType="String">
+		INSERT INTO
+		CMS_privilege_role(rr_guid,privilege_guid,role_guid)
+		VALUES(#{PRguid},#{stri},#{role_guid})
+	</insert>
+	<insert id="insNewRole" parameterType="String">
+		INSERT INTO CMS_role
+		VALUES(#{role_guid},#{role_name},#{role_des})
+	</insert>
+
+	<delete id="delRoleMessage" parameterType="String">
+		DELETE FROM CMS_role
+		WHERE role_guid=#{role_guid}
+	</delete>
+
+	<delete id="delRolePrivilege" parameterType="String">
+		DELETE FROM
+		CMS_privilege_role WHERE role_guid=#{role_guid}
+	</delete>
+
+	<update id="updateUserRole" parameterType="String">
+		UPDATE CMS_user SET role_guid='10000' WHERE role_guid=#{role_guid}
+	</update>
+	<select id="checkNewRoleName" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_role WHERE role_name=#{newrolename}
+	</select>
+	
+	<update id="checkNewRoleMessage" parameterType="String">
+		UPDATE CMS_role SET role_name=#{newrole_name},role_des=#{newrole_des} WHERE role_guid=#{role_guid}
+	</update>
+	
+	<select id="checkRoleName" parameterType="String" resultType='Integer'>
+		SELECT COUNT(*) FROM CMS_role WHERE role_name=#{newrole_name} AND role_guid!=#{role_guid}
+	</select>
+</mapper>

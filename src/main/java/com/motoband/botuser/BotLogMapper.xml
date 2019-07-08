@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.botuser.BotLogMapper">
+	<select id="getList" parameterType="String"
+		resultType="com.motoband.botuser.BotLogModel">
+		select * from mbuser_bot_task_log  order by bid desc
+		limit #{start},#{limit}
+	</select>
+	<select id="getModelById"
+		resultType="com.motoband.botuser.BotLogModel">
+		select * from
+		mbuser_bot_task_log where
+		bid = #{bid}
+	</select>
+	
+	<select id="getModelByParam"
+		resultType="com.motoband.botuser.BotLogModel" 
+		parameterType="Map" >
+		select * from
+		mbuser_bot_task_log where 1=1 
+		<if test="botuserid!= null">
+			and botuserid=#{botuserid}
+		</if>
+		<if test="nid!=null">
+			and nid=#{nid}
+		</if>
+			<if test="logtype!=null">
+			and logtype=#{logtype}
+		</if>
+		<if test="logtime!=null">
+			and logtime between #{starttime} and #{endtime} 
+		</if>
+	</select>
+	<insert id="insertOrUpdate"
+		parameterType="com.motoband.botuser.BotLogModel">
+		INSERT INTO `mbuser_bot_task_log` 
+		(`bid`, `botuserid`, `nid`, `nidtasklcount`, `nidtaskgcount`, `logtype`, `logtime`, `giftid`) 
+		VALUES 
+		(null,#{botuserid},#{nid},#{nidtasklcount},#{nidtaskgcount},#{logtype},#{logtime},#{giftid})
+		ON DUPLICATE KEY 
+		UPDATE
+		nidtasklcount=#{nidtasklcount},nidtaskgcount=#{nidtaskgcount},logtime=#{logtime},giftid=#{giftid},logtype=#{logtype}
+	</insert>
+	<select id="getCount"  resultType="int">
+		select count(1) from mbuser_bot_task_log
+	</select>
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.payordermanage.PayorderMapper">
+<select id="getPayorderList" resultType="com.motoband.payordermanage.PayorderModel">
+    select DISTINCT(ip.productNo),ip.packagename,p.payid,p.userid,p.order_no,p.pid,p.price,p.ordertime,p.orderstate,p.state,p.carinfo,p.businesscode,p.channel,
+    p.userinfo,ii.policyStatus  from payorder p left join insurance_package ip on ip.productNo = p.pid
+   left join insurance_info  ii on ii.channelOrderNo= p.order_no
+    <where>
+       <if test="userid !=''">
+       and  p.userid=#{userid}
+      </if>
+       <if test="order_no !=''">
+        and  p.order_no=#{order_no}
+      </if>
+      <if test="state !=''">
+        and  p.state=#{state}
+      </if>
+      <if test="starttime !=0 and endtime ==0">
+        and  p.ordertime >= #{starttime}
+      </if>
+      <if test="endtime !=0 and starttime ==0 ">
+         and  #{endtime} >= p.ordertime 
+      </if>
+      <if test="endtime !=0 and starttime !=0  ">
+         and   #{endtime} >= p.ordertime and p.ordertime >= #{starttime}
+      </if>
+    </where>
+    <if test="order == 1">
+       order by p.payid asc
+    </if>
+    <if test="order == 0">
+       order by p.payid desc
+    </if>
+    limit #{start},#{limit}
+ </select>
+ <select id="getPayorderListCount" resultType="integer">
+  select count(1)  from  payorder p
+   <where>
+       <if test="userid !=''">
+        and p.userid=#{userid}
+      </if>
+       <if test="order_no !=''">
+        and p.order_no=#{order_no}
+      </if>
+      <if test="state !=''">
+        and  p.state=#{state}
+      </if>
+      <if test="starttime !=0 and endtime ==0">
+        and  p.ordertime >= #{starttime}
+      </if>
+      <if test="endtime !=0 and starttime ==0 ">
+         and  #{endtime} >= p.ordertime 
+      </if>
+      <if test="endtime !=0 and starttime !=0  ">
+         and   #{endtime} >= p.ordertime and p.ordertime >= #{starttime}
+      </if>
+    </where>
+</select>
+ <select id="lookCar" parameterType="Integer" resultType="String">
+    select p.carinfo from payorder p where p.payid = #{payid}
+ </select>
+  <select id="lookUser" parameterType="Integer" resultType="String">
+    select p.userinfo from payorder p where p.payid = #{payid}
+ </select>
+ <select id="lookInsurance" parameterType="String" resultType="com.motoband.payordermanage.InsuranceModel" >
+   select * from insurance_info ii where ii.channelOrderNo = #{order_no}
+ </select>
+ <select id="getPayorderlogList" resultType="com.motoband.payordermanage.PayorderlogModel">
+    select  *  from payorderlog p 
+    <where>
+      <if test="inputorder_id != null and inputorder_id !='' ">
+        p.orderid=#{inputorder_id}
+      </if>
+    </where>
+    <if test="order == 1">
+       order by p.id asc
+    </if>
+    <if test="order == 0">
+       order by p.id desc
+    </if>
+    limit #{start},#{limit}
+ </select>
+ <select id="getPayorderlogListCount" resultType="integer">
+  select count(1)  from  payorderlog p
+  <where>
+      <if test="inputorder_id != null and inputorder_id !='' ">
+        p.orderid=#{inputorder_id}
+      </if>
+  </where>
+</select>
+<select id="getInsuranceupdatelistCount" resultType="Integer">
+   select COUNT(1) from insurance_update
+</select>
+<select id="getInsuranceupdatelist" resultType="com.motoband.payordermanage.InsuranceupdateModel">
+  select * from insurance_update
+  <if test="order == 1">
+       order by addtime asc
+    </if>
+    <if test="order == 0">
+       order by addtime desc
+    </if>
+    limit #{start},#{limit}
+</select>
+<select id="getInsuranceupdateByid" parameterType="String" resultType="com.motoband.payordermanage.InsuranceupdateModel">
+  select * from insurance_update where iuid=#{iuid}
+</select>
+<update id="updateInsuranceupdate" parameterType="com.motoband.payordermanage.InsuranceupdateModel">
+   update  insurance_update set `desc`=#{desc},addtime=#{addtime} where iuid=#{iuid}
+</update>
+<insert id="addInsuranceupdate" parameterType="com.motoband.payordermanage.InsuranceupdateModel">
+   insert into insurance_update(`desc`,addtime) values(#{desc},#{addtime})
+</insert>
+<delete id="deleteInsuranceupdateByid" parameterType="String">
+   delete from insurance_update where iuid=#{iuid}
+</delete>
+<update id="changePolicyStatus" parameterType="String">
+  update insurance_info  set policyStatus =#{policyStatus} where  channelOrderNo=#{channelOrderNo}
+</update>
+<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+</mapper>

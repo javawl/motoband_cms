@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.configdata.configdataMapper">
+	<select id="getConfigList" resultType="com.motoband.configdata.configdata">
+		SELECT * FROM config
+	</select>
+	<insert id="insertConfigdata" parameterType="com.motoband.configdata.configdata">
+		INSERT INTO config
+		(servicename,configkey,configvalue,comments)
+		VALUES(#{servicename},#{configkey},#{configvalue},#{comments})
+	</insert>
+	<select id="getConfigDataByID" parameterType="Integer"
+		resultType="com.motoband.configdata.configdata">
+		SELECT * FROM config WHERE id=#{configdata_id}
+	</select>
+	<update id="saveConfigdataMessage" parameterType="com.motoband.configdata.configdata">
+		UPDATE config SET 
+		servicename=#{servicename},configkey=#{configkey},configvalue=#{configvalue},comments=#{comments}
+		WHERE id=#{id}
+	</update>
+	<delete id="delConfigdataMessage" parameterType="String">DELETE FROM config WHERE id=#{id}</delete>
+   <select id="getConfigValueBykey" parameterType="String" resultType="String">
+      select configvalue from config where configkey=#{configkey}
+   </select>
+   <update id="updateConfigValueByKey" parameterType="String">
+      update config set configvalue=#{configvalue} where configkey=#{configkey}
+   </update>
+</mapper>

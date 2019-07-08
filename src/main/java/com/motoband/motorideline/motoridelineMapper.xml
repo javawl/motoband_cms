@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.motorideline.motoridelineMapper">
+
+	<select id="queryRidelineMessageById" parameterType="String"
+		resultType="com.motoband.motorideline.rideline">
+		SELECT * FROM rideline WHERE ridelineid=#{ridelineid}
+	</select>
+	<select id="getBrandNameById" parameterType="int" resultType="String">
+		SELECT name FROM motobrand WHERE brandid=#{brandid}
+	</select>
+	<select id="getModelName" parameterType="int" resultType="String">
+		SELECT name FROM motomodel WHERE modelid=#{modelid}
+	</select>
+</mapper>

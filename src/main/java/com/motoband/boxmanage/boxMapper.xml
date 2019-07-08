@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.boxmanage.boxMapper">
+	<select id="checkPrivilege" parameterType="String" resultType="integer">
+		SELECT COUNT(*) from CMS_privilege WHERE (
+		SELECT privilege_guid FROM
+		CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN (
+		SELECT
+		privilege_guid FROM CMS_privilege_role WHERE role_guid=(
+		SELECT
+		role_guid FROM CMS_user WHERE user_guid=#{userGuid})) OR
+		(SELECT
+		privilege_parentguid FROM CMS_privilege WHERE
+		privilege_key=#{privilege_key})
+		IN(
+		SELECT privilege_guid FROM
+		CMS_privilege_role WHERE role_guid=(
+		SELECT role_guid FROM CMS_user
+		WHERE user_guid=#{userGuid}))
+	</select>
+
+	<select id="getBoxList"  resultType="com.motoband.boxmanage.Boxlist">
+		SELECT
+		a.boxid,a.typeid,b.description,a.submitter,a.approve,a.source,a.keyword,a.ismotoband,a.title,a.subtitle,a.boxtime,a.localpath,a.boxurl,a.`status`,a.ishot
+		,a.news FROM motobox a,motoboxtype b WHERE a.typeid=b.typeid 
+		<if test="title !=null and title !='' ">
+	      and title like concat('%',#{title},'%')
+	   </if>
+	   <choose>
+	    <when test="orderConditions !=''  and orderConditions !=null">
+	          <choose>
+	             <when test="orderConditions == 'description' ">
+	               order by convert(description using gbk)
+	             </when>
+	             <otherwise>
+	                ORDER BY  ${orderConditions}
+	             </otherwise>
+	          </choose>
+	    </when>
+	    <when test="orderConditions ==''  or orderConditions ==null">
+	      ORDER BY a.boxid
+	    </when>
+	   </choose> 
+	 
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+	
+		limit #{start},#{limit}
+	</select>
+    <select id="getBoxListCount"  resultType="int">
+	SELECT COUNT(1) FROM motobox a,motoboxtype b WHERE a.typeid=b.typeid 
+	<if test="title !=null and title !='' ">
+	  and title like concat('%',#{title},'%')
+	</if>
+	</select>
+	<select id="getBoxListBytypidCount" parameterType="String"  resultType="int">
+	SELECT COUNT(1) FROM motobox a,motoboxtype b WHERE a.typeid=b.typeid AND
+		a.typeid=#{nowtypeid} 
+	<if test="title !=null and title !='' ">
+	  and title like concat('%',#{title},'%')
+	</if>
+	</select>
+	<select id="getBoxTypeList" resultType="com.motoband.boxmanage.Boxtype">
+		SELECT * FROM motoboxtype where state=1
+	</select>
+	<insert id="insMotoBox" parameterType="com.motoband.boxmanage.motobox">
+		<selectKey keyProperty="boxid" order="AFTER" resultType="String">
+			select @@IDENTITY
+		</selectKey>
+		INSERT INTO motobox (typeid,title,boxkind,subtitle,boxtime,status,keyword,approve,submitter,source,localpath,ismotoband)
+		VALUES(#{typeid},#{title},#{boxkind},#{subtitle},#{boxtime},#{status},#{keyword},#{approve},#{submitter},#{source},#{localpath},#{ismotoband})
+
+	</insert>
+	<insert id="insMotoNote" parameterType="com.motoband.boxmanage.noteModel">
+		INSERT INTO motonote
+		VALUES(#{note_guid},#{boxid},#{note_writer},#{note_content})
+
+	</insert>
+
+	<select id="getMotoBoxMessageByBoxid" resultType="com.motoband.boxmanage.motobox">
+		SELECT * FROM
+		motobox WHERE boxid=#{box_id}
+	</select>
+	<select id="getNoteModelMessageByBoxid" resultType="com.motoband.boxmanage.noteModel">
+		SELECT * FROM
+		motonote WHERE boxid=#{box_id}
+	</select>
+	<select id="getMotoImgList" resultType="com.motoband.boxmanage.motoimg">
+		SELECT * FROM motoboximg
+	</select>
+	<insert id="insMotoImg" parameterType="com.motoband.boxmanage.motoimg">
+		INSERT INTO motoboximg
+		VALUES(#{img_guid},#{img_url},#{img_opurl},#{img_time},#{img_writerguid},#{img_name},#{img_groupid})
+
+	</insert>
+
+	<delete id="delMotoImg" parameterType="String">
+		DELETE FROM motoboximg
+		WHERE img_guid=#{img_guid}
+	</delete>
+	<update id="updateBoxMessage" parameterType="com.motoband.boxmanage.motobox">
+		UPDATE motobox SET
+		typeid=#{typeid},title=#{title},boxkind=#{boxkind},keyword=#{keyword},submitter=#{submitter},source=#{source},approve=#{approve},subtitle=#{subtitle},boxtime=#{boxtime},status=#{status}
+		WHERE boxid=#{boxid}
+	</update>
+
+	<update id="updateNoteMessage" parameterType="com.motoband.boxmanage.noteModel">
+		UPDATE motonote SET
+		note_writer=#{note_writer} ,note_content=#{note_content} WHERE
+		boxid=#{boxid}
+	</update>
+	<update id="updatePath" parameterType="String">
+		UPDATE motobox SET
+		localpath=#{localpath},boxurl=#{showurl} WHERE boxid=#{boxid}
+	</update>
+
+	<select id="getPageLocalPath" resultType="String">
+		SELECT configvalue FROM
+		config WHERE servicename='MotoBandCMS' AND
+		configkey='Box_PageLocalPath'
+	</select>
+
+	<select id="getBoxUrlIP" resultType="String">
+		SELECT configvalue FROM
+		config WHERE servicename='MotoBandCMS' AND configkey='Box_BoxUrlIP'
+	</select>
+
+	<select id="getBoxListByType" parameterType="String"
+		resultType="com.motoband.boxmanage.Boxlist">
+		SELECT
+		a.boxid,a.typeid,b.description,a.title,a.subtitle,a.boxtime,a.localpath,a.boxurl,a.`status`
+		,a.news  FROM motobox a,motoboxtype b WHERE a.typeid=b.typeid AND
+		a.typeid=#{nowtypeid} 
+		<if test="title !=null and title !='' ">
+	      and title like concat('%',#{title},'%')
+	   </if>
+	  <choose>
+	    <when test="orderConditions !=''  and orderConditions !=null">
+	          <choose>
+	             <when test="orderConditions == 'description' ">
+	               order by convert(description using gbk)
+	             </when>
+	             <otherwise>
+	                ORDER BY  ${orderConditions}
+	             </otherwise>
+	          </choose>
+	    </when>
+	    <when test="orderConditions ==''  or orderConditions ==null">
+	      ORDER BY a.boxid
+	    </when>
+	   </choose> 
+	 
+		<if test="order == 1 ">
+		   ASC
+		</if>
+		<if test="order == 0 ">
+		    DESC
+		</if>
+		limit #{start},#{limit}
+	</select>
+
+	<delete id="delBoxMessage" parameterType="String">
+		DELETE FROM motobox
+		WHERE boxid=#{box_id}
+	</delete>
+	<delete id="delNoteMessage" parameterType="String">
+		DELETE FROM motonote
+		WHERE boxid=#{box_id}
+	</delete>
+
+	<select id="getImgGroupList" resultType="com.motoband.boxmanage.imggroup">
+		SELECT * FROM
+		motoboximggroup
+	</select>
+	<select id="getMotoImgListByGroupGuid" parameterType="String"
+		resultType="com.motoband.boxmanage.motoimg">
+		SELECT * FROM motoboximg WHERE img_groupid=#{group_guid} order by img_time desc
+	</select>
+	<update id="updateImgName" parameterType="String">
+		UPDATE motoboximg SET
+		img_name=#{newname} WHERE img_guid=#{img_guid}
+	</update>
+	<select id="selectBoxIdByGuid" resultType="String">
+		SELECT box_id FROM moto_box_img WHERE img_guid=#{img_guid}
+	</select>
+	<update id="saveimgNewGroup" parameterType="String">
+		UPDATE motoboximg SET img_groupid=#{imgnewgroup} WHERE img_guid=#{img_guid}
+	</update>
+	<select id="checkGroupName" parameterType="String" resultType="String">
+		SELECT group_name FROM motoboximggroup WHERE group_name=#{groupname}
+	</select>
+	<insert id="addImgGroup" parameterType="String">
+		INSERT INTO motoboximggroup VALUES(#{groupid},#{groupname})
+	</insert>
+
+	<!-- <update id="updateImgBoxid" parameterType="String">
+		UPDATE motoboximg SET img_boxid=
+		concat_ws(',',(SELECT tt.img_boxid FROM
+		(SELECT tmp.img_guid,tmp.img_boxid FROM motoboximg tmp) tt
+		WHERE tt.img_guid=#{img_guid}),#{box_id})
+		WHERE img_guid=#{img_guid}
+
+	</update> -->
+	<insert id="addImgBox" parameterType="com.motoband.boxmanage.motoimgbox">
+	   INSERT INTO moto_box_img VALUES(#{ib_guid},#{img_guid},#{box_id})
+	</insert>
+	<delete id="delImgBox">
+	  DELETE FROM moto_box_img WHERE box_id=#{box_id}
+	</delete>
+	<update id="addTitleImg" parameterType="String">
+	UPDATE motobox SET
+		titleimage=#{titleimg} WHERE boxid=#{box_id}
+	</update>
+	<select id="getTitleImage" parameterType="String" resultType="String">
+	SELECT titleimage FROM motobox WHERE boxid=#{box_id}
+	</select>
+	<select id="getBoxLook" parameterType="String" resultType="Long">
+	SELECT COUNT(*) FROM motobox_userlook where boxid=#{boxid}
+	</select>
+	<select id="getBoxRecommendList" resultType="com.motoband.boxmanage.BoxRecommendModel">
+	SELECT * FROM motobox_recommend where state=0 order by addtime desc
+	</select>
+	<select id="checkUserApprove" resultType="Integer" parameterType="String">
+	select count(*) from mbuserapprove where userid=#{userid} 
+	</select>
+	<select id="getRecommend" resultType="com.motoband.boxmanage.BoxRecommendModel" parameterType="Long">
+	select * from motobox_recommend where id=#{recommendBoxID}
+	</select>
+	<update id="updateBoxRecommdState" parameterType="String">
+		update motobox_recommend set state=1 where id=#{recommendBoxID}
+	</update>
+	<update id="addHotBox" parameterType="String">
+		update motobox set ishot=1 where boxid=#{boxid}
+	</update>
+	<update id="delHotBox" parameterType="String">
+		update motobox set ishot=0 where boxid=#{boxid}
+	</update>
+	<select id="getBoxBannerList" resultType="com.motoband.boxmanage.BoxBannerModel">
+		select * from motobox_banner 
+	</select>
+	<delete id="delBanner" parameterType="String">
+		delete from motobox_banner where boxbannerid=#{bannerid}
+	</delete>
+	<update id="updatebanner" parameterType="com.motoband.boxmanage.BoxBannerModel">
+		update motobox_banner set score=#{score},title=#{title},subtitle=#{subtitle},imgurl=#{imgurl},state=#{state} where boxbannerid=#{boxbannerid}
+	</update>
+	<select id="getBoxByBoxid" parameterType="String" resultType="com.motoband.boxmanage.motobox">
+		select * from motobox where boxid=#{boxid}
+	</select>
+	<insert id="addBoxBanner" parameterType="com.motoband.boxmanage.BoxBannerModel" >
+		insert into motobox_banner (score,title,type,subtitle,url,boxid,state) values(#{score},#{title},#{type},#{subtitle},#{url},#{boxid},#{state})
+	</insert>
+	<select id="getBoxKeywordList" resultType="com.motoband.boxmanage.BoxKeywordModel">
+		select * from motobox_keyword
+	</select>
+	<delete id="delboxkeyword" parameterType="String">
+		delete from motobox_keyword where keywordid=#{bannerid}
+	</delete>
+	<update id="updateboxkeyword" parameterType="com.motoband.boxmanage.BoxKeywordModel">
+		update motobox_keyword set keyword=#{keyword},orderindex=#{orderindex},imgurl=#{imgurl},state=#{state} where keywordid=#{keywordid}
+	</update>
+	<insert id="addBoxKeyword" parameterType="String">
+		insert into motobox_keyword (keyword,orderindex,state) values(#{keyword},0,0)
+	</insert>
+	<select id="getBoxTypeByTypeid" parameterType="String" resultType="com.motoband.boxmanage.Boxtype">
+	   select * from motoboxtype where typeid=#{typeid}
+	</select>
+	<select id="getBoxTitleList" resultType="com.motoband.boxmanage.Boxlist">
+	  select m.boxid,m.title from motobox m
+	</select>
+	<update id="updateNewsStatus" parameterType="String">
+	 update motobox set news=#{news} where boxid=#{boxid}
+	</update>
+</mapper>

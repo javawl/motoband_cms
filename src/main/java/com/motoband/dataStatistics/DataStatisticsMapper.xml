@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.dataStatistics.DataStatisticsMapper">
+<select id="getOpenAppCount" parameterType="String" resultType="Integer">
+select sum(count1)  from (
+  select count(1) as count1 from userloginonlog_2019_1 where  logintime >=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_2 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_3 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_4 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_5 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_6 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_7 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_8 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_9 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_10 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_11 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2019_12 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_1 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_2 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_3 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_4 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_5 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_6 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_7 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_8 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_9 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_10 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_11 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(1) as count1 from userloginonlog_2018_12 where  logintime>=#{startTime} and #{endTime}>=logintime
+) a
+</select>
+<select id="getDistinctUser" parameterType="String" resultType="Integer">
+select sum(count1)  from (
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_1 where  logintime >=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_2 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_3 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_4 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_5 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_6 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_7 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_8 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_9 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_10 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_11 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2019_12 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_1 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_2 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_3 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_4 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_5 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_6 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_7 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_8 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_9 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_10 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_11 where  logintime>=#{startTime} and #{endTime}>=logintime
+   union all
+  select count(DISTINCT userid) as count1 from userloginonlog_2018_12 where  logintime>=#{startTime} and #{endTime}>=logintime
+) a
+</select>
+<select id="getNewAddUser" parameterType="String" resultType="Integer">
+select count(1) from mbuser where  addtime >= #{startTime} and #{endTime} >= addtime
+</select>
+<select id="getRidedataCount" parameterType="String" resultType="Integer">
+select sum(count1)  from (
+  select count(1) as count1 from ridedatalog_2016_1 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_2 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2016_3 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_4 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2016_5 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_6 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2016_7 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_8 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2016_9 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_10 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2016_11 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2016_12 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_1 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_2 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_3 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_4 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_5 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_6 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_7 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_8 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_9 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_10 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2017_11 where  starttime>=#{startTime} and  #{endTime} >=endtime  
+  union  all
+  select count(1) as count1 from ridedatalog_2017_12 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_1 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_2 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_3 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_4 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_5 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_6 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_7 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_8 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_9 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_10 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_11 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2018_12 where   starttime>=#{startTime} and  #{endTime} >=endtime
+   union  all
+  select count(1) as count1 from ridedatalog_2019_1 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_2 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_3 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_4 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_5 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_6 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_7 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_8 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_9 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_10 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_11 where   starttime>=#{startTime} and  #{endTime} >=endtime
+  union  all
+  select count(1) as count1 from ridedatalog_2019_12 where   starttime>=#{startTime} and  #{endTime} >=endtime
+ 
+) a
+</select>
+<select id="getNewsCount" parameterType="String" resultType="Integer">
+select count(1) from  news_info  
+<where>
+type!=5 and type!=6 and type!=7 and ptime>=#{startTime} and #{endTime}>=ptime
+<if test="type!=null and type!='' ">
+and type=#{type} 
+</if>
+<if test="recommend!=null and recommend!='' ">
+ and recommend=#{recommend}
+</if>
+
+</where>
+</select>
+<select id="getNewsUserCount" parameterType="String" resultType="Integer">
+select count(DISTINCT userid) from  news_info  
+<where>
+type!=5 and type!=6 and type!=7 and ptime>=#{startTime} and #{endTime}>=ptime
+<if test="type!=null and type!='' ">
+and type=#{type} 
+</if>
+<if test="recommend!=null and recommend!='' ">
+ and recommend=#{recommend}
+</if>
+
+</where>
+</select>
+<select id="getNewsLike" parameterType="String" resultType="Integer">
+select count(1) from  news_like  where score>=#{startTime} and #{endTime}>=score
+</select>
+<select id="getNewsCommentCount" parameterType="String" resultType="Integer">
+select count(1) from  news_comment  where ctime>=#{startTime} and #{endTime}>=ctime
+</select>
+<select id="getGiftCount" parameterType="String" resultType="Integer">
+select COUNT(1) from gift_log where gifttime>=#{startTime} and #{endTime}>=gifttime
+</select>
+<select id="getGiftDistinctUserCount" parameterType="String" resultType="Integer">
+select COUNT(DISTINCT(userid)) from gift_log where gifttime>=#{startTime} and #{endTime}>=gifttime
+</select>
+<select id="getGiftDistinctNidCount" parameterType="String" resultType="Integer">
+select COUNT(DISTINCT(nid)) from gift_log where gifttime>=#{startTime} and #{endTime}>=gifttime
+</select>
+<insert id="insertDataStatistics" parameterType="com.motoband.dataStatistics.DataStatisticsModel">
+ insert into daily_datastatistics(openAppCount,distinctUserCount,newAddUserCount,ridedataCount,newsCount,newsStoryCount,newsVideoCount,
+newsRidelineCount,newsRecommmentCount,newsLikeCount,newsCommentCount,giftCount,giftDistinctNidCount,giftDistinctUserCount,newsDiscussCount,newsGraphicCount,`timestamp`,timeformat,
+newsPublishDiscussUserCount,newsPublishDiscussCount,giftexchangeUserCount,giftexchangeCount,giftexchangeCreditCount,giftgivenUserCount,giftgivenGiftCount,newsBoxCount,newsBoxUserCount,
+buserSumCount,buserAddCount,secondcarSumCount,secondcarAddCount,ratio1,ratio2) 
+values (#{openAppCount},#{distinctUserCount},#{newAddUserCount},#{ridedataCount},#{newsCount},#{newsStoryCount},#{newsVideoCount},
+#{newsRidelineCount},#{newsRecommmentCount},#{newsLikeCount},#{newsCommentCount},#{giftCount},#{giftDistinctNidCount},#{giftDistinctUserCount},#{newsDiscussCount},#{newsGraphicCount},#{timestamp},#{timeformat},
+#{newsPublishDiscussUserCount},#{newsPublishDiscussCount},#{giftexchangeUserCount},#{giftexchangeCount},#{giftexchangeCreditCount},#{giftgivenUserCount},#{giftgivenGiftCount},#{newsBoxCount},#{newsBoxUserCount},
+#{buserSumCount},#{buserAddCount},#{secondcarSumCount},#{secondcarAddCount},#{ratio1},#{ratio2})
+</insert>
+
+<select id="getDataStatisticsCount" parameterType="String" resultType="integer">
+<if test="type==1">
+select count(1) from daily_datastatistics 
+where CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+order by timeformat DESC 
+</if>
+<if test="type==2">
+select count(1) from (
+select timeformat  from daily_datastatistics group by YEAR(timeformat),WEEK(timeformat) 
+having  CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+order by timeformat DESC
+) a
+</if>
+<if test="type==3">
+select count(1) from (
+select timeformat from daily_datastatistics group by YEAR(timeformat),MONTH(timeformat)
+having  CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED) 
+order by timeformat DESC
+) a
+</if>
+
+</select>
+<select id="getDataStatisticslist" parameterType="String" resultType="com.motoband.dataStatistics.DataStatisticsModel">
+<if test="type==1">
+select * from (select * from daily_datastatistics ORDER BY id asc ) a 
+where CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+order by timeformat DESC 
+</if>
+<if test="type==2">
+select  CONCAT(timeformat,'-',DATE_ADD(timeformat,INTERVAL  6 DAY)+0) as timeformat,sum(openAppCount) as openAppCount,sum(distinctUserCount) as distinctUserCount,sum(newAddUserCount) as newAddUserCount,
+sum(ridedataCount) as ridedataCount,sum(newsCount) as newsCount,
+sum(newsStoryCount) as newsStoryCount,sum(newsVideoCount) as newsVideoCount,sum(newsRidelineCount) as newsRidelineCount,
+sum(newsPublishDiscussUserCount) as newsPublishDiscussUserCount,sum(newsPublishDiscussCount) as newsPublishDiscussCount,sum(giftexchangeUserCount) as giftexchangeUserCount,
+sum(giftexchangeCount) as giftexchangeCount,sum(giftexchangeCreditCount) as giftexchangeCreditCount,sum(giftgivenUserCount) as giftgivenUserCount,
+sum(giftgivenGiftCount) as giftgivenGiftCount,sum(newsBoxCount) as newsBoxCount,sum(newsBoxUserCount) as newsBoxUserCount,
+sum(buserSumCount) as buserSumCount,sum(buserAddCount) as buserAddCount,sum(secondcarSumCount) as secondcarSumCount,
+sum(secondcarAddCount) as secondcarAddCount,
+sum(newsRecommmentCount) as newsRecommmentCount,sum(newsLikeCount) as newsLikeCount,sum(newsDiscussCount) as newsDiscussCount,sum(newsGraphicCount) as newsGraphicCount,
+sum(newsCommentCount) as newsCommentCount,sum(giftCount) as giftCount ,sum(giftDistinctNidCount) as giftDistinctNidCount ,sum(giftDistinctUserCount) as giftDistinctUserCount , 
+avg(ratio1) as ratio1,avg(ratio2) as ratio2
+from (select * from daily_datastatistics ORDER BY id asc ) a  group by YEAR(timeformat),WEEK(timeformat) 
+having  CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+order by timeformat DESC
+</if>
+<if test="type==3">
+select CONCAT(timeformat,'-',DATE_ADD(DATE_ADD(timeformat,INTERVAL  1 MONTH),INTERVAL  -1 DAY)+0 ) as timeformat ,  sum(openAppCount) as openAppCount,sum(distinctUserCount) as distinctUserCount,sum(newAddUserCount) as newAddUserCount,
+sum(ridedataCount) as ridedataCount,sum(newsCount) as newsCount,
+sum(newsStoryCount) as newsStoryCount,sum(newsVideoCount) as newsVideoCount,sum(newsRidelineCount) as newsRidelineCount,
+sum(newsPublishDiscussUserCount) as newsPublishDiscussUserCount,sum(newsPublishDiscussCount) as newsPublishDiscussCount,sum(giftexchangeUserCount) as giftexchangeUserCount,
+sum(giftexchangeCount) as giftexchangeCount,sum(giftexchangeCreditCount) as giftexchangeCreditCount,sum(giftgivenUserCount) as giftgivenUserCount,
+sum(giftgivenGiftCount) as giftgivenGiftCount,sum(newsBoxCount) as newsBoxCount,sum(newsBoxUserCount) as newsBoxUserCount,
+sum(buserSumCount) as buserSumCount,sum(buserAddCount) as buserAddCount,sum(secondcarSumCount) as secondcarSumCount,
+sum(secondcarAddCount) as secondcarAddCount,
+sum(newsRecommmentCount) as newsRecommmentCount,sum(newsLikeCount) as newsLikeCount,sum(newsDiscussCount) as newsDiscussCount,sum(newsGraphicCount) as newsGraphicCount,
+sum(newsCommentCount) as newsCommentCount,sum(giftCount) as giftCount ,sum(giftDistinctNidCount) as giftDistinctNidCount ,sum(giftDistinctUserCount) as giftDistinctUserCount ,  
+avg(ratio1) as ratio1,avg(ratio2) as ratio2
+from (select * from daily_datastatistics ORDER BY id asc ) a  group by YEAR(timeformat),MONTH(timeformat)
+having  CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED) 
+order by timeformat DESC
+</if>
+
+</select>
+
+<select id="getBusersDataStatisticsCount" parameterType="String" resultType="com.motoband.dataStatistics.BusinessDataStatisticsModel">
+select a.count,
+Case when  a.interfacetype = 1 and a.source=1 then 1
+when  a.interfacetype = 1 and a.source=2 then 2
+when  a.interfacetype = 1 and a.source=3 then 3
+when  a.interfacetype = 2 then 4
+when  a.interfacetype = 3 then 5
+when  a.interfacetype = 4 then 6
+end
+ as type,a.buserid from
+(
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_4 
+where  calltime>=#{startTime} and #{endTime}>=calltime  group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_5 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_6 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_7 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_8 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_9 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_10 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_11 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2017_12 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_1 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_2 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_3 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_4 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_5 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_6 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_7 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_8 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_9 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_10 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_11 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+union all
+select *,COUNT(DISTINCT(userid)) as count from business_userlog_2018_12 
+where  calltime>=#{startTime} and #{endTime}>=calltime   group by buserid,interfacetype,source
+) a
+
+</select>
+
+<insert id="insertBusinessDataStatistics" parameterType="com.motoband.dataStatistics.BusinessDataStatisticsModel">
+insert into daily_businessdatastatistics (usecarmainBusersCount,allBusersListCount,usecarmainActivityBusersCount,onlineBusersCount,onphoneBusersCount,commentBusersCount,`timestamp`,timeformat,buserid) 
+values(#{usecarmainBusersCount},#{allBusersListCount},#{usecarmainActivityBusersCount},#{onlineBusersCount},#{onphoneBusersCount},#{commentBusersCount},#{timestamp},#{timeformat},#{buserid})
+</insert>
+<select id="getBusinessDataStatisticsCount" parameterType="String" resultType="integer">
+select count(1) from daily_businessdatastatistics 
+where CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+<if test="buserid !='-1'">
+ and buserid=#{buserid}
+</if>
+order by timeformat DESC 
+</select>
+<select id="getBusinessDataStatisticslist" parameterType="String" resultType="com.motoband.dataStatistics.BusinessDataStatisticsModel">
+select * from daily_businessdatastatistics 
+where CAST(timeformat AS SIGNED)>= CAST(#{startTime} AS SIGNED) and CAST(#{endTime} AS SIGNED)>=CAST(timeformat AS SIGNED)
+<if test="buserid !='-1'">
+ and buserid=#{buserid}
+</if>
+order by timeformat DESC 
+</select>
+<select id="getGiftexchangeUserCount" parameterType="String" resultType="integer">
+select count(DISTINCT(userid)) from exchange_code where state=1 and usetime>=#{startTime} and #{endTime}>=usetime
+</select>
+<select id="getGiftexchangeCount" parameterType="String" resultType="integer">
+select count(1) from exchange_code where state=1 and usetime>=#{startTime} and #{endTime}>=usetime
+</select>
+<select id="getGiftexchangeCreditCount" parameterType="String" resultType="integer">
+select  case when sum(gi.score*ge.giftcount) is null then 0 else sum(gi.score*ge.giftcount) end as count  from exchange_code  ec
+left join giftexchange ge on ge.exchangeid=ec.exchangeid
+left join gift_info gi on gi.giftid=ge.giftid
+where ec.state=1  and ec.usetime>=#{startTime} and #{endTime}>=ec.usetime 
+</select>
+<select id="getGiftgivenUserCount" parameterType="String" resultType="integer">
+   select count(DISTINCT(userid)) from gift_givenlog where  logtime>=#{startTime} and #{endTime}>=logtime
+</select>
+<select id="getGiftgivenGiftCount" parameterType="String" resultType="integer">
+  select case when sum(giftcount) is null then 0 else sum(giftcount) end as count  from gift_givenlog  where  logtime>=#{startTime} and #{endTime}>=logtime
+</select>
+<select id="getBuserSumCount" parameterType="String" resultType="integer">
+ select count(1) from business_user where state=1 and #{endTime}>=addtime
+</select>
+<select id="getBuserAddCount" parameterType="String" resultType="integer">
+select count(1) from business_user where state=1 and #{endTime}>=addtime and addtime>=#{startTime}
+</select>
+<select id="getSecondcarAddCount" parameterType="String" resultType="integer">
+select count(1) from second_car where state=0 and #{endTime}>=createtime and createtime>=#{startTime}
+</select>
+<select id="getSecondcarSumCount" parameterType="String" resultType="integer">
+ select count(1) from second_car where state=0 and #{endTime}>=createtime
+</select>
+<select id="getSummbuserCount" resultType="long">
+  select count(1) from mbuser
+</select>
+<update id="updateDataStatistics" parameterType="com.motoband.dataStatistics.DataStatisticsModel">
+update daily_datastatistics set openAppCount=#{openAppCount},distinctUserCount=#{distinctUserCount},newAddUserCount=#{newAddUserCount}
+where `timestamp`=#{timestamp}
+</update>
+<select id="getSummSecondCarCount" resultType="long"> 
+select count(1) from second_car
+</select>
+<select id="getMonthActiveModels" resultType="com.motoband.dataStatistics.MonthActiveModel">
+  select * from monthactive
+</select>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.admin.admin.AdminMapper">
+
+	<!-- 通过（登录名和密码）获取管理者基本信息 -->
+	<select id="getAdminMessageByLoginnameAndPassword"
+		parameterType="String" resultType="com.motoband.admin.admin.Admin">
+		SELECT *
+		FROM CMS_user WHERE
+		user_loginname=#{username} AND user_password=#{pwd}
+	</select>
+
+	<!-- 通过（登录名）获取管理者基本信息 -->
+	<select id="getAdminMessageByLoginname" parameterType="String"
+		resultType="com.motoband.admin.admin.Admin">
+		SELECT id AS 'id',
+		name AS 'name',
+		pwd AS 'pwd',
+		sno AS 'sno',
+		createuser AS 'createuser',
+		createtime AS 'createtime'
+		FROM account WHERE name=#{username}
+	</select>
+
+	<!-- 添加管理员信息 -->
+	<insert id="insertAdmin" parameterType="com.motoband.admin.admin.Admin">
+		INSERT INTO account
+		(id,name,pwd,sno,createuser,createtime)
+		VALUES
+		(#{id},#{name},#{pwd},#{sno},#{createuser},NOW())
+	</insert>
+
+	<!-- 修改管理员信息 -->
+	<update id="updateAdmin" parameterType="com.motoband.admin.admin.Admin">
+		update account set
+		<if test="null!=pwd and pwd!='' ">
+			pwd = #{pwd},
+		</if>
+		sno=#{sno}
+		where name=#{name}
+	</update>
+	<select id="getPrivilegesByloginname" resultType="com.motoband.admin.admin.Privilege">
+		 SELECT * FROM CMS_privilege WHERE privilege_guid IN ( 
+SELECT privilege_guid from CMS_privilege_role WHERE role_guid IN( 
+SELECT role_guid FROM CMS_user WHERE user_loginname=#{loginname})) 
+	</select>
+
+</mapper>
