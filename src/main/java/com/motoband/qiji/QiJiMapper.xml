@@ -3,7 +3,7 @@
 <mapper namespace="com.motoband.qiji.QiJiMapper">
 	<select id="getList" parameterType="String"
 		resultType="com.motoband.qiji.QiJiInfoModel">
-		select lid,sid,longitude,latitude,province,city,_name from qiji where
+		select lid,sid,longitude,latitude,province,city,_name,_address from qiji where
 		state=0
 		<if test="province!= null">
 			and province=#{province}
@@ -33,7 +33,7 @@
 
 	<select id="getQijiModelById"
 		resultType="com.motoband.qiji.QiJiInfoModel">
-		select lid,sid,longitude,latitude,province,city,_name from
+		select lid,sid,longitude,latitude,province,city,_name,_address from
 		qiji where
 		state=0 and sid = #{sid}
 	</select>
@@ -41,11 +41,11 @@
 	<insert id="insertOrUpdateQijiModel"
 		parameterType="com.motoband.qiji.QiJiInfoModel">
 		insert into
-		qiji(lid,sid,longitude,latitude,province,city,type,state,_name)
+		qiji(lid,sid,longitude,latitude,province,city,type,state,_name,_address)
 		values
-		(#{lid},#{sid},#{longitude},#{latitude},#{province},#{city},#{type},#{state},#{_name})
+		(#{lid},#{sid},#{longitude},#{latitude},#{province},#{city},#{type},#{state},#{_name},#{_address})
 		ON DUPLICATE KEY UPDATE
-		longitude=#{longitude},latitude=#{latitude},_name=#{_name},province=#{province},city=#{city}
+		longitude=#{longitude},latitude=#{latitude},_name=#{_name},province=#{province},city=#{city},_address=#{_address}
 	</insert>
 
 	<delete id="delopenqiji" parameterType="String">

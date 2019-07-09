@@ -447,6 +447,12 @@
 							placeholder="请输入经纬度,'经度+维度',如111.940666,25.59102"
 							id="addlonandlat" value="">
 					</div>
+					
+					<div class="form-group">
+						<label>地址</label> <input class="form-control"
+							placeholder="请输入地址,玉泉路2号"
+							id="_address" value="">
+					</div>
 
 					<!-- 	
 				 <div class="form-group">

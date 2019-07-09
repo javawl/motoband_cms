@@ -114,12 +114,13 @@ public class QiJiController {
 	
 	@RequestMapping(value = "/insertOrUpdateQijiModel", method = RequestMethod.POST)
 	@ResponseBody
-	public String insertOrUpdateQijiModel(QiJiInfoModel model) {
+	public String insertOrUpdateQijiModel(QiJiInfoModel model,String _name,String _address) {
 		String jsonString= "fail";
 			if(StringUtils.isBlank(model.sid)){
 				model.sid=MbUtil.getUUID().toLowerCase();
 			}
-			model._name=model.name;
+			model._name=_name;
+			model._address=_address;
 			boolean flag=qijiService.insertOrUpdateQijiModel(model);
 			if(flag) {
 				jsonString= "success";

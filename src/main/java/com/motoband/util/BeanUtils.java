@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 
 public class BeanUtils {
 
@@ -51,6 +52,47 @@ public class BeanUtils {
 					map.put(field.getName(), String.valueOf(field.get(obj)));
 				}else {
 					map.put(field.getName(), String.valueOf(field.get(obj)));
+				}
+			}
+		}
+		return map;
+	}
+	
+	public static Map<String, Object>  objectToMapObj(Object obj) throws Exception {
+		if (obj == null) {
+			return null;
+		}
+		Map<String, Object> map = Maps.newHashMap();
+		Field[] declaredFields = obj.getClass().getDeclaredFields();
+		for (Field field : declaredFields) {
+			field.setAccessible(true);
+			if (field.get(obj) == null) {
+				try {
+					if (field.getType().getName().contains("com.motoband.model")) {
+						Object res = field.get(obj);
+						map.put(field.getName(), res);
+					} else {
+						map.put(field.getName(), field.get(obj));
+					}
+				} catch (Exception e) {
+					map.put(field.getName(), field.get(obj));
+				}
+			} else {
+				if (field.getType().getName().contains("com.motoband.model")) {
+					Object res = field.get(obj);
+					map.put(field.getName(), res);
+				} else if (field.getType().getName().equals("byte")) {
+					map.put(field.getName(), field.get(obj));
+				} else if (field.getType().getName().equals("long")) {
+					map.put(field.getName(), field.get(obj));
+				} else if (field.getType().getName().equals("int")) {
+					map.put(field.getName(), field.get(obj));
+				} else if (field.getType().getName().equals("double")) {
+					map.put(field.getName(), field.get(obj));
+				}  else if (field.getType().getName().equals("float")) {
+					map.put(field.getName(), field.get(obj));
+				}else {
+					map.put(field.getName(), field.get(obj));
 				}
 			}
 		}

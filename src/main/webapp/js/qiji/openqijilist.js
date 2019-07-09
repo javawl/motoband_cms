@@ -18,6 +18,7 @@ function addopenqiji(){
 	$("#addprovince").val("");
 	$("#addcity").val("");
 	$("#addlonandlat").val("");
+	$("_address").val("");
 	
 }
 function editopenqiji(sid){
@@ -36,11 +37,13 @@ function editopenqiji(sid){
 		    {
 			    if (data !=''&& data !=null)
 			    {
+			    	console.log(data);
 			    	$("#addsid").val(data.sid);
 			    	$("#addname").val(data._name);
 			    	$("#addprovince").val(data.province);
                     $("#addcity").val(data.city);
                     $("#addlonandlat").val(data.longitude+","+data.latitude);
+                    $("#_address").val(data._address);
 			    }
 			    
 		    }
@@ -53,7 +56,7 @@ function editopenqijiConfirm(pagenum){
   var addprovince=	$("#addprovince").val();
   var addcity=	$("#addcity").val();
   var addlonandlat=	$("#addlonandlat").val();
-  
+  var _address=$("#_address").val();
   
  
   if((addname==null || addname =="")||(addprovince==null||addprovince=="")||(addcity==null||addcity=="")||(addlonandlat==null||addlonandlat=="")){
@@ -73,11 +76,11 @@ function editopenqijiConfirm(pagenum){
 	{
 		"sid" : sid,
 		"_name" : addname,
-		"name" : addname,
 		"province" : addprovince,
 		"city" : addcity,
 		"longitude" : longitude,
-		"latitude" : latitude
+		"latitude" : latitude,
+		"_address":_address
 	}
 	$.ajax (
 	{
@@ -86,6 +89,7 @@ function editopenqijiConfirm(pagenum){
 	    data : datas,
 	    success : function (data)
 	    {
+	    	console.log(datas);
 		    if (data =='success')
 		    {
 		    	  $(".modal-backdrop").remove();

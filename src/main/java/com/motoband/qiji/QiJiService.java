@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.motoband.businessmanage.LBSManager;
-import com.motoband.util.BeanUtils;
+import com.motoband.util.MongoManger;
 import com.motoband.util.OkHttpClientUtil;
 
 import okhttp3.Response;
@@ -43,80 +43,91 @@ public class QiJiService {
 		return qijimapper.getQijiModelById(sid);
 	}
 
-	public boolean insertOrUpdateQijiModel(QiJiInfoModel model) {
-		boolean flag = qijimapper.insertOrUpdateQijiModel(model) > 0;
+	public boolean insertOrUpdateQijiModel(QiJiInfoModel modelold) {
+		boolean flag = qijimapper.insertOrUpdateQijiModel(modelold) > 0;
 		if (flag) {
+			QiJiInfoModel model=qijimapper.getQijiModelById(modelold.sid);
+			model.location=new double[] {model.getLongitude(),model.getLatitude()};
+			String qijisigncount = com.motoband.util.RedisManager.getInstance().string_get(com.motoband.util.Consts.REDIS_SCHEME_RUN, model.getSid() + "_qiji_info_sign_count");
+			qijisigncount=qijisigncount==null?"0":qijisigncount;
+			model.signcount=Long.parseLong(qijisigncount);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
-					StringBuilder url = new StringBuilder(LBSManager.LBS_SEARCHDATACITY_URL).append("?key=").append(key)
-							.append("&tableid=").append(tableid).append("&city=").append("全国")
-							.append("&keywords=").append(model.sid);
-					String str = null;
-					boolean flag = true;
 					try {
-						str = IOUtils.toString(OkHttpClientUtil.getInstance().okHttpGet(url.toString()));
-						JSONObject jsonObject = JSON.parseObject(str);
-						if (jsonObject.getString("status").equals("1")) {
-							JSONArray datas = jsonObject.getJSONArray("datas");
-							Map<String, Object> linkedHashMap = Maps.newLinkedHashMap();
-							linkedHashMap.put("lid", model.lid);
-							linkedHashMap.put("sid", model.sid);
-							linkedHashMap.put("longitude", model.longitude);
-							linkedHashMap.put("latitude", model.latitude);
-							linkedHashMap.put("province", model.province);
-							linkedHashMap.put("city", model.city);
-							linkedHashMap.put("state", model.lid);
-							linkedHashMap.put("_name", model._name);
-							if (datas.size() == 0) {
-								flag = true;
-							} else {
-								linkedHashMap.put("_id", datas.getJSONObject(0).getString("_id"));
-//								String _name = datas.getJSONObject(0).getString("_name");
-//								if (!_name.equals(linkedHashMap.get("_name"))) {
-//									flag = true;
-//								}
-//								if (!model.province.equals(linkedHashMap.get("province"))) {
-//									flag = true;
-//								}
-//								if (!model.city.equals(linkedHashMap.get("city"))) {
-//									flag = true;
-//								}
-							}
-							if (flag) {
-								Map<String, String> map = Maps.newHashMap();
-								map.put("key", key);
-								map.put("tableid", tableid);
-								linkedHashMap.put("_location",
-										linkedHashMap.get("longitude") + "," + linkedHashMap.get("latitude"));
-								map.put("data", JSON.toJSONString(linkedHashMap));
-								Response res = null;
-								try {
-									if (linkedHashMap.get("_id") != null) {
-										res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_EDITDATA_URL,
-												map);
-									} else {
-										res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_ADDDATA_URL,
-												map);
-									}
-									if (res.isSuccessful()) {
-										logger.info(IOUtils.toString(res.body().bytes()));
-									}
-								} catch (Exception e) {
-									e.printStackTrace();
-									logger.error(ExceptionUtils.getStackTrace(e));
-								} finally {
-									res.close();
-								}
-							}
-						}
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
+						MongoManger.getInstance().insertOrUpdate("qiji",model,"sid",model.getSid());
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						e.printStackTrace();
 					}
+//					StringBuilder url = new StringBuilder(LBSManager.LBS_SEARCHDATACITY_URL).append("?key=").append(key)
+//							.append("&tableid=").append(tableid).append("&city=").append("全国")
+//							.append("&keywords=").append(model.sid);
+//					String str = null;
+//					boolean flag = true;
+//					try {
+//						str = IOUtils.toString(OkHttpClientUtil.getInstance().okHttpGet(url.toString()));
+//						JSONObject jsonObject = JSON.parseObject(str);
+//						if (jsonObject.getString("status").equals("1")) {
+//							JSONArray datas = jsonObject.getJSONArray("datas");
+//							Map<String, Object> linkedHashMap = Maps.newLinkedHashMap();
+//							linkedHashMap.put("lid", model.lid);
+//							linkedHashMap.put("sid", model.sid);
+//							linkedHashMap.put("longitude", model.longitude);
+//							linkedHashMap.put("latitude", model.latitude);
+//							linkedHashMap.put("province", model.province);
+//							linkedHashMap.put("city", model.city);
+//							linkedHashMap.put("state", model.lid);
+//							linkedHashMap.put("_name", model._name);
+//							if (datas.size() == 0) {
+//								flag = true;
+//							} else {
+//								linkedHashMap.put("_id", datas.getJSONObject(0).getString("_id"));
+////								String _name = datas.getJSONObject(0).getString("_name");
+////								if (!_name.equals(linkedHashMap.get("_name"))) {
+////									flag = true;
+////								}
+////								if (!model.province.equals(linkedHashMap.get("province"))) {
+////									flag = true;
+////								}
+////								if (!model.city.equals(linkedHashMap.get("city"))) {
+////									flag = true;
+////								}
+//							}
+//							if (flag) {
+//								Map<String, String> map = Maps.newHashMap();
+//								map.put("key", key);
+//								map.put("tableid", tableid);
+//								linkedHashMap.put("_location",
+//										linkedHashMap.get("longitude") + "," + linkedHashMap.get("latitude"));
+//								map.put("data", JSON.toJSONString(linkedHashMap));
+//								Response res = null;
+//								try {
+//									if (linkedHashMap.get("_id") != null) {
+//										res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_EDITDATA_URL,
+//												map);
+//									} else {
+//										res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_ADDDATA_URL,
+//												map);
+//									}
+//									if (res.isSuccessful()) {
+//										logger.info(IOUtils.toString(res.body().bytes()));
+//									}
+//								} catch (Exception e) {
+//									e.printStackTrace();
+//									logger.error(ExceptionUtils.getStackTrace(e));
+//								} finally {
+//									res.close();
+//								}
+//							}
+//						}
+//					} catch (IOException e1) {
+//						e1.printStackTrace();
+//					} catch (Exception e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
 				}
 			}).start();
 		}
@@ -131,49 +142,60 @@ public class QiJiService {
 
 				@Override
 				public void run() {
-					StringBuilder url = new StringBuilder(LBSManager.LBS_SEARCHDATACITY_URL).append("?key=").append(key)
-							.append("&tableid=").append(tableid).append("&city=").append("全国")
-							.append("&keywords=").append(sid);
-					String str = null;
-					boolean flag = true;
-					try {
-						str = IOUtils.toString(OkHttpClientUtil.getInstance().okHttpGet(url.toString()));
-						JSONObject jsonObject = JSON.parseObject(str);
-						if (jsonObject.getString("status").equals("1")) {
-							JSONArray datas = jsonObject.getJSONArray("datas");
-							if (datas.size() == 0) {
-								flag = false;
-							}
-							if (flag) {
-								Map<String, String> map = Maps.newHashMap();
-								map.put("key", key);
-								map.put("tableid", tableid);
-								map.put("ids", datas.getJSONObject(0).getString("_id"));
-								Response res = null;
-								try {
-										res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_DELETE_URL,
-												map);
-									if (res.isSuccessful()) {
-										logger.info(IOUtils.toString(res.body().bytes()));
-									}
-								} catch (Exception e) {
-									e.printStackTrace();
-									logger.error(ExceptionUtils.getStackTrace(e));
-								} finally {
-									res.close();
-								}
-							}
-						}
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+//					deleteGaoDeLbs(sid);
+					deleteMonGo(sid);
 				}
+
+				
 			}).start();
 		}
 		return flag;
+	}
+	
+	protected void deleteMonGo(String sid) {
+		MongoManger.getInstance().delete("qiji","sid",sid );
+	}
+
+	private void deleteGaoDeLbs(String sid) {
+		StringBuilder url = new StringBuilder(LBSManager.LBS_SEARCHDATACITY_URL).append("?key=").append(key)
+				.append("&tableid=").append(tableid).append("&city=").append("全国")
+				.append("&keywords=").append(sid);
+		String str = null;
+		boolean flag = true;
+		try {
+			str = IOUtils.toString(OkHttpClientUtil.getInstance().okHttpGet(url.toString()));
+			JSONObject jsonObject = JSON.parseObject(str);
+			if (jsonObject.getString("status").equals("1")) {
+				JSONArray datas = jsonObject.getJSONArray("datas");
+				if (datas.size() == 0) {
+					flag = false;
+				}
+				if (flag) {
+					Map<String, String> map = Maps.newHashMap();
+					map.put("key", key);
+					map.put("tableid", tableid);
+					map.put("ids", datas.getJSONObject(0).getString("_id"));
+					Response res = null;
+					try {
+							res = OkHttpClientUtil.getInstance().okHttpPost(LBSManager.LBS_DELETE_URL,
+									map);
+						if (res.isSuccessful()) {
+							logger.info(IOUtils.toString(res.body().bytes()));
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						logger.error(ExceptionUtils.getStackTrace(e));
+					} finally {
+						res.close();
+					}
+				}
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public List<String> getProvinceList() {

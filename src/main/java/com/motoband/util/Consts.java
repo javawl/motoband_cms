@@ -120,7 +120,12 @@ public class Consts {
 	public static String TIM_AdminSig = "eJxlj11PgzAYhe-5FYTbGW1LuwWTXfhBsi8VJgnuqmHQyeuytpQiY8b-ruISSTy3z3Nycj4c13W9ZPV8meW5aqTlttPCc69dD3kXf1BrKHhmuW*Kf1AcNRjBs50VpoeYMUYQGjpQCGlhB2cjKw4gB7gu9rzf*O3T7zJhPmZDBV57*BDGd-N7FahTup6HUfTSkatolYxTZBtxLCdlWz2CNsvN7E3qUbO8gdsJNXWXLvIgLONZXG2qChtltuXpaS3bZBEQVY-MFu193U6ng0kLB3E*RMcBpYjRAX0XpgYle4EgzDDx0U8859P5Aqu-XnQ_";
 	public static String TIM_YZCUSTOMERSIG = "eJxlj81qg0AYRfc*hbgudfyZSApZFFvQYBqkaYjdDJOZ0Xw16lTHRCl591oTiNC7PYd7uT*aruvGJnp-pIxVbamI6qUw9CfdQMbDHUoJnFBFnJr-g6KTUAtCUyXqEVoYYxuhqQNclApSuBmUF1ASyhScQPVsYAO42w3PyTh5rXOHLhs7Fp4qkI1w9frhh-FLztI*lFVAuzVfrr7QwY-a7XH*7c*bw2dgVg1aZnJ79sJ9HGYhTdr8*Ris33iwT8xzYQWJmdXMzeQmbtI4Zl6R71TU7arFZFJBIW7-XA8hZzabPjyJuoGqHAUbWdiyHfQXQ7tov1EjZNY_";
 	public static String TIM_ACTIVITYCENTERSIG = "eJxlj81qg0AYRfc*hbgudfyZSApZFFvQYBqkaYjdDJOZ0Xw16lTHRCl591oTiNC7PYd7uT*aruvGJnp-pIxVbamI6qUw9CfdQMbDHUoJnFBFnJr-g6KTUAtCUyXqEVoYYxuhqQNclApSuBmUF1ASyhScQPVsYAO42w3PyTh5rXOHLhs7Fp4qkI1w9frhh-FLztI*lFVAuzVfrr7QwY-a7XH*7c*bw2dgVg1aZnJ79sJ9HGYhTdr8*Ris33iwT8xzYQWJmdXMzeQmbtI4Zl6R71TU7arFZFJBIW7-XA8hZzabPjyJuoGqHAUbWdiyHfQXQ7tov1EjZNY_";
-
+	//3.7.0 mongo
+	public static  String MONGO_IP="188.131.149.211";
+	public static  int MONGO_PORT=20008;
+	public static  String MONGO_USERNAME="mongouser";
+	public static  String MONGO_PASSWORD="Motoband2015!@#";
+	public static  String MONGO_DATABASE="motobandtest";
 	public Consts() {
 
 		if (ENVIRONMENT.equals(ENVIRONMENT_PROD)) {
@@ -167,6 +172,13 @@ public class Consts {
 			TIM_AdminSig = "eJxlj1FPgzAYRd-5FYRXjbSFgjXxAReWLbhI3NDoC6m0wDdCYaVTN*N-V3GJJN7Xc25u7odl27azuV1f8KLo9srk5tBLx76yHeSc-8G*B5Fzk3ta-IPyvQctc14aqUeIKaUEoakDQioDJZwMLlpQEzyIJh83fvv*d5lQzIKpAtUIV3E2W8brWkKYdI1sj8Xgrp7as*cbPX8TaeMmx80D1gWvE01mL14EcVTNlyWrETdppHZ0O*CdH6TZdmEU6QXcPy7uKjfOUCr3xfVk0kArT4f8MGTsMmAT*ir1AJ0aBYIwxcRDP3GsT*sLaW9dqw__";
 			TIM_YZCUSTOMERSIG = "eJxlj8FugkAURfd8BWHd1GFgxDHpwraiNlWJgFQ2E4SheW2BEQYLbfrvWmoiSd-ynZN7c78VVVU179m9jeK4qHPJZCu4po5VDWk3VygEJCySzCiTf5A3AkrOolTysoM6IQQj1Hcg4bmEFC5GlGSQs-YrritZZOfn1aySd9bV-UWZ5xxMdDrsK-DaweXUf1jMs4-Ucw9xU*8xb9fYsRYzOOxeZqa9tVHwJHy04qINCvI2gekEedHjekRhM*TtxgkcK5T3Pimb-Xb36Ybzyh6sUGhjIx8s73qVEjJ*2WZaFqUj2l935GUFRd4JGOlExwb6PU35UU6qA2Fj";
 			TIM_ACTIVITYCENTERSIG = "eJxlz01Pg0AQgOE7v4Jw1dj9YEsx6aGKYhOKNuBXLxtglzpilxW2TRvjfxexSUmc6-NmJvNl2bbtpFFykRVFvVWGm4OWjn1pO8g5P6HWIHhmOG3EP5R7DY3kWWlk0yNmjBGEhg0IqQyUcCwysQHFs8LADsyh6KyDU92Kivcn-9a53S7CsD8eJrDucXGzvJ4HT6sEpzG5j97f2IMJKhSKhs3yPIwfR*Jjddauk7qkJflMZ3AVqH2Yv6AIKtjSBWDXv6tiNdJGqnpSPU*SsRe-ajx3b5fT6eCkgY08-ud6nu-7lA50J5sWatUHBGGGCUW-41jf1g9JdmKD";
+			
+			
+			MONGO_IP="10.0.0.5";
+			MONGO_PORT=27017;
+			MONGO_USERNAME="mongouser";
+			MONGO_PASSWORD="Motoband2015!@#";
+			MONGO_DATABASE="motobandprod";
 		}
 	}
 
