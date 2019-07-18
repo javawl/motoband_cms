@@ -203,6 +203,10 @@ public List<String> getUnFinishTaskUsers(String taskid) {
 	return motouserMapper.getUnFinishTaskUsers(taskid);
 }
 
+public List<String> getTaskUsers(String taskid) {
+	return motouserMapper.getTaskUsers(taskid);
+}
+
 public int getMessageTaskAllUserByTaskid(String taskid) {
 	// TODO Auto-generated method stub
 	return motouserMapper.getMessageTaskAllUserByTaskid(taskid);

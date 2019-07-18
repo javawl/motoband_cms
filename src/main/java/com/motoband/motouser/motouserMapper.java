@@ -124,9 +124,12 @@ public interface motouserMapper {
 
 
 	List<String> getUnFinishTaskUsers(String taskid);
-
-
+	List<String> getTaskUsers(String taskid);
+	
 	void deleteVip(@Param("userid")String userid, @Param("viptype")int viptype);
+
+
+
 
 
 

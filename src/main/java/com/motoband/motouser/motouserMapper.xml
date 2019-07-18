@@ -290,6 +290,10 @@
           select userid from  cms_msg_usertask  where taskid=#{taskid} and !state=1
      </select>
      
+     <select id="getTaskUsers" resultType="String">
+          select userid from  cms_msg_usertask  where taskid=#{taskid}
+     </select>
+     
      <select id="getMessageTaskAllUserByTaskid" parameterType="Map" resultType="Integer">
     	 select count(1) from cms_msg_usertask where taskid=#{taskid}
      </select>

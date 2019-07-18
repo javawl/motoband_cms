@@ -315,8 +315,9 @@ body {
 											<div>
 <%-- 												<div class="testbutton" value="预览" onclick="edit('${messagetask}')">预览</div> --%>
 <%-- 												<div class="testbutton" value="预览" onclick="failagain('${messagetask.taskid}')">编辑</div> --%>
-												<div class="testbutton" value="重试" onclick="failagain('${messagetask.taskid}')">重试</div>
 												<div class="testbutton" value="查看进度" onclick="getMsg('${messagetask.taskid}')">查看进度</div>
+												<div class="testbutton" value="重试" onclick="failagain('${messagetask.taskid}')">重试</div>
+												<div class="testbutton" value="强制重新推送" onclick="again('${messagetask.taskid}')">强制重新推送</div>
 												
 
 											</div>

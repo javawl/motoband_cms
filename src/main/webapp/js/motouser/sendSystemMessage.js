@@ -17,6 +17,25 @@ function failagain(taskid){
 
 }
 
+function again(taskid){
+	var r=confirm("强制重新推送所有该任务用户？")
+	  if (r==true)
+	    {
+			alert("发送成功，正在重试中。。。。")
+			$.ajax({
+				url:"/motouser/allTaskHandle?taskid="+taskid,
+				success:function(result){
+					console.log(result);
+				}
+			});
+	    }
+	  else
+	    {
+		  alert("You pressed Cancel")
+	    }
+
+}
+
 function getMsg(taskid) {
 	var comet = "/motouser/gettaskcountnow";
 	// 请求地址是CometServlet对应的URL，加上一个随机值参数防止缓存问题

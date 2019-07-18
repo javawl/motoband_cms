@@ -310,6 +310,30 @@ public class motouserController {
 
 		}
 	}
+	
+	private void againTaskAll(MessageTaskModel messageTaskModel) {
+		executor.submit(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					List<String> userids = motouserService.getTaskUsers(messageTaskModel.taskid);
+					MBMessageModel model = gettaskMessageModel(messageTaskModel.taskid);
+					String pushMsg = "您有一条新的消息，点击查看";
+					if (logger.isErrorEnabled()) {
+						logger.error("开始补救task----" + messageTaskModel.taskid);
+					}
+					batchSendCMSMessage(messageTaskModel.taskid, model, pushMsg, 0, userids);
+					TaskFinshe(messageTaskModel.taskid);
+				} catch (Exception e) {
+					if (logger.isErrorEnabled()) {
+						logger.error(ExceptionUtils.getStackTrace(e));
+
+					}
+				}
+
+			}
+		});
+	}
 
 	@RequestMapping(value = "/motouserlist", method = RequestMethod.GET)
 	public void userlist(Model model, HttpSession session, HttpServletRequest request, String userGuid,
@@ -2466,6 +2490,18 @@ public class motouserController {
 				
 				return "success";
 //			}
+		}
+		return "error";
+
+
+	}
+	
+	@RequestMapping(value="/allTaskHandle")
+	@ResponseBody
+	private String allTaskHandle(String taskid) {
+		if(StringUtils.isNotBlank(taskid)) {
+			doMessageTaskUser(taskid);
+			return "success";
 		}
 		return "error";
 
