@@ -304,13 +304,13 @@ body {
 
 										<td style='width: 150px; height: auto;'>
 											<div>
-												<font color="blue" id='${messagetask.taskid}_1'>loading..../loading....</font>
+												<font color="blue" id='${messagetask.taskid}_1'>/</font>
 											</div>
 											<div>
-												成功：<font color="green" id='${messagetask.taskid}_2'>loading....</font>
+												成功：<font color="green" id='${messagetask.taskid}_2'></font>
 											</div>
 											<div>
-												失败：<font color="red" id='${messagetask.taskid}_3'>loading....</font>
+												失败：<font color="red" id='${messagetask.taskid}_3'></font>
 											</div>
 											<div>
 <%-- 												<div class="testbutton" value="预览" onclick="edit('${messagetask}')">预览</div> --%>
