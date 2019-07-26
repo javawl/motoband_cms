@@ -14,6 +14,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,6 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.motoband.qiji.QiJiInfoModel;
 import com.motoband.util.Base64Utils;
 import com.motoband.util.Consts;
@@ -75,6 +78,7 @@ public class BotUserController {
 	private volatile static Future<?> giftexcutetask;
 	private volatile static Future<?> followxcutetask;
 	private volatile static Map<String,Runnable> map=Maps.newConcurrentMap();
+	private volatile static Set<String> isuseuserids=Sets.newConcurrentHashSet();//10S内使用过的userid
 	
 	@Autowired
 	private  BotService botService;
@@ -84,6 +88,19 @@ public class BotUserController {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
+				Timer t=new Timer();
+				t.scheduleAtFixedRate(new TimerTask() {
+					@Override
+					public void run() {
+						isuseuserids.clear();
+					}
+				}, 0, 10000);
+			}
+		};
+		threadpool.submit(r);
+		Runnable r2 = new Runnable() {
+			@Override
+			public void run() {
 				while (true) {
 				//每天重置应完成的任务数
 				long sleeptime= LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.of(2, 0, 1)).toInstant(ZoneOffset.of("+8")).toEpochMilli();
@@ -91,23 +108,29 @@ public class BotUserController {
 				try {
 					Thread.sleep(sleeptime);
 					logger.error("重置各个任务数");
-					islikecount=0;
-					isgiftcount=0;
-					isfollowcount=0;
+					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount","0");
+					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount","0");
+					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount","0");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				}
 			}
 		};
-		threadpool.submit(r);
-		map.put("init", r);
+		threadpool.submit(r2);
+		map.put("init", r2);
 	}
 	
 	@PostConstruct
 	public void init() {
 //		botService=botService2;
-//		startjob(0, 5000, isgiftcount, isfollowcount);
+		String lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount");
+		BotUserController.islikecount=(lcount==null)?0:Integer.parseInt(lcount);
+		lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount");
+		BotUserController.isgiftcount=(lcount==null)?0:Integer.parseInt(lcount);
+		lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount");
+		BotUserController.isfollowcount=(lcount==null)?0:Integer.parseInt(lcount);
+//		startjob(0, 5000, 800, 1777);
 	}
 
 
@@ -323,9 +346,26 @@ public class BotUserController {
 
 	public static void main(String[] args) {
 		
-		float day=17998870/(1000*3600);
-		System.out.println(day);
-		System.out.println(Integer.compare(7, 7));
+//		float day=17998870/(1000*3600);
+//		System.out.println(day);
+//		System.out.println(Integer.compare(7, 7));
+		for (int i = 0; i < 10; i++) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while (true) {
+						System.out.println(RandomUtils.nextLong(0, 65000));
+						try {
+							Thread.currentThread().sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+
+
 //		LocalDate date = LocalDate.now();
 //		date = date.plusDays(1);
 //		LocalTime time = LocalTime.of(7, 0, 0);
@@ -347,25 +387,33 @@ public class BotUserController {
 		if(logger.isDebugEnabled()) {
 			logger.debug(tasktype+"-------------");
 		}
-		Map<String, Object> map = JSON.parseObject(jsonStr);
+		Map<String, Object> param = JSON.parseObject(jsonStr);
 		String userid = RedisManager.getInstance().srandmember(Consts.REDIS_SCHEME_USER, "bot_user");
+		while (userid==null||userid.equals("")||isuseuserids.contains(userid)) {
+			userid = RedisManager.getInstance().srandmember(Consts.REDIS_SCHEME_USER, "bot_user");
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		switch (tasktype) {
 		case 1:
 			//点赞
 			if (StringUtils.isNotBlank(userid)) {
 				if (BotUserController.islikecount < count) {
 					try {
-						map.put("userid", userid);
-						sendHttpRequest(map, useractive_url);
+						param.put("userid", userid);
+						sendHttpRequest(param, useractive_url);
 						String nid = getLikeNewsId(userid,tasktype);
-						map.put("nid", nid);
+						param.put("nid", nid);
 						BotLogModel log=new BotLogModel();
 						log.setBotuserid(userid);
 						log.setLogtime(System.currentTimeMillis());
 						log.setLogtype((byte)tasktype);
 						log.setNid(nid);
 						botService.insertOrUpdateQijiModel(log);
-						sendHttpRequest(map, like_url);
+						sendHttpRequest(param, like_url);
 						logger.error("start---" + tasktype+"---" + BotUserController.islikecount+"---nid:"+nid);
 
 					} catch (Exception e) {
@@ -373,7 +421,7 @@ public class BotUserController {
 					}
 					
 					BotUserController.islikecount++;
-					
+					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount",BotUserController.islikecount+"");
 				}
 			}
 				break;
@@ -381,14 +429,14 @@ public class BotUserController {
 			//送礼物
 				if (StringUtils.isNotBlank(userid)) {
 					if (BotUserController.isgiftcount < count) {
-						map.put("userid", userid);
-						sendHttpRequest(map, useractive_url);
+						param.put("userid", userid);
+						sendHttpRequest(param, useractive_url);
 						String nid = getLikeNewsId(userid,tasktype);
 						int giftid=gifts[RandomUtils.nextInt(0, gifts.length)];
-						map.put("giftid", gifts[RandomUtils.nextInt(0, gifts.length)]);
+						param.put("giftid", gifts[RandomUtils.nextInt(0, gifts.length)]);
 						String creater = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO, "userid");
-						map.put("nid",nid);
-						map.put("touserid",creater);
+						param.put("nid",nid);
+						param.put("touserid",creater);
 						if(giftid==11||giftid==10) {
 							String gender=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, creater + "_user", "gender");
 							if(StringUtils.isNotBlank(gender)) {
@@ -401,8 +449,9 @@ public class BotUserController {
 								giftid=10;
 							}
 						}
-						sendHttpRequest(map, gift_url);
+						sendHttpRequest(param, gift_url);
 						BotUserController.isgiftcount++;
+						RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount",BotUserController.isgiftcount+"");
 						BotLogModel log=new BotLogModel();
 						log.setBotuserid(userid);
 						log.setLogtime(System.currentTimeMillis());
@@ -418,13 +467,14 @@ public class BotUserController {
 			//关注
 			if (StringUtils.isNotBlank(userid)) {
 				if (BotUserController.isfollowcount < count) {
-					map.put("userid", userid);
-					sendHttpRequest(map, useractive_url);
+					param.put("userid", userid);
+					sendHttpRequest(param, useractive_url);
 					String nid = getLikeNewsId(userid,tasktype);
 					String creater = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO, "userid");
-					map.put("targetid",creater);
-					sendHttpRequest(map, follow_url);
+					param.put("targetid",creater);
+					sendHttpRequest(param, follow_url);
 					BotUserController.isfollowcount++;
+					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount",BotUserController.isfollowcount+"");
 					BotLogModel log=new BotLogModel();
 					log.setBotuserid(userid);
 					log.setLogtime(System.currentTimeMillis());

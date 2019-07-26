@@ -910,5 +910,18 @@ public class RedisManager {
 			}
 		}
 	}
+
+	public long scard(String schemeName, String key) {
+		Jedis jedis = null;
+		try {
+			JedisPool pool = poolMap.get(schemeName);
+			jedis = pool.getResource();
+			return jedis.scard(key);
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+	}
 	
 }
