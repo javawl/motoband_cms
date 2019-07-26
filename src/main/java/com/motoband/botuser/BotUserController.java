@@ -353,12 +353,11 @@ public class BotUserController {
 		case 1:
 			//点赞
 			if (StringUtils.isNotBlank(userid)) {
-				map.put("userid", userid);
-				sendHttpRequest(map, useractive_url);
-				String nid = getLikeNewsId(userid,tasktype);
 				if (BotUserController.islikecount < count) {
-					
 					try {
+						map.put("userid", userid);
+						sendHttpRequest(map, useractive_url);
+						String nid = getLikeNewsId(userid,tasktype);
 						map.put("nid", nid);
 						BotLogModel log=new BotLogModel();
 						log.setBotuserid(userid);
@@ -381,10 +380,10 @@ public class BotUserController {
 		case 2:
 			//送礼物
 				if (StringUtils.isNotBlank(userid)) {
-					map.put("userid", userid);
-					sendHttpRequest(map, useractive_url);
-					String nid = getLikeNewsId(userid,tasktype);
 					if (BotUserController.isgiftcount < count) {
+						map.put("userid", userid);
+						sendHttpRequest(map, useractive_url);
+						String nid = getLikeNewsId(userid,tasktype);
 						int giftid=gifts[RandomUtils.nextInt(0, gifts.length)];
 						map.put("giftid", gifts[RandomUtils.nextInt(0, gifts.length)]);
 						String creater = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO, "userid");
@@ -418,10 +417,10 @@ public class BotUserController {
 		case 3:
 			//关注
 			if (StringUtils.isNotBlank(userid)) {
-				map.put("userid", userid);
-				sendHttpRequest(map, useractive_url);
-				String nid = getLikeNewsId(userid,tasktype);
 				if (BotUserController.isfollowcount < count) {
+					map.put("userid", userid);
+					sendHttpRequest(map, useractive_url);
+					String nid = getLikeNewsId(userid,tasktype);
 					String creater = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO, "userid");
 					map.put("targetid",creater);
 					sendHttpRequest(map, follow_url);
