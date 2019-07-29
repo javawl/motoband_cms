@@ -97,7 +97,7 @@ public class BotUserController {
 				}, 0, 10000);
 			}
 		};
-		threadpool.submit(r);
+		new Thread(r).start();
 		Runnable r2 = new Runnable() {
 			@Override
 			public void run() {
@@ -111,13 +111,16 @@ public class BotUserController {
 					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount","0");
 					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount","0");
 					RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount","0");
+					islikecount=0;
+					isgiftcount=0;
+					isfollowcount=0;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				}
 			}
 		};
-		threadpool.submit(r2);
+		new Thread(r2).start();
 		map.put("init", r2);
 	}
 	
@@ -198,6 +201,9 @@ public class BotUserController {
 		} else if (status == 1) {
 			try {
 				threadpool.awaitTermination(5*1000, TimeUnit.MILLISECONDS);
+				BotUserController.followxcutetask.cancel(true);
+				BotUserController.giftexcutetask.cancel(true);
+				BotUserController.islikeexcutetask.cancel(true);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -397,6 +403,7 @@ public class BotUserController {
 				e.printStackTrace();
 			}
 		}
+		isuseuserids.add(userid);
 		switch (tasktype) {
 		case 1:
 			//点赞
@@ -414,7 +421,7 @@ public class BotUserController {
 						log.setNid(nid);
 						botService.insertOrUpdateQijiModel(log);
 						sendHttpRequest(param, like_url);
-						logger.error("start---" + tasktype+"---" + BotUserController.islikecount+"---nid:"+nid);
+						logger.error("start---" + tasktype+"---" + BotUserController.islikecount+"---nid:"+nid+"----botuserid:"+userid);
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -459,7 +466,7 @@ public class BotUserController {
 						log.setNid(nid);
 						log.setGiftid(giftid);
 						botService.insertOrUpdateQijiModel(log);
-						logger.error("start---" + tasktype+"---" + BotUserController.isgiftcount+"---nid:"+nid);
+						logger.error("start---" + tasktype+"---" + BotUserController.isgiftcount+"---nid:"+nid+"----botuserid:"+userid);
 					}
 				}
 				break;
