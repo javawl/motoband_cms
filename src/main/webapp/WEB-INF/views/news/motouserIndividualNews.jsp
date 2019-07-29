@@ -226,7 +226,14 @@ opacity
 						<div>标题：${tempnews.title}</div>
 						<div>子标题：${tempnews.title }</div>
 						<div>boxurl：${tempnews.linkurl }</div>
-						<div>动态keyword:${tempnews.keywords }</div>
+						<div>动态keyword:
+						<c:if test="${empty tempnews.keywords}">
+                           ${tempnews.discusskeyword }
+                        </c:if>
+                        <c:if test="${not empty  tempnews.keywords}">
+                          ${tempnews.keywords }
+                        </c:if>
+                        ${tempnews.keywords }</div>
 						<div>动态label:${tempnews.labels }</div>
 						<div>动态类型:${tempnews.type }</div>
 						<div>动态评论数:${tempnews.ccount }</div>
