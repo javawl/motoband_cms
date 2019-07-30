@@ -273,7 +273,7 @@ opacity
 							<a class="btn btn-danger"
 								href="javascript:void(0)"
 								onclick="deleteUserSingleNews('${tempnews.nid}','${tempnews.userid }')">删除动态</a>
-														<a class="btn btn-danger"
+<!-- 														<a class="btn btn-danger" -->
 <!-- 								href="javascript:void(0)" -->
 <%-- 								onclick="setReadCountNews('${tempnews.nid}','${tempnews.userid }')">设置阅读数</a> --%>
 						</div>

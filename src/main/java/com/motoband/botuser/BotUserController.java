@@ -351,25 +351,28 @@ public class BotUserController {
 	}
 
 	public static void main(String[] args) {
-		
+		long min=BigDecimal.valueOf(LocalDateTime.of(LocalDate.now().plusMonths(-1),LocalTime.now()).toInstant(ZoneOffset.of("+8")).toEpochMilli()).longValue();
+		long max=BigDecimal.valueOf(LocalDateTime.of(LocalDate.now(),LocalTime.now()).toInstant(ZoneOffset.of("+8")).toEpochMilli()).longValue();
+		System.out.println(min);
+		System.out.println(max);
 //		float day=17998870/(1000*3600);
 //		System.out.println(day);
 //		System.out.println(Integer.compare(7, 7));
-		for (int i = 0; i < 10; i++) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					while (true) {
-						System.out.println(RandomUtils.nextLong(0, 65000));
-						try {
-							Thread.currentThread().sleep(10);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
-		}
+//		for (int i = 0; i < 10; i++) {
+//			new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					while (true) {
+//						System.out.println(RandomUtils.nextLong(0, 65000));
+//						try {
+//							Thread.currentThread().sleep(10);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//			}).start();
+//		}
 
 
 //		LocalDate date = LocalDate.now();
@@ -390,20 +393,19 @@ public class BotUserController {
 
 
 	protected  void job(int count,int tasktype) {
-		if(logger.isDebugEnabled()) {
-			logger.debug(tasktype+"-------------");
-		}
+		
 		Map<String, Object> param = JSON.parseObject(jsonStr);
 		String userid = RedisManager.getInstance().srandmember(Consts.REDIS_SCHEME_USER, "bot_user");
-		while (userid==null||userid.equals("")||isuseuserids.contains(userid)) {
-			userid = RedisManager.getInstance().srandmember(Consts.REDIS_SCHEME_USER, "bot_user");
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		isuseuserids.add(userid);
+			logger.error(tasktype+"-------------userid:"+userid+"----count:"+count);
+//		while (userid==null||userid.equals("")||isuseuserids.contains(userid)) {
+//			userid = RedisManager.getInstance().srandmember(Consts.REDIS_SCHEME_USER, "bot_user");
+//			try {
+//				Thread.sleep(1);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		isuseuserids.add(userid);
 		switch (tasktype) {
 		case 1:
 			//点赞
@@ -505,26 +507,26 @@ public class BotUserController {
 		long index=RandomUtils.nextLong(0, count);
 		Set<String> nids=RedisManager.getInstance().zrevrangebyindex(Consts.REDIS_SCHEME_NEWS, NEWSKEY_MOMENTNEWS, index, index);
 		String nid=nids.iterator().next();
-		while (!RedisManager.getInstance().checkkey(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO)) {
-			nids=RedisManager.getInstance().zrevrangebyindex(Consts.REDIS_SCHEME_NEWS, NEWSKEY_MOMENTNEWS, index, index);
-			nid=nids.iterator().next();
-		}
-		if(tasktype==1||tasktype==3) {
-			Map<String,Object> map=Maps.newHashMap();
-			map.put("nid", nid);
-			map.put("logtype", tasktype);
-			map.put("botuserid", botuserid);
-			try {
-				BotLogModel model=botService.getModelById(map);
-				if(model!=null) {
-					return getLikeNewsId(botuserid, tasktype);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
+//		while (!RedisManager.getInstance().checkkey(Consts.REDIS_SCHEME_NEWS, nid + NEWSKEY_NEWSINFO)) {
+//			nids=RedisManager.getInstance().zrevrangebyindex(Consts.REDIS_SCHEME_NEWS, NEWSKEY_MOMENTNEWS, index, index);
+//			nid=nids.iterator().next();
+//		}
+//		if(tasktype==1||tasktype==3) {
+//			Map<String,Object> map=Maps.newHashMap();
+//			map.put("nid", nid);
+//			map.put("logtype", tasktype);
+//			map.put("botuserid", botuserid);
+//			try {
+//				BotLogModel model=botService.getModelById(map);
+//				if(model!=null) {
+//					return getLikeNewsId(botuserid, tasktype);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+//			
+//		}
 
 		return nid;
 	}
