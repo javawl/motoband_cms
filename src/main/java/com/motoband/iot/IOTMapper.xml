@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.motoband.iot.IOTMapper">
+  <select id="getDeviceLogCount" resultType="Integer">
+    select COUNT(1) from gps_device_log 
+  </select>
+  <select id="getDeviceLoglist" parameterType="String" resultType="com.motoband.giftexchangemanage.GiftexchangeModel">
+  select * from giftexchange 
+   order by  exchangeid
+		<if test="order == 1 ">
+			ASC
+		</if>
+		<if test="order == 0 ">
+			DESC
+		</if>
+		limit #{start},#{limit}
+  </select>
+<select id="getGiftList" resultType="com.motoband.giftexchangemanage.GiftModel">
+  select * from gift_info
+</select>
+<insert id="addGiftexchange"  parameterType="com.motoband.giftexchangemanage.GiftexchangeModel">
+insert into giftexchange(exchangeid,`name`,des,`condition`,scope,sumcount,validitystarttime,validityendtime,giftid,giftcount,remind,pic,conditiondes,state) 
+values(#{exchangeid},#{name},#{des},#{condition},#{scope},#{sumcount},#{validitystarttime},#{validityendtime},#{giftid},#{giftcount},#{remind},#{pic},#{conditiondes},#{state})
+</insert>
+<insert id="insertBusinessGiftexchange" parameterType="String">
+  insert into business_giftexchange(buserid,exchangeid) values(#{buserid},#{exchangeid})
+</insert>
+<select id="getGiftexchangeByid" parameterType="String" resultType="com.motoband.giftexchangemanage.GiftexchangeModel">
+  select * from giftexchange where exchangeid=#{exchangeid}
+</select>
+<select id="getBusergiftexchangeByid" parameterType="String" resultType="com.motoband.giftexchangemanage.BusinessGiftexchangeModel">
+   select * from business_giftexchange where exchangeid=#{exchangeid}
+</select>
+<update id="updateGiftexchange" parameterType="com.motoband.giftexchangemanage.GiftexchangeModel">
+   update giftexchange set `name`=#{name},des=#{des},`condition`=#{condition},scope=#{scope},
+   sumcount=#{sumcount},validitystarttime=#{validitystarttime},validityendtime=#{validityendtime},giftid=#{giftid},giftcount=#{giftcount},
+   remind=#{remind},pic=#{pic},conditiondes=#{conditiondes},state=#{state}
+   where exchangeid=#{exchangeid}
+</update>
+<delete id="deleteBusinessGiftexchange" parameterType="String">
+  delete from business_giftexchange where exchangeid=#{exchangeid}
+</delete>
+</mapper>

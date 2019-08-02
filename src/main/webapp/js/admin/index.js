@@ -257,3 +257,10 @@ function openbotuserlist(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
 	loading.hide();
 }
+
+function opendevicelog(url,adminGuid){
+	loading.show();
+	$ ("#page-wrapper").text("正在加载中.....");
+	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
+	loading.hide();
+}

@@ -299,6 +299,12 @@
 								<li id="botuser" style="display: none"><a
 									href="javascript:openbotuserlist('../botuser/botuserlist','${admin.user_guid}')">bot管理</a></li>
 							</ul></li>
+						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
+								腾讯云iot<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li id="iot" style="display: none"><a
+									href="javascript:opendevicelog('../iot/devicelog','${admin.user_guid}')">设备日志</a></li>
+							</ul></li>
 					</ul>
 				</div>
 				<!-- /.sidebar-collapse -->
