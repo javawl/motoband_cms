@@ -15,9 +15,6 @@
 
 	<!-- Configures the @Controller programming model -->
 	<mvc:annotation-driven />
-	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.motoband" />
-	</bean>
 
 	<!-- task annotations -->
 	<!-- 开启这个配置，spring才能识别@Scheduled注解 -->
