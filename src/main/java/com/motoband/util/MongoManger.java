@@ -25,7 +25,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.motoband.qiji.QiJiInfoModel;
-import com.sun.tools.javac.util.Assert;
 
 /**
  * MongoManager单例
@@ -53,9 +52,9 @@ public class MongoManger{
       .maxConnectionLifeTime(10*60*1000)//连接的最大生命时间。
       .threadsAllowedToBlockForConnectionMultiplier(10)//允许阻塞等待连接的线程数量的倍数
       .maxWaitTime(15*1000);
-      Assert.checkNonNull(mongoClient,"mongoClient is init null");
+//      Assert.checkNonNull(mongoClient,"mongoClient is init null");
       database = mongoClient.getDatabase(Consts.MONGO_DATABASE);
-      Assert.checkNonNull(database,"database is init null");
+//      Assert.checkNonNull(database,"database is init null");
 
 	}
 	
@@ -126,8 +125,8 @@ public class MongoManger{
 	 * @return
 	 */
 	public <T> List<T>   search(String collectionName,double[] near,String distanceField,DBObject query,double minDistance,double maxDistance,int pageNo,int pageSize,T clazz,int order,DBObject sort) throws Exception{
-		Assert.checkNonNull(collectionName,"collectionName is null");
-		Assert.checkNonNull(clazz,"class is null");
+//		Assert.checkNonNull(collectionName,"collectionName is null");
+//		Assert.checkNonNull(clazz,"class is null");
 		MongoCollection<Document> collection = getCollection(collectionName);
 		if(query==null) {
 			query=new BasicDBObject();
@@ -151,8 +150,8 @@ public class MongoManger{
 		List<T> result=Lists.newArrayList();
 	     List<BasicDBObject> pipeLine = new ArrayList<>();
 	     if(order==0){
-	 		Assert.checkNonNull(distanceField,"distanceField is null");
-			Assert.checkNonNull(near,"near is null");
+//	 		Assert.checkNonNull(distanceField,"distanceField is null");
+//			Assert.checkNonNull(near,"near is null");
 	    	 BasicDBObject aggregate = new BasicDBObject("$geoNear",
 	 	    		new BasicDBObject("near",near)
 	 				        .append("distanceField",distanceField)
@@ -196,7 +195,7 @@ public class MongoManger{
 	 * @return
 	 */
 	public MongoCollection<Document> getCollection(String collectionName) {
-		Assert.checkNonNull(collectionName,"collectionName is null");
+//		Assert.checkNonNull(collectionName,"collectionName is null");
 		MongoCollection<Document> collection = database.getCollection(collectionName);
 		return collection;
 	}
