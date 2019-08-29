@@ -270,7 +270,7 @@ function inputPageGoto(url, adminGuid,totalPage){
 									<th>独立用户数</th>
 									<th>新增用户</th>
 									<th>骑行次数</th>
-									<th>动态数</th>
+									<th>其他动态数</th>
 									<th>故事数</th>
 									<th>视频动态数</th>
 									<th>线路动态数</th>
