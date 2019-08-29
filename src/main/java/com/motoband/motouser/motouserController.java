@@ -273,10 +273,10 @@ public class motouserController {
 			}
 		}));
 
-		List<MessageTaskModel> taskModel = motouserService.getUnFinishTask();
-		for (MessageTaskModel messageTaskModel : taskModel) {
-			againTask(messageTaskModel);
-		}
+//		List<MessageTaskModel> taskModel = motouserService.getUnFinishTask();
+//		for (MessageTaskModel messageTaskModel : taskModel) {
+//			againTask(messageTaskModel);
+//		}
 	}
 
 	private void againTask(MessageTaskModel messageTaskModel) {
