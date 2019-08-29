@@ -241,7 +241,7 @@ function inputPageGoto(url, adminGuid,totalPage){
 						   <c:when test="${type==1 }">
 						       <button type="button" class="btn btn-danger"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','1')">日</button>
 						     <%--   <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','2')">周</button> --%>
-						       <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','3')">月</button>
+<%-- 						       <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','3')">月</button> --%>
 						   </c:when>
 						<%--   <c:when test="${type==2 }">
 						       <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','1')">日</button>
@@ -251,7 +251,7 @@ function inputPageGoto(url, adminGuid,totalPage){
 						  <c:when test="${type==3 }">
 						       <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','1')">日</button>
 						     <%--   <button type="button" class="btn btn-success"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','2')">周</button> --%>
-						       <button type="button" class="btn btn-danger"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','3')">月</button>
+<%-- 						       <button type="button" class="btn btn-danger"  onclick="javascript:changeType('/dataStatisticsmanage/dataStatisticslist','${sessionScope.user.user_guid}','3')">月</button> --%>
 						  </c:when>
 						</c:choose>
 						

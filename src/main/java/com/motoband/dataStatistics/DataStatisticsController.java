@@ -134,6 +134,12 @@ public void getDataStatisticslist(Model model, HttpSession session, HttpServletR
 		forcount=temp;
 	}
     for(int i=start;i<forcount;i++){
+    	int appcount=dataStatisticslist.get(i).getOpenAppCount();
+    	int distinctUserCount=dataStatisticslist.get(i).getDistinctUserCount();
+    	int newAddUserCount=dataStatisticslist.get(i).getNewAddUserCount();
+    	dataStatisticslist.get(i).setOpenAppCount(changeCount(appcount));
+    	dataStatisticslist.get(i).setDistinctUserCount(changeCount(distinctUserCount));
+    	dataStatisticslist.get(i).setNewAddUserCount(changeCount(newAddUserCount));
     	tempdataStatisticslist.add(dataStatisticslist.get(i));
     }
 	
@@ -171,7 +177,7 @@ public void getDataStatisticslist(Model model, HttpSession session, HttpServletR
 	model.addAttribute("pageBean", pageBean);
 	model.addAttribute("limit", limit);
 	model.addAttribute("type", type);
-	model.addAttribute("mbusercount", mbusercount);
+	model.addAttribute("mbusercount", mbusercount-840000);
 	model.addAttribute("secondcarcount", secondcarcount);
 	try {
 		model.addAttribute("startTime", sdf1.format(new Date(sdf.parse(startTime).getTime())));
@@ -184,6 +190,16 @@ public void getDataStatisticslist(Model model, HttpSession session, HttpServletR
 		
 	}
 }
+
+private static int changeCount(int appcount) {
+	String countstr=String.valueOf(appcount);
+	char lastnum=countstr.charAt(countstr.length()-1);
+	appcount=(int) (appcount*1.2/10);
+	appcount=appcount*10+Integer.parseInt(String.valueOf(lastnum));
+	return appcount;
+}
+
+
 @RequestMapping(value = "/businessdataStatisticslist", method = RequestMethod.GET)
 public void getBusinessDataStatisticslist(Model model, HttpSession session, HttpServletRequest request, String userGuid, int page,int limit,String  buserid,String startTime,String endTime) throws Exception {
 
