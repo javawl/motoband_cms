@@ -90,31 +90,31 @@ public class Consts {
 	public static int REDIS_FOLLOW_PORT = 6379;
 	public static int REDIS_FOLLOW_DBINDEX = 0;
 	public static int REDIS_FOLLOW_TIMEOUT = 100000;
-	public static String REDIS_FOLLOW_AUTH = "123456";
+	public static String REDIS_FOLLOW_AUTH = "EgM=f)";
 
 	public static String REDIS_USER_IP = "123.206.24.130";
 	public static int REDIS_USER_PORT = 6380;
 	public static int REDIS_USER_DBINDEX = 0;
 	public static int REDIS_USER_TIMEOUT = 100000;
-	public static String REDIS_USER_AUTH = "123456";
+	public static String REDIS_USER_AUTH = "EgM=f)";
 
 	public static String REDIS_RIDEDATA_IP = "123.206.24.130";
 	public static int REDIS_RIDEDATA_PORT = 6381;
 	public static int REDIS_RIDEDATA_DBINDEX = 0;
 	public static int REDIS_RIDEDATA_TIMEOUT = 100000;
-	public static String REDIS_RIDEDATA_AUTH = "123456";
+	public static String REDIS_RIDEDATA_AUTH = "EgM=f)";
 
 	public static String REDIS_NEWS_IP = "123.206.24.130";
 	public static int REDIS_NEWS_PORT = 6382;
 	public static int REDIS_NEWS_DBINDEX = 0;
 	public static int REDIS_NEWS_TIMEOUT = 100000;
-	public static String REDIS_NEWS_AUTH = "123456";
+	public static String REDIS_NEWS_AUTH = "EgM=f)";
 
 	public static String REDIS_RUN_IP = "123.206.24.130";
 	public static int REDIS_RUN_PORT = 6383;
 	public static int REDIS_RUN_DBINDEX = 0;
 	public static int REDIS_RUN_TIMEOUT = 100000;
-	public static String REDIS_RUN_AUTH = "123456";
+	public static String REDIS_RUN_AUTH = "EgM=f)";
 	/* tim */
 	public static String TIM_Appid = "1400025315";
 	public static String TIM_AdminSig = "eJxlj11PgzAYhe-5FYTbGW1LuwWTXfhBsi8VJgnuqmHQyeuytpQiY8b-ruISSTy3z3Nycj4c13W9ZPV8meW5aqTlttPCc69dD3kXf1BrKHhmuW*Kf1AcNRjBs50VpoeYMUYQGjpQCGlhB2cjKw4gB7gu9rzf*O3T7zJhPmZDBV57*BDGd-N7FahTup6HUfTSkatolYxTZBtxLCdlWz2CNsvN7E3qUbO8gdsJNXWXLvIgLONZXG2qChtltuXpaS3bZBEQVY-MFu193U6ng0kLB3E*RMcBpYjRAX0XpgYle4EgzDDx0U8859P5Aqu-XnQ_";
