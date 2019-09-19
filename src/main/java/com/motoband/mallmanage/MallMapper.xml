@@ -461,16 +461,16 @@ select * from motomall_product where probrand=#{probrand}
  where parentid=#{parentid}
 </update>
 <select id="getMallbaseCount" parameterType="String" resultType="Integer">
-select count(1) from mallbase 
+select count(1) from mallbase where grouptype=#{grouptype}
 <if test="groupid >= 0">
-     where groupid =#{groupid} 
+     and groupid =#{groupid} 
 </if>
 </select>
 <select id="getMallbaselist" parameterType="String" resultType="com.motoband.mallmanage.MallBaseModel">
-select a.*,b.title as groupname,b.type as grouptype ,b.subtitle as groupsubname  from mallbase a
-left join equippinggroup b on b.groupid=a.groupid
+select a.*,b.title as groupname ,b.subtitle as groupsubname  from mallbase a
+left join equippinggroup b on b.groupid=a.groupid where a.grouptype=#{grouptype}
 <if test="groupid >= 0">
-     where a.groupid =#{groupid} 
+     and  a.groupid =#{groupid} 
 </if>
   order by a.state desc,a.orderindex desc
   limit #{start},#{limit}
@@ -486,22 +486,22 @@ select * from equippinggroup
     select * from mallbase where mid=#{mid}
 </select>
 <insert id="insertOrupdateMallbase" parameterType="com.motoband.mallmanage.MallBaseModel">
- insert into mallbase (mid,title,picurl,url,price,state,orderindex,groupid,subtitle,oldprice)
-  values (#{mid},#{title},#{picurl},#{url},#{price},#{state},#{orderindex},#{groupid},#{subtitle},#{oldprice})
+ insert into mallbase (mid,title,picurl,url,price,state,orderindex,groupid,subtitle,oldprice,grouptype)
+  values (#{mid},#{title},#{picurl},#{url},#{price},#{state},#{orderindex},#{groupid},#{subtitle},#{oldprice},#{grouptype})
   ON DUPLICATE KEY UPDATE
   title=#{title},picurl=#{picurl},url=#{url},price=#{price},state=#{state},
-  orderindex=#{orderindex},groupid=#{groupid},subtitle=#{subtitle},oldprice=#{oldprice}
+  orderindex=#{orderindex},groupid=#{groupid},subtitle=#{subtitle},oldprice=#{oldprice},grouptype=#{grouptype}
 </insert>
 <select id="getEquippingGroupCount" parameterType="String" resultType="Integer">
-select count(1) from equippinggroup  
+select count(1) from equippinggroup  where grouptype=#{grouptype}
 <if test="state >= 0">
-     where state =#{state} 
+     and state =#{state}
 </if>
 </select>
 <select id="getEquippingGrouplistWithLimit" parameterType="String" resultType="com.motoband.mallmanage.EquippingGroupModel">
-select * from equippinggroup  
+select * from equippinggroup where grouptype=#{grouptype}  
 <if test="state >= 0">
-     where state =#{state} 
+     and state =#{state} 
 </if>
  order by state desc,orderindex desc
  limit #{start},#{limit}
@@ -510,10 +510,10 @@ select * from equippinggroup
 select * from equippinggroup  where groupid=#{groupid}
 </select>
 <insert id="insertOrupdateEquippingGroup" parameterType="com.motoband.mallmanage.EquippingGroupModel">
-insert into equippinggroup(groupid,title,type,orderindex,state,subtitle,url)
-values(#{groupid},#{title},#{type},#{orderindex},#{state},#{subtitle},#{url})
+insert into equippinggroup(groupid,title,type,orderindex,state,subtitle,url,grouptype)
+values(#{groupid},#{title},#{type},#{orderindex},#{state},#{subtitle},#{url},#{grouptype})
  ON DUPLICATE KEY UPDATE
- title=#{title},type =#{type}, orderindex=#{orderindex}, state=#{state},subtitle=#{subtitle},url=#{url}
+ title=#{title},type =#{type}, orderindex=#{orderindex}, state=#{state},subtitle=#{subtitle},url=#{url,grouptype=#{grouptype}}
 </insert>
 <update id="insertMallProductKeyword" parameterType="String">
  update motomall_product set keyword=#{keyword} where id=#{id}

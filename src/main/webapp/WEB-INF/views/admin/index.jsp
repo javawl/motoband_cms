@@ -234,9 +234,13 @@
 								<li id="mallnotify" style="display: none"><a
 									href="javascript:mallnotify('../mallmanage/mallnotifylist','${admin.user_guid}')">商品消息管理</a></li>
 								<li id="mallbase" style="display: none"><a
-									href="javascript:mallbase('../mallmanage/mallbaselist','${admin.user_guid}')">商品首页管理</a></li>
+									href="javascript:mallbase('../mallmanage/mallbaselist','${admin.user_guid}',0)">商品首页管理</a></li>
 								<li id="equippinggroup" style="display: none"><a
-									href="javascript:equippinggroup('../mallmanage/equippinggrouplist','${admin.user_guid}')">商品首页分组管理</a></li>
+									href="javascript:equippinggroup('../mallmanage/equippinggrouplist','${admin.user_guid}',0)">商品首页分组管理</a></li>
+								<li id="mallbasecredit" style="display: none"><a
+									href="javascript:mallbase('../mallmanage/mallbaselist','${admin.user_guid}',1)">积分首页管理</a></li>
+								<li id="equippinggroupcredit" style="display: none"><a
+									href="javascript:equippinggroup('../mallmanage/equippinggrouplist','${admin.user_guid}',1)">积分首页分组管理</a></li>
 							</ul></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								数据统计管理<span class="fa arrow"></span></a>

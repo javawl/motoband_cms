@@ -278,14 +278,14 @@ public void updateMallParentType(String parentid, String name, String brandids) 
 	 mallMapper.updateMallParentType( parentid,name, brandids);
 	}
 
-public int getMallbaseCount(int groupid) {
+public int getMallbaseCount(int groupid, int grouptype) {
 	
-	return  mallMapper.getMallbaseCount( groupid);
+	return  mallMapper.getMallbaseCount( groupid,grouptype);
 }
 
-public List<MallBaseModel> getMallbaselist(int start, int limit, int order, String orderConditions, int groupid) {
+public List<MallBaseModel> getMallbaselist(int start, int limit, int order, String orderConditions, int groupid, int grouptype) {
 	
-	return mallMapper.getMallbaselist( start,  limit,  order,  orderConditions,  groupid) ;
+	return mallMapper.getMallbaselist( start,  limit,  order,  orderConditions,  groupid,grouptype) ;
 }
 
 public List<EquippingGroupModel> getEquippingGroupList(int state) {
@@ -302,12 +302,12 @@ public void insertOrupdateMallbase(MallBaseModel mallBaseModel) {
 	
 }
 
-public int getEquippingGroupCount(int state) {
-	return mallMapper.getEquippingGroupCount( state);
+public int getEquippingGroupCount(int state, int grouptype) {
+	return mallMapper.getEquippingGroupCount( state,grouptype);
 }
 
-public List<EquippingGroupModel> getEquippingGrouplistWithLimit(int state, int start, int limit, int order, String orderConditions) {
-	return mallMapper.getEquippingGrouplistWithLimit( state,  start,  limit,  order,  orderConditions);
+public List<EquippingGroupModel> getEquippingGrouplistWithLimit(int state, int start, int limit, int order, String orderConditions, int grouptype) {
+	return mallMapper.getEquippingGrouplistWithLimit( state,  start,  limit,  order,  orderConditions,grouptype);
 }
 
 public EquippingGroupModel getEquippinggroupByGroupid(String groupid) {

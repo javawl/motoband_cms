@@ -117,9 +117,9 @@ public interface MallMapper {
 
 	Object updateMallParentType(@Param("parentid")String parentid, @Param("name")String name, @Param("brandids")String brandids);
 
-	int getMallbaseCount(@Param("groupid")int groupid);
+	int getMallbaseCount(@Param("groupid")int groupid,@Param("grouptype") int grouptype);
 
-	List<MallBaseModel> getMallbaselist(@Param("start")int start, @Param("limit")int limit, @Param("order")int order, @Param("orderConditions")String orderConditions, @Param("groupid")int groupid);
+	List<MallBaseModel> getMallbaselist(@Param("start")int start, @Param("limit")int limit, @Param("order")int order, @Param("orderConditions")String orderConditions, @Param("groupid")int groupid,@Param("grouptype") int grouptype);
 
 	List<EquippingGroupModel> getEquippingGroupList(@Param("state")int state);
 
@@ -127,9 +127,9 @@ public interface MallMapper {
 
 	void insertOrupdateMallbase(MallBaseModel mallBaseModel);
 
-	int getEquippingGroupCount(@Param("state")int state);
+	int getEquippingGroupCount(@Param("state")int state, @Param("grouptype")int grouptype);
 
-	List<EquippingGroupModel> getEquippingGrouplistWithLimit(@Param("state")int state, @Param("start")int start,@Param("limit") int limit, @Param("order")int order, @Param("orderConditions")String orderConditions);
+	List<EquippingGroupModel> getEquippingGrouplistWithLimit(@Param("state")int state, @Param("start")int start,@Param("limit") int limit, @Param("order")int order, @Param("orderConditions")String orderConditions, @Param("grouptype")int grouptype);
 
 	EquippingGroupModel getEquippinggroupByGroupid(@Param("groupid")String groupid);
 

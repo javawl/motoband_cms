@@ -46,7 +46,7 @@ function editmallbase(id){
 	
 }
 
-function editmallbaseConfirm(){
+function editmallbaseConfirm(grouptype){
 	
 	var mid= $("#addmid").val();
 	var title= $("#addtitle").val();
@@ -74,7 +74,8 @@ function editmallbaseConfirm(){
 		    "oldprice" : oldprice,
 		    "state" : state,
 		    "orderindex" : orderindex,
-		    "groupid" : groupid
+		    "groupid" : groupid,
+		    "grouptype":grouptype
 		}
 		$.ajax (
 		{
@@ -88,7 +89,7 @@ function editmallbaseConfirm(){
 				      alert ("修改成功！");
 				      $(".modal-backdrop").remove();
 			    	  $("body").removeClass('modal-open');
-				      $("#page-wrapper").load("../mallmanage/mallbaselist?userGuid=0&page=1&limit="+limit+"&order=0&groupid="+selectgroupid);
+				      $("#page-wrapper").load("../mallmanage/mallbaselist?userGuid=0&page=1&limit="+limit+"&order=0&groupid="+selectgroupid+"&grouptype="+grouptype);
 			    }else{
 			    	 alert ("修改失败！");
 			    }

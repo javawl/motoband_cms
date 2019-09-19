@@ -38,8 +38,7 @@ function editequippinggroup(id){
 	
 }
 
-function editequippinggroupConfirm(){
-	
+function editequippinggroupConfirm(grouptype){
 	var groupid= $("#addgroupid").val();
 	var title= $("#addtitle").val();
 	var subtitle= $("#addsubtitle").val();
@@ -59,7 +58,8 @@ function editequippinggroupConfirm(){
 		    "url" : url,
 		    "state" : state,
 		    "orderindex" : orderindex,
-		    "type" : type
+		    "type" : type,
+		    "grouptype":grouptype
 		}
 		$.ajax (
 		{
@@ -73,7 +73,8 @@ function editequippinggroupConfirm(){
 				      alert ("修改成功！");
 				      $(".modal-backdrop").remove();
 			    	  $("body").removeClass('modal-open');
-				      $("#page-wrapper").load("../mallmanage/equippinggrouplist?userGuid=0&page=1&limit="+limit+"&order=0");
+			    	  
+				      $("#page-wrapper").load("../mallmanage/equippinggrouplist?userGuid=0&page=1&limit="+limit+"&order=0&grouptype="+grouptype);
 			    }else{
 			    	 alert ("修改失败！");
 			    }

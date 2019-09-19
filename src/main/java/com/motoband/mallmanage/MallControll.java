@@ -1476,7 +1476,7 @@ public class MallControll {
 	
 	@RequestMapping(value = "/mallbaselist", method = RequestMethod.GET)
 	public void mallbaselist(Model model, HttpSession session, HttpServletRequest request, String userGuid, 
-			int page,int limit,int order,String orderConditions,int groupid) {
+			int page,int limit,int order,String orderConditions,int groupid,int grouptype) {
 
 		if (userGuid == null) {
 			Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
@@ -1495,7 +1495,7 @@ public class MallControll {
 		}
 		pageBean.setPage(page);
 		pageBean.setLimit(limit);
-		int totalCount=mallService.getMallbaseCount(groupid);
+		int totalCount=mallService.getMallbaseCount(groupid,grouptype);
 		
 		int totalPage=0;
 		if(totalCount % limit == 0){
@@ -1507,7 +1507,7 @@ public class MallControll {
 		pageBean.setTotalPage(totalPage); 
 		int start= (page-1)*limit;
 //		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<MallBaseModel> mallbaseModels=mallService.getMallbaselist(start,limit,order,orderConditions,groupid);
+		List<MallBaseModel> mallbaseModels=mallService.getMallbaselist(start,limit,order,orderConditions,groupid,grouptype);
 		
 		ArrayList<motoimg> motoimgs = boxService.getMotoImgListByGroupGuid("0");
 		ArrayList<imggroup> imggroups = boxService.getImgGroupList();
@@ -1533,6 +1533,7 @@ public class MallControll {
 		model.addAttribute("groupid",groupid);
 		model.addAttribute("order", order);
 		model.addAttribute("orderConditions", orderConditions);
+		session.setAttribute("grouptype", grouptype);
 	}
 	
 	@RequestMapping(value = "/getmallbasebymid", method = RequestMethod.POST)
@@ -1599,7 +1600,7 @@ public class MallControll {
 	
 	@RequestMapping(value = "/equippinggrouplist", method = RequestMethod.GET)
 	public void equippinggrouplist(Model model, HttpSession session, HttpServletRequest request, String userGuid, 
-			int page,int limit,int order,String orderConditions) {
+			int page,int limit,int order,String orderConditions,int grouptype) {
 
 		if (userGuid == null) {
 			Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
@@ -1618,7 +1619,7 @@ public class MallControll {
 		}
 		pageBean.setPage(page);
 		pageBean.setLimit(limit);
-		int totalCount=mallService.getEquippingGroupCount(-1);
+		int totalCount=mallService.getEquippingGroupCount(-1,grouptype);
 		
 		int totalPage=0;
 		if(totalCount % limit == 0){
@@ -1629,7 +1630,7 @@ public class MallControll {
 		}
 		pageBean.setTotalPage(totalPage); 
 		int start= (page-1)*limit;
-		List<EquippingGroupModel> equippingGroupModels=mallService.getEquippingGrouplistWithLimit(-1,start,limit,order,orderConditions);
+		List<EquippingGroupModel> equippingGroupModels=mallService.getEquippingGrouplistWithLimit(-1,start,limit,order,orderConditions,grouptype);
 		
 		ArrayList<Integer> limitList =new ArrayList<Integer>();
 		limitList.add(20);
@@ -1647,6 +1648,7 @@ public class MallControll {
 		model.addAttribute("limit", limit);
 		model.addAttribute("order", order);
 		model.addAttribute("orderConditions", orderConditions);
+		session.setAttribute("grouptype", grouptype);
 	}
 	
 	@RequestMapping(value = "/getEquippinggroupByGroupid", method = RequestMethod.POST)

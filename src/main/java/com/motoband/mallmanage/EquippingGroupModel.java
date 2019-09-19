@@ -9,10 +9,19 @@ public class EquippingGroupModel {
 	public int type;//0 分类组   1 广告组  2 分组商品组 3 推荐商品组
 	public long orderindex;//排序 倒序
 	public int state;//状态（0 下架   1上架）
+	public int grouptype;//0商城首页分组,1积分中心分组
 	
+	public int getGrouptype() {
+		return grouptype;
+	}
+
+	public void setGrouptype(int grouptype) {
+		this.grouptype = grouptype;
+	}
+
 	@Override
 	public String toString() {
-		return "EquippingGroupModel [groupid=" + groupid + ", title=" + title + ", type=" + type + ", orderindex=" + orderindex + ", state=" + state + "]";
+		return "EquippingGroupModel [groupid=" + groupid + ", title=" + title + ", subtitle=" + subtitle + ", url=" + url + ", type=" + type + ", orderindex=" + orderindex + ", state=" + state + ", grouptype=" + grouptype + "]";
 	}
 	
 	public String getUrl() {

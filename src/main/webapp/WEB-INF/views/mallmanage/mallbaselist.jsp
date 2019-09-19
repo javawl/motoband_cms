@@ -170,7 +170,7 @@
 
 <script src="../js/consts.js"></script>
 <script type="text/javascript">
-
+var grouptype=${sessionScope.grouptype}
 function pageGoto(url, adminGuid,page){ 
 	var order= $("#triangleHidden").val();
 	var limit= $("#pageSizeSelect").val();
@@ -180,7 +180,7 @@ function pageGoto(url, adminGuid,page){
 	}	
 	var orderConditions= $("#triangleHiddenValue").val();
   
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);	
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);	
 }
 function inputPageGoto(url, adminGuid,totalPage){
 	var inputPage=$("#inputPage").val();
@@ -194,7 +194,7 @@ function inputPageGoto(url, adminGuid,totalPage){
 		}
 	
 		var orderConditions= $("#triangleHiddenValue").val();
-    	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+inputPage+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);
+    	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+inputPage+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);
 	   
 	}else{
 	    alert("页数不合法，请输入合法的页数");
@@ -205,7 +205,7 @@ function changeTriangle(url, adminGuid,page,order,orderConditions){
 
  	var limit= $("#pageSizeSelect").val();
  	var groupid= $("#groupSelect").val();
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);
 
 } 
 function changegroup(url, adminGuid,page,obj){ 
@@ -216,7 +216,7 @@ function changegroup(url, adminGuid,page,obj){
 	}	
 	var orderConditions= $("#triangleHiddenValue").val();
   
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+obj.value);	
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+obj.value+"&grouptype="+grouptype);	
 }
 
 
@@ -226,14 +226,19 @@ function changegroup(url, adminGuid,page,obj){
 <body >
    <div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">商品首页管理</h1>
+			<h1 class="page-header">
+			<c:if test="${sessionScope.grouptype==0} ">商品首页管理</c:if>
+			<c:if test="${sessionScope.grouptype==1} ">积分首页管理</c:if>
+			</h1>
 		</div>
 	</div>
 
 	<div class="row" >
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品首页列表 
+				<div class="panel-heading">
+							<c:if test="${sessionScope.grouptype==0} ">商品首页列表</c:if>
+			<c:if test="${sessionScope.grouptype==1} ">积分首页列表</c:if> 
 				&nbsp&nbsp<button type="button" class="btn btn-primary btn-lg"  
 				                     data-toggle="modal"  data-target="#editmallbaseModel" onclick="javascript:addmallbase()">添加</button>
 				&nbsp&nbsp<button type="button" class="btn btn-info" onclick="javascript:updateVersion('equippingversion')">更新商品首页版本</button>
@@ -304,7 +309,7 @@ function changegroup(url, adminGuid,page,obj){
 									<th>mid</th>
 									<th>组标题</th>
 									<th>组副标题</th>
-									<th>组别</th>
+<!-- 									<th>组别</th> -->
 									<th>商品标题</th>
 									<th>商品副标题</th>
 									<th>图片</th>
@@ -322,26 +327,26 @@ function changegroup(url, adminGuid,page,obj){
 									    <td>${mallbase.mid}</td>
 									    <td>${mallbase.groupname}</td>
 									    <td>${mallbase.groupsubname}</td>
-									    <c:choose>
-									       <c:when test="${mallbase.grouptype==0}">
-									          <td>分类组</td>
-									       </c:when>
-									       <c:when test="${mallbase.grouptype==1}">
-									          <td>广告组</td>
-									       </c:when>
-									       <c:when test="${mallbase.grouptype==2}">
-									          <td>分组商品组</td>
-									       </c:when>
-									       <c:when test="${mallbase.grouptype==3}">
-									          <td>推荐商品组</td>
-									       </c:when>
-									       <c:when test="${mallbase.grouptype==4}">
-									          <td>横条滚动组</td>
-									       </c:when>
-									       <c:otherwise>
-									          <td>未知</td>
-									       </c:otherwise>
-									    </c:choose>
+<%-- 									    <c:choose> --%>
+<%-- 									       <c:when test="${mallbase.mallbasetype==0}"> --%>
+<!-- 									          <td>分类组</td> -->
+<%-- 									       </c:when> --%>
+<%-- 									       <c:when test="${mallbase.mallbasetype==1}"> --%>
+<!-- 									          <td>广告组</td> -->
+<%-- 									       </c:when> --%>
+<%-- 									       <c:when test="${mallbase.mallbasetype==2}"> --%>
+<!-- 									          <td>分组商品组</td> -->
+<%-- 									       </c:when> --%>
+<%-- 									       <c:when test="${mallbase.mallbasetype==3}"> --%>
+<!-- 									          <td>推荐商品组</td> -->
+<%-- 									       </c:when> --%>
+<%-- 									       <c:when test="${mallbase.mallbasetype==4}"> --%>
+<!-- 									          <td>横条滚动组</td> -->
+<%-- 									       </c:when> --%>
+<%-- 									       <c:otherwise> --%>
+<!-- 									          <td>未知</td> -->
+<%-- 									       </c:otherwise> --%>
+<%-- 									    </c:choose> --%>
 										 <td>${mallbase.title}</td>
 										 <td>${mallbase.subtitle}</td>
 										 <td><img alt="" src="${mallbase.picurl}!thumb" width="100px" height="100px"></td>
@@ -515,7 +520,7 @@ function changegroup(url, adminGuid,page,obj){
 					<button type="button" class="btn btn-default" data-dismiss="modal"
 						id="closedelBoxModel">关闭</button>
 					<button type="button" class="btn btn-primary" 
-						onclick="javascript:editmallbaseConfirm()">确认</button>
+						onclick="javascript:editmallbaseConfirm('${sessionScope.grouptype}')">确认</button>
 				</div>
 			</div>
 		</div>

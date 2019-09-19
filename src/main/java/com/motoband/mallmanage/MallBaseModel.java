@@ -15,9 +15,11 @@ public class MallBaseModel {
 	//扩展
 	public String groupname;//组标题
 	public String groupsubname;//组副标题
-	public int grouptype;//组类型
+	public int grouptype;//分组所属首页类型
 	
 	
+
+
 	public String getGroupsubname() {
 		return groupsubname;
 	}

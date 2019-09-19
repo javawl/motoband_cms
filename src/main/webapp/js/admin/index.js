@@ -239,11 +239,12 @@ function openqijilist(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
 	loading.hide();
 }
-function mallbase(url,adminGuid){
-	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0&groupid=-1");
+function mallbase(url,adminGuid,grouptype){
+	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0&groupid=-1&grouptype="+grouptype);
 }
-function equippinggroup(url,adminGuid){
-	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
+function equippinggroup(url,adminGuid,grouptype){
+	console.log("abc");
+	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0&grouptype="+grouptype);
 }
 function newmotomodellist(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");

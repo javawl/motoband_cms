@@ -172,6 +172,7 @@
 <script type="text/javascript">
 
 function pageGoto(url, adminGuid,page){ 
+	var grouptype=${sessionScope.grouptype}
 	var order= $("#triangleHidden").val();
 	var limit= $("#pageSizeSelect").val();
 	var groupid= $("#groupSelect").val();
@@ -180,9 +181,10 @@ function pageGoto(url, adminGuid,page){
 	}	
 	var orderConditions= $("#triangleHiddenValue").val();
   
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);	
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);	
 }
 function inputPageGoto(url, adminGuid,totalPage){
+	var grouptype=${sessionScope.grouptype}
 	var inputPage=$("#inputPage").val();
 	var reg=/^[1-9]\d*$/;
 	if(reg.test(inputPage)==true && (parseInt(inputPage)<=parseInt(totalPage))){
@@ -194,7 +196,7 @@ function inputPageGoto(url, adminGuid,totalPage){
 		}
 	
 		var orderConditions= $("#triangleHiddenValue").val();
-    	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+inputPage+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);
+    	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+inputPage+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);
 	   
 	}else{
 	    alert("页数不合法，请输入合法的页数");
@@ -202,13 +204,14 @@ function inputPageGoto(url, adminGuid,totalPage){
 	}
 }
 function changeTriangle(url, adminGuid,page,order,orderConditions){
-
+	var grouptype=${sessionScope.grouptype}
  	var limit= $("#pageSizeSelect").val();
  	var groupid= $("#groupSelect").val();
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid);
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+groupid+"&grouptype="+grouptype);
 
 } 
 function changegroup(url, adminGuid,page,obj){ 
+	var grouptype=${sessionScope.grouptype}
 	var order= $("#triangleHidden").val();
 	var limit= $("#pageSizeSelect").val();
 	if(order==''||order == null){
@@ -216,7 +219,7 @@ function changegroup(url, adminGuid,page,obj){
 	}	
 	var orderConditions= $("#triangleHiddenValue").val();
   
-	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+obj.value);	
+	$("#page-wrapper").load(url + "?userGuid=" + adminGuid+ "&page="+page+"&limit="+limit+"&order="+order+"&orderConditions="+orderConditions+"&groupid="+obj.value+"&grouptype="+grouptype);	
 }
 
 
@@ -226,14 +229,20 @@ function changegroup(url, adminGuid,page,obj){
 <body >
    <div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">商品首页分组管理</h1>
+			<h1 class="page-header">
+			<c:if test="${sessionScope.grouptype==0}">商品首页分组管理</c:if>
+			<c:if test="${sessionScope.grouptype==1}">积分首页分组管理</c:if>
+			</h1>
 		</div>
 	</div>
 
 	<div class="row" >
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品首页分组列表 
+				<div class="panel-heading">
+							<c:if test="${sessionScope.grouptype==0}">商品首页分组列表 </c:if>
+			<c:if test="${sessionScope.grouptype==1}">积分首页分组列表 </c:if>
+			
 				&nbsp&nbsp<button type="button" class="btn btn-primary btn-lg"  
 				                     data-toggle="modal"  data-target="#editequippinggroupModel" onclick="javascript:addequippinggroup()">添加</button>
 				&nbsp&nbsp<!-- <button type="button" class="btn btn-info" onclick="javascript:updateVersion('equippingversion')">更新商品首页版本</button> -->
@@ -466,7 +475,7 @@ function changegroup(url, adminGuid,page,obj){
 					<button type="button" class="btn btn-default" data-dismiss="modal"
 						id="closedelBoxModel">关闭</button>
 					<button type="button" class="btn btn-primary" 
-						onclick="javascript:editequippinggroupConfirm()">确认</button>
+						onclick="javascript:editequippinggroupConfirm('${sessionScope.grouptype}')">确认</button>
 				</div>
 			</div>
 		</div>
