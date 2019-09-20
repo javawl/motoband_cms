@@ -474,6 +474,7 @@
 									<th>equippingversion</th>
 									<th>tribaltypeversion</th>
 									<th>vipcardinfoversion</th>
+									<th>qijiversion</th>
 								</tr>
 							</thead>
 							<tr>
@@ -501,21 +502,29 @@
 											data-toggle="modal" data-target="#versionModel"
 											onclick="javascript:versionmodel('qijiversion')">qijiversion版本更新</button>
 									</div></td>
+							</tr>
+						<thead>
+								<tr>
+									<th>businessservicev3_8_0version</th>
+								</tr>
+							</thead>
+							<tr>
 								<td rowspan="2"><div>${dataversion.businessservicev3_8_0version}</div>
 									<div>
 										<button type="button" class="btn btn-success"
 											data-toggle="modal" data-target="#versionModel"
 											onclick="javascript:versionmodel('businessservicev3_8_0version')">businessservicev3_8_0version版本更新</button>
 									</div></td>
+
 							</tr>
-<!-- 							<tr> -->
-<%-- 								<td rowspan="2"><div>${dataversion.mallactivityversion}</div> --%>
-<!-- 									<div> -->
-<!-- 										<button type="button" class="btn btn-success" -->
-<!-- 											data-toggle="modal" data-target="#versionModel" -->
-<!-- 											onclick="javascript:versionmodel('mallactivityversion')">mallactivityversion版本更新</button> -->
-<!-- 									</div></td> -->
-<!-- 							</tr> -->
+							<!-- 							<tr> -->
+							<%-- 								<td rowspan="2"><div>${dataversion.mallactivityversion}</div> --%>
+							<!-- 									<div> -->
+							<!-- 										<button type="button" class="btn btn-success" -->
+							<!-- 											data-toggle="modal" data-target="#versionModel" -->
+							<!-- 											onclick="javascript:versionmodel('mallactivityversion')">mallactivityversion版本更新</button> -->
+							<!-- 									</div></td> -->
+							<!-- 							</tr> -->
 							</tbody>
 						</table>
 					</div>

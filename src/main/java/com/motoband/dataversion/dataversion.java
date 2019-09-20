@@ -50,6 +50,8 @@ public class dataversion {
     private int vipcardinfoversion;
     private int qijiversion;
 //	public int mallactivityversion;//商城活动
+    private int businessservicev3_8_0version;
+    
 	
 	
     
@@ -60,6 +62,14 @@ public class dataversion {
 //	public void setMallactivityversion(int mallactivityversion) {
 //		this.mallactivityversion = mallactivityversion;
 //	}
+
+	public int getBusinessservicev3_8_0version() {
+		return businessservicev3_8_0version;
+	}
+
+	public void setBusinessservicev3_8_0version(int businessservicev3_8_0version) {
+		this.businessservicev3_8_0version = businessservicev3_8_0version;
+	}
 
 	public int getQijiversion() {
 		return qijiversion;
