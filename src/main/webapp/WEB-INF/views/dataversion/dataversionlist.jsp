@@ -501,6 +501,12 @@
 											data-toggle="modal" data-target="#versionModel"
 											onclick="javascript:versionmodel('qijiversion')">qijiversion版本更新</button>
 									</div></td>
+								<td rowspan="2"><div>${dataversion.businessservicev3_8_0version}</div>
+									<div>
+										<button type="button" class="btn btn-success"
+											data-toggle="modal" data-target="#versionModel"
+											onclick="javascript:versionmodel('businessservicev3_8_0version')">businessservicev3_8_0version版本更新</button>
+									</div></td>
 							</tr>
 <!-- 							<tr> -->
 <%-- 								<td rowspan="2"><div>${dataversion.mallactivityversion}</div> --%>

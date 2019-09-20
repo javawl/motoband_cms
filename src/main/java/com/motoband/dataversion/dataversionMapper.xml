@@ -151,6 +151,9 @@
 	<update id="updateQiji">
 	   UPDATE dataversion SET qijiversion=qijiversion+1
 	</update>
+	<update id="updateBusinessservicev3_8_0version">
+		UPDATE dataversion SET businessservicev3_8_0version=businessservicev3_8_0version+1
+	</update>
 	<!-- 3.7.0新增商城活动提醒版本号  -->
 <!-- 		<update id="updateMallActivityversion"> -->
 <!-- 	   UPDATE dataversion SET mallactivityversion=mallactivityversion+1 -->

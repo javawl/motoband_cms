@@ -125,8 +125,10 @@ public class dataversionController {
 		dataversionService.updateTribalType();
 	}else if (sign.equals("vipcardinfoversion")) {
 		dataversionService.updateVipcardinfo();
-	}if (sign.equals("qijiversion")) {
+	}else if (sign.equals("qijiversion")) {
 		dataversionService.updateQiji();
+	}else if (sign.equals("businessservicev3_8_0version")) {
+		dataversionService.updateBusinessservicev3_8_0version();
 	}
 			
 		

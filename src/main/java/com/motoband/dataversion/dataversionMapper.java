@@ -110,6 +110,8 @@ public interface dataversionMapper {
 
 	void updateMallActivityversion();
 
+	void updateBusinessservicev3_8_0version();
+
 
 	
 

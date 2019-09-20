@@ -257,6 +257,10 @@ public class dataversionService {
 	public void updateMallActivityversion() {
 		dataversionMapper.updateMallActivityversion();
 	}
+
+	public void updateBusinessservicev3_8_0version() {
+		dataversionMapper.updateBusinessservicev3_8_0version();
+	}
 	
 
 
