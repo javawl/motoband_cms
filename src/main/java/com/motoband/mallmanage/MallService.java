@@ -288,9 +288,9 @@ public List<MallBaseModel> getMallbaselist(int start, int limit, int order, Stri
 	return mallMapper.getMallbaselist( start,  limit,  order,  orderConditions,  groupid,grouptype) ;
 }
 
-public List<EquippingGroupModel> getEquippingGroupList(int state) {
+public List<EquippingGroupModel> getEquippingGroupList(int state, int grouptype) {
 	
-	return  mallMapper.getEquippingGroupList( state);
+	return  mallMapper.getEquippingGroupList( state,grouptype);
 }
 
 public MallBaseModel getmallbasebymid(String mid) {

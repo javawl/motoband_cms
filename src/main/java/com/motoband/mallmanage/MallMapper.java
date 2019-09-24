@@ -121,7 +121,7 @@ public interface MallMapper {
 
 	List<MallBaseModel> getMallbaselist(@Param("start")int start, @Param("limit")int limit, @Param("order")int order, @Param("orderConditions")String orderConditions, @Param("groupid")int groupid,@Param("grouptype") int grouptype);
 
-	List<EquippingGroupModel> getEquippingGroupList(@Param("state")int state);
+	List<EquippingGroupModel> getEquippingGroupList(@Param("state")int state,@Param("grouptype") int grouptype);
 
 	MallBaseModel getmallbasebymid(@Param("mid")String mid);
 

@@ -1525,7 +1525,7 @@ public class MallControll {
 
 		model.addAttribute("pageBean", pageBean);
 		
-		List<EquippingGroupModel> equippinggroupModels=mallService.getEquippingGroupList(1);
+		List<EquippingGroupModel> equippinggroupModels=mallService.getEquippingGroupList(1,grouptype);
 		model.addAttribute("equippinggroupModels", equippinggroupModels);
 		
 		model.addAttribute("mallbaseModels", mallbaseModels);

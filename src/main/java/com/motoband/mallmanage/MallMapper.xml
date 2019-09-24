@@ -476,9 +476,9 @@ left join equippinggroup b on b.groupid=a.groupid where a.grouptype=#{grouptype}
   limit #{start},#{limit}
 </select>
 <select id="getEquippingGroupList" parameterType="String" resultType="com.motoband.mallmanage.EquippingGroupModel">
-select * from equippinggroup  
+select * from equippinggroup   where grouptype=#{grouptype}  
 <if test="state >= 0">
-     where state =#{state} 
+     and state =#{state} 
 </if>
  order by state desc,orderindex desc
 </select>
