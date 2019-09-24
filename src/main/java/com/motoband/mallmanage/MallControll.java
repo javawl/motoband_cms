@@ -1551,7 +1551,7 @@ public class MallControll {
 	}
 	@RequestMapping(value = "/insertOrupdateMallbase", method = RequestMethod.POST)
 	public void insertOrupdateMallbase(Model model, HttpSession session, HttpServletRequest request,
-			String mid,String title,String picurl,String url,String price,String state,String orderindex,String groupid,String oldprice,String subtitle,
+			String mid,String title,String picurl,String url,String price,String state,String orderindex,String groupid,String oldprice,String subtitle,int grouptype,
 			PrintWriter out) {
 		
 		String jsonStr="";
@@ -1587,6 +1587,7 @@ public class MallControll {
 		if(groupid!=null&& !"".equals(groupid)){
 			mallBaseModel.setGroupid(Integer.parseInt(groupid));
 		}
+		mallBaseModel.setGrouptype(grouptype);
 		try {
 			mallService.insertOrupdateMallbase(mallBaseModel);
 			jsonStr="success";
