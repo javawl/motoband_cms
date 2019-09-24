@@ -513,7 +513,7 @@ select * from equippinggroup  where groupid=#{groupid}
 insert into equippinggroup(groupid,title,type,orderindex,state,subtitle,url,grouptype)
 values(#{groupid},#{title},#{type},#{orderindex},#{state},#{subtitle},#{url},#{grouptype})
  ON DUPLICATE KEY UPDATE
- title=#{title},type =#{type}, orderindex=#{orderindex}, state=#{state},subtitle=#{subtitle},url=#{url,grouptype=#{grouptype}}
+ title=#{title},type =#{type}, orderindex=#{orderindex}, state=#{state},subtitle=#{subtitle},url=#{url},grouptype=#{grouptype}
 </insert>
 <update id="insertMallProductKeyword" parameterType="String">
  update motomall_product set keyword=#{keyword} where id=#{id}

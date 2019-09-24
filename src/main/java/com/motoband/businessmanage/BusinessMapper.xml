@@ -248,4 +248,42 @@ where userid=#{buserid}
 <delete id="deleteAllBusinessActivity" parameterType="String">
   delete from business_activity where buserid=#{buserid}
 </delete>
+
+
+<!-- 3.8.0 -->
+	<resultMap
+		type="com.motoband.businessmanage.BusinessUserV3_8_0Model"
+		id="businessUserV3_8_0Model">
+		<result property="pics" column="pics"
+			typeHandler="com.motoband.util.JsonArrayTypeHandle" />
+		<result property="kfuseridlist" column="kfuseridlist"
+			typeHandler="com.motoband.util.JsonArrayTypeHandle" />
+		<result property="lables" column="lables"
+			typeHandler="com.motoband.util.JsonArrayTypeHandle" />
+		<result property="contactphone" column="contactphone"
+			typeHandler="com.motoband.util.JsonArrayTypeHandle" />
+	</resultMap>
+	<resultMap
+		type="com.motoband.businessmanage.BusinessServiceV3_8_0Model"
+		id="businessServiceV3_8_0Model">
+		<result property="lables" column="lables"
+			typeHandler="com.motoband.util.JsonArrayTypeHandle" />
+	</resultMap>
+	<select id="getRedirctShopCount"  resultType="Integer"  > 
+		select count(1) from `business_user_v_3_8_0` 
+	</select>
+	<select id="selectBusinessServiceV3_8_0List"
+		resultMap="businessServiceV3_8_0Model">
+		select * from `business_service_v_3_8_0` where state=0 order
+		by orderindex desc
+	</select>
+	<select id="getRedirctShopList"
+		resultMap="businessUserV3_8_0Model">
+		select * from `business_user_v_3_8_0`
+	</select>
+	<select id="getBUserV3_8_0ByUserid"
+		resultMap="businessUserV3_8_0Model" parameterType="String">
+		select * from
+		`business_user_v_3_8_0` where state=0 and userid=#{userid}
+	</select>
 </mapper>

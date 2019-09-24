@@ -191,4 +191,13 @@ public boolean insertOrUpdateBusinessActivity(BusinessActivityModel businessActi
 	}
 	
 }
+
+public int getRedirctShopCount() {
+	return businessMapper.getRedirctShopCount();
+}
+
+public List<BusinessUserV3_8_0Model> getRedirctShopList(int start, int limit, int order, String orderConditions) {
+	// TODO Auto-generated method stub
+	return businessMapper.getRedirctShopList(start,limit,order,orderConditions);
+}
 }

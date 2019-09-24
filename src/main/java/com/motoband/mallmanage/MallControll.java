@@ -1667,7 +1667,7 @@ public class MallControll {
 	
 	@RequestMapping(value = "/insertOrupdateEquippingGroup", method = RequestMethod.POST)
 	public void insertOrupdateEquippingGroup(Model model, HttpSession session, HttpServletRequest request,
-			String groupid,String title,String state,String orderindex,String type,String subtitle,String url,
+			String groupid,String title,String state,String orderindex,String type,String subtitle,String url,int grouptype,
 			PrintWriter out) {
 		
 		String jsonStr="";
@@ -1695,6 +1695,7 @@ public class MallControll {
 		if(type!=null&& !"".equals(type)){
 			equippingGroupModel.setType(Integer.parseInt(type));
 		}
+		equippingGroupModel.setGrouptype(grouptype);
 		try {
 			mallService.insertOrupdateEquippingGroup(equippingGroupModel);
 			jsonStr="success";

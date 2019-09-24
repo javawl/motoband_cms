@@ -83,5 +83,10 @@ public interface BusinessMapper {
 	void deleteAllBusinessActivity(@Param("buserid")String userid);
 
 	void insertOrUpdateBusinessActivity(BusinessActivityModel businessActivityModel);
+
+	int getRedirctShopCount();
+
+	List<BusinessUserV3_8_0Model> getRedirctShopList(@Param("start")int start, @Param("limit")int limit, @Param("order")int order,
+			@Param("orderConditions")String orderConditions);
     
 }

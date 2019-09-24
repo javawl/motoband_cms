@@ -768,6 +768,64 @@ public void businessuserlist(Model model, HttpSession session, HttpServletReques
 	model.addAttribute("order", order);
 	model.addAttribute("orderConditions", orderConditions);
 }
+
+
+@RequestMapping(value = "/businessredirctshoplist", method = RequestMethod.GET)
+public void businessredirctshoplist(Model model, HttpSession session, HttpServletRequest request, String userGuid, 
+		int page,int limit,int order,String orderConditions) {
+
+	if (userGuid == null) {
+		Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
+		userGuid = admin.getUser_guid();
+	}
+	PageBean<BusinessUserV3_8_0Model> pageBean=new PageBean<BusinessUserV3_8_0Model>();
+	if(page==0){
+		page=1;
+	}
+    if(limit==0){
+    	limit=20;
+    }
+  
+    if(orderConditions==null || orderConditions==""){
+		orderConditions="";
+	}
+	pageBean.setPage(page);
+	pageBean.setLimit(limit);
+	int totalCount=businessService.getRedirctShopCount();
+	
+	int totalPage=0;
+	if(totalCount % limit == 0){
+		totalPage = totalCount / limit;
+	}else{
+		totalPage = totalCount / limit + 1;
+	
+	}
+	pageBean.setTotalPage(totalPage); 
+	int start= (page-1)*limit;
+	List<BusinessUserV3_8_0Model> businessusers=businessService.getRedirctShopList(start,limit,order,orderConditions);
+	
+	ArrayList<Integer> limitList =new ArrayList<Integer>();
+	limitList.add(20);
+	limitList.add(50);
+	limitList.add(100);
+	model.addAttribute("limitList", limitList);
+	ArrayList<Integer> typeList =new ArrayList<Integer>();
+	typeList.add(0);
+	typeList.add(1);
+
+	model.addAttribute("pageBean", pageBean);
+
+	
+//	model.addAttribute("businessTypeModels", businessTypeModels);
+//	model.addAttribute("businessServiceModels", businessServiceModels);
+//	model.addAttribute("brandparentModels", brandparentModels);
+	model.addAttribute("businessusers", businessusers);
+	model.addAttribute("limit", limit);
+	model.addAttribute("order", order);
+	model.addAttribute("orderConditions", orderConditions);
+}
+
+
 @RequestMapping(value = "/resetBuserPassword", method = RequestMethod.POST)
 public void resetBuserPassword(Model model, HttpSession session, HttpServletRequest request, String userid,String password,PrintWriter out) {
     password=MD5.stringToMD5(MD5.stringToMD5(password));
@@ -800,6 +858,19 @@ public void lookUserNewPage(Model model, HttpSession session, HttpServletRequest
 	model.addAttribute("brandparentModels", brandparentModels);
 
 }
+@RequestMapping(value = "/lookBusinessRedirctshopInfo", method = RequestMethod.GET)
+public void lookBusinessRedirctshopInfo(Model model, HttpSession session, HttpServletRequest request, int buid) {
+
+	ArrayList<motoimg> motoimgs = boxService.getMotoImgListByGroupGuid("0");
+	ArrayList<imggroup> imggroups = boxService.getImgGroupList();
+	model.addAttribute("imggroups", imggroups);
+	model.addAttribute("motoimgs", motoimgs);
+	model.addAttribute("buid", buid);
+
+}
+
+
+
 
 @RequestMapping(value = "/lookuser", method = RequestMethod.POST)
 public void lookuser(Model model, HttpSession session, HttpServletRequest request,String userid,PrintWriter out) throws UnsupportedEncodingException {
