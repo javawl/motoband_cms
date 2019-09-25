@@ -933,6 +933,15 @@ public void lookuser(Model model, HttpSession session, HttpServletRequest reques
     out.write(jsonString);
   }
 
+
+@RequestMapping(value = "/lookbusinessredirctshoplist", method = RequestMethod.POST)
+public void lookbusinessredirctshoplist(Model model, HttpSession session, HttpServletRequest request,int buid,PrintWriter out) throws UnsupportedEncodingException {
+	String jsonString = "";
+	BusinessUserV3_8_0Model businessUserModel=businessService.getgetBUserV3_8_0ByUserid(buid);
+	jsonString=JSON.toJSONString(businessUserModel);
+    out.write(jsonString);
+  }
+
 @RequestMapping(value = "/updateBUser", method = RequestMethod.POST)
 @ResponseBody
 public void updateBUser(Model model, HttpSession session, HttpServletRequest request,String userid,String name,String contactname,String contactphone,String type,String address,String businessarea
@@ -1237,6 +1246,13 @@ public void updateBUser(Model model, HttpSession session, HttpServletRequest req
     out.write(jsonString);
   }
 
+@RequestMapping(value = "/updateBUserV_3_8_0", method = RequestMethod.POST)
+@ResponseBody
+public void updateBUserV_3_8_0(Model model, HttpSession session, HttpServletRequest request,BusinessUserV3_8_0Model user,PrintWriter out) {
+	user.setUpdatetime(System.currentTimeMillis());
+	businessService.insertOrupdateBusinessUserV_3_8_0(user);
+	  out.write("success");
+}
 @RequestMapping(value = "/activitytoUsecarmain", method = RequestMethod.POST)
 public void activitytoUsecarmain(Model model, HttpSession session, HttpServletRequest request, String baid,
 		String groupid,String orderindex, String content,String title,String pics1,String pics2,String pics3,String pics4,String buserid, PrintWriter out) throws Exception {

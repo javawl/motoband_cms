@@ -48,6 +48,10 @@ public void updateBusinessUser(Map<String, String> updatemap) {
 	
 }
 
+public void insertOrupdateBusinessUserV_3_8_0(BusinessUserV3_8_0Model user) {
+	businessMapper.insertOrupdateBusinessUserV_3_8_0(user);
+}
+
 public BusinessUserinfoApplyModel getBuserinfoApplyBybuserid(String buserid) {
 	
 	return businessMapper.getBuserinfoApplyBybuserid(buserid);
@@ -200,4 +204,9 @@ public List<BusinessUserV3_8_0Model> getRedirctShopList(int start, int limit, in
 	// TODO Auto-generated method stub
 	return businessMapper.getRedirctShopList(start,limit,order,orderConditions);
 }
+public BusinessUserV3_8_0Model getgetBUserV3_8_0ByUserid(int buid) {
+	// TODO Auto-generated method stub
+	return businessMapper.getBUserV3_8_0ByUserid(buid);
+}
+
 }

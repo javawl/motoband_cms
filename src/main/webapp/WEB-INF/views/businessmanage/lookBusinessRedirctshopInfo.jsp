@@ -4,9 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String htmlData = request.getParameter("content1") != null
-			? request.getParameter("content1")
-			: "";
+	String htmlData = request.getParameter("content1") != null ? request.getParameter("content1") : "";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,8 +51,8 @@
 
 <link rel="stylesheet" type="text/css"
 	href="../css/bootstrap-datetimepicker.min.css" />
-<script src="../js/bootstrap-datetimepicker.js"
-	type="text/javascript" charset="utf-8"></script>
+<script src="../js/bootstrap-datetimepicker.js" type="text/javascript"
+	charset="utf-8"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"
 	type="text/javascript" charset="utf-8"></script>
 
@@ -176,18 +174,16 @@ body {
 	filter: alpha(opacity = 50);
 	opacity: 0.5;
 }
-
 </style>
 <script>
-	$ ('#grouplist > div').on ("click", function ()
-    {
+	$('#grouplist > div').on("click", function() {
 		console.log("111111");
-	    showgroupimg ($ (this).attr ("id"));
-	    $ ("#nowgroupid").val ($ (this).attr ("id"));
-	    $ (this).parent ("#grouplist").find ("div").removeClass ('groupaction');
-	    $ (this).addClass ('groupaction');
-	    
-    });
+		showgroupimg($(this).attr("id"));
+		$("#nowgroupid").val($(this).attr("id"));
+		$(this).parent("#grouplist").find("div").removeClass('groupaction');
+		$(this).addClass('groupaction');
+
+	});
 </script>
 
 
@@ -196,186 +192,175 @@ body {
 
 </head>
 <body>
-    
+
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">用户管理——编辑页</h1>
-			<input id="useridHidden" type="hidden" value="${buid }"/>
-			<input id="hiddenValue" type="hidden" value=""/>
-			
+			<input id="useridHidden" type="hidden" value="${buid }" /> <input
+				id="hiddenValue" type="hidden" value="" />
+
 		</div>
-   </div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-info">
-					<div class="panel-heading">页面内容</div>
-					<div class="modal-body" style="height:5800px">
-					<div id="back" style="display:none; POSITION:fixed; z-index: 1000;left:0; top:0; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.6); filter:alpha(opacity=60)">
-					<h3><font color="white">上传中，请耐心等待</font></h3></div>
-					<div class="form-group">
-					    <input class="form-control" placeholder="buid" id="look_userid"
-							value="" readonly="readonly" >
-							<input id="hidden_buid" type="hidden" value="" />
-							<input id="hidden_state" type="hidden" value="" />
-					</div>
-                    <div class="form-group">
-					   <b>商家名称</b><input class="form-control" placeholder="name" id="look_name"
-							value="" >
-					</div>
-                    <div class="form-group">
-					    <b>联系人电话</b><input class="form-control" placeholder="contactphone" id="look_contactphone"
-							value="" >
-					</div>
-					<div style="clear:both;"></div>
-                    <div class="form-group">
-					    <b>地址</b><input class="form-control" placeholder="address" id="look_address"
-							value="" >
-					</div>
-                    <div class="form-group">
-					  <div><b>状态</b></div>
-						<div class="col-sm-3"><input type="radio" name="look_state" value="0" />审核通过（下架）</div>
-						<div class="col-sm-3"><input type="radio" name="look_state" value="1" />上架</div>
-					</div>
-					<div style="clear:both;"></div>
-                    <div class="form-group">
-					   <b>省</b><input class="form-control" placeholder="province" id="look_province"
-							value="" readonly="readonly">
-					</div>
-                    <div class="form-group">
-					    <b>市</b><input class="form-control" placeholder="city" id="look_city"
-							value="" readonly="readonly">
-					</div>
-                    <div class="form-group">
-					    <b>添加时间</b><input class="form-control" placeholder="addtime" id="look_createtime"
-							value="" readonly="readonly" >
-					</div>
-                    
-                    <div class="form-group">
-					    <b>经度</b><input class="form-control" placeholder="longitude" id="look_longitude"
-							value="" readonly="readonly">
-					</div>
-                    <div class="form-group">
-					    <b>纬度</b><input class="form-control" placeholder="latitude" id="look_latitude"
-							value="" readonly="readonly">
-					</div>
-					</div>
-                    <div class="form-group">
-					    <b>营业时间</b><input class="form-control" placeholder="businesshours" id="look_businesshours"
-							value="" >
-					</div>
-                    <div class="form-group">
-					    <b>商家标签</b><input class="form-control" placeholder="businesslables" id="look_businesslables"
-							value="" >
-					</div>
-                    <div class="form-group">
-					    <b>商家客服</b><input class="form-control" placeholder="多客服userid  英文逗号隔开" id="look_kfuseridlist"
-							value="" >
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-info">
+				<div class="panel-heading">页面内容</div>
+				<div class="modal-body">
+					<div id="back"
+						style="display: none; POSITION: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); filter: alpha(opacity = 60)">
+						<h3>
+							<font color="white">上传中，请耐心等待</font>
+						</h3>
 					</div>
 					<div class="form-group">
-					    <span><b>店铺简介</b></span><!-- <input class="form-control" placeholder="des" id="look_des"
+						<input class="form-control" placeholder="buid" id="look_buid"
+							value="" readonly="readonly"> <input id="hidden_buid"
+							type="hidden" value="" /> <input id="hidden_state" type="hidden"
+							value="" />
+					</div>
+					<div class="form-group">
+						<b>商家名称</b><input class="form-control" placeholder="name"
+							id="look_name" value="">
+					</div>
+					<div class="form-group">
+						<b>联系人电话</b> <input class="form-control"
+							placeholder="contactphone" id="look_contactphone" value="">
+					</div>
+					<div style="clear: both;"></div>
+					<div class="form-group">
+						<b>地址</b><input class="form-control" placeholder="address"
+							id="look_address" value="">
+					</div>
+					<div class="form-group">
+						<div>
+							<b>状态</b>
+						</div>
+						<div class="col-sm-3">
+							<input type="radio" name="look_state" value="1" />审核通过（下架）
+						</div>
+						<div class="col-sm-3">
+							<input type="radio" name="look_state" value="0" />上架
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+					<div class="form-group">
+						<b>省</b><input class="form-control" placeholder="province"
+							id="look_province" value="">
+					</div>
+					<div class="form-group">
+						<b>市</b><input class="form-control" placeholder="city"
+							id="look_city" value="">
+					</div>
+					<div class="form-group">
+						<b>添加时间</b><input class="form-control" placeholder="addtime"
+							id="look_createtime" value="" readonly="readonly">
+					</div>
+
+					<div class="form-group">
+						<b>经度</b><input class="form-control" placeholder="longitude"
+							id="look_longitude" value="">
+					</div>
+					<div class="form-group">
+						<b>纬度</b><input class="form-control" placeholder="latitude"
+							id="look_latitude" value="">
+					</div>
+					<div class="form-group">
+						<b>营业时间</b><input class="form-control" placeholder="businesshours"
+							id="look_businesshours" value="">
+					</div>
+					<div class="form-group">
+						<b>商家标签</b><input class="form-control"
+							placeholder="businesslables" id="look_businesslables" value="">
+					</div>
+					<div class="form-group">
+						<b>商家客服</b><input class="form-control"
+							placeholder="多客服userid  英文逗号隔开" id="look_kfuseridlist" value="">
+					</div>
+					<div class="form-group">
+						<span><b>店铺简介</b></span>
+						<!-- <input class="form-control" placeholder="des" id="look_des"
 							value="" > -->
-							<div><textarea style="width: 100%;" class="form-group" id="look_des" rows="3" cols="" placeholder="des"></textarea></div>
+						<div>
+							<textarea style="width: 100%;" class="form-group" id="look_des"
+								rows="3" cols="" placeholder="des"></textarea>
+						</div>
 					</div>
+				</div>
+
+				<div class="form-group">
 					<div class="form-group">
-					    <div><b>服务能力</b></div><!-- <input class="form-control" placeholder="businessserviceliststr" id="look_businessserviceliststr"
-							value="" > -->
-							<c:forEach items="${businessServiceModels}" var="service" >
-					            <div class="col-sm-3">${service.name }</div> 
-					         </c:forEach>
+						<div class="col-sm-3">
+							<b>店内照片1</b>
+							<div>
+								<input id="" type="button" value="设置照片1" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('7')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics1"> <img
+									id="shoppicsshow1" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<b>店内照片2</b>
+							<div>
+								<input id="" type="button" value="设置照片2" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('8')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics2"> <img
+									id="shoppicsshow2" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<b>店内照片3</b>
+							<div>
+								<input id="" type="button" value="设置照片3" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('9')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics3"> <img
+									id="shoppicsshow3" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<b>店内照片4</b>
+							<div>
+								<input id="" type="button" value="设置照片4" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('10')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics4"> <img
+									id="shoppicsshow4" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
 					</div>
-					<div style="clear:both;"></div>
-<!-- 					<div class="form-group"> -->
-<%-- 					   <c:forEach items="${businessServiceModels}" var="service" > --%>
-<%-- 					        <div id="servicecontentDiv${service.bsid }" style="display: none;"><span>${service.name }描述：</span><div><textarea style="width: 100%;" class="form-group" id="look_servicecontent${service.bsid }" rows="3" cols="" placeholder="请输入${service.name }描述"></textarea></div></div> --%>
-<%-- 					   </c:forEach> --%>
-<!-- 					</div> -->
-					<div style="clear:both;"><hr></div>
-					<div class="form-group">
-					   <div class="col-sm-6">
-					    <div class="col-sm-6">
-					       <b>用户头像</b>
-				          <div>
-							<input id="" type="button" value="设置头像" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel" onclick="javascript:insertTitleImgHidden('2')">
-						  </div>
-						  <div>
-							<input type="text" value="" id="headurl"> <img
-								id="headurlshow" src=""
-								style="width: 144px; height: 144px" />
-						  </div>
-					   </div>
-					</div> 
-					<div style="clear:both;"><br><hr></div>
-					<div style="clear:both;"><br><hr></div>
-				    <div class="form-group">
-					   <div class="col-sm-3">
-					       <b>店内照片1</b>
-				          <div>
-							<input id="" type="button" value="设置照片1" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel" onclick="javascript:insertTitleImgHidden('7')">
-						  </div>
-						  <div>
-							<input type="text" value="" id="shoppics1"> <img
-								id="shoppicsshow1" src=""
-								style="width: 144px; height: 144px" />
-						  </div>
-					   </div>
-					    <div class="col-sm-3">
-					       <b>店内照片2</b>
-				          <div>
-							<input id="" type="button" value="设置照片2" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel" onclick="javascript:insertTitleImgHidden('8')">
-						  </div>
-						  <div>
-							<input type="text" value="" id="shoppics2"> <img
-								id="shoppicsshow2" src=""
-								style="width: 144px; height: 144px" />
-						  </div>
-					   </div>
-					   <div class="col-sm-3">
-					       <b>店内照片3</b>
-				          <div>
-							<input id="" type="button" value="设置照片3" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel" onclick="javascript:insertTitleImgHidden('9')">
-						  </div>
-						  <div>
-							<input type="text" value="" id="shoppics3"> <img
-								id="shoppicsshow3" src=""
-								style="width: 144px; height: 144px" />
-						  </div>
-					   </div>
-					    <div class="col-sm-3">
-					       <b>店内照片4</b>
-				          <div>
-							<input id="" type="button" value="设置照片4" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel" onclick="javascript:insertTitleImgHidden('10')">
-						  </div>
-						  <div>
-							<input type="text" value="" id="shoppics4"> <img
-								id="shoppicsshow4" src=""
-								style="width: 144px; height: 144px" />
-						  </div>
-					   </div>
+					<div style="clear: both;">
+						<br>
+						<hr>
 					</div>
-					<div style="clear:both;"><br><hr></div>
 
 				</div>
-					<div class="panel-footer">
-						
-					<button id="editBtn" type="button" class="btn btn-success" onclick="javascript:toEdit()">编辑</button>
-					<button type="button" class="btn btn-primary" 
+				<div class="panel-footer">
+
+					<button id="editBtn" type="button" class="btn btn-success"
+						onclick="javascript:toEdit()">编辑</button>
+					<button type="button" class="btn btn-primary"
 						onclick="javascript:editUserConfirm()">保存编辑结果</button>
-					</div>
 				</div>
 			</div>
-
 		</div>
 
+	</div>
 
-		<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-		<script src="../dist/js/sb-admin-2.js"></script>
-		<script src="../js/boxmanage/jquery.form.min.js"></script>
+	<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+	<script src="../dist/js/sb-admin-2.js"></script>
+	<script src="../js/boxmanage/jquery.form.min.js"></script>
 
 	<div class="modal fade" id="titleImgModel" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -386,9 +371,13 @@ body {
 						aria-hidden="true" onclick="javascript:closetitleImgModel()">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">选择图片</h4>
 				</div>
-				<div class="modal-body" style="padding: 5px;" >
-				<div id="back1" style="display:none; POSITION:fixed; z-index: 1000;left:0; top:0; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.6); filter:alpha(opacity=60)">
-				<h3><font color="white">上传中，请耐心等待</font></h3></div>
+				<div class="modal-body" style="padding: 5px;">
+					<div id="back1"
+						style="display: none; POSITION: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); filter: alpha(opacity = 60)">
+						<h3>
+							<font color="white">上传中，请耐心等待</font>
+						</h3>
+					</div>
 					<div class="form-group" id="imglistdiv"
 						style="height: 600px; overflow: auto; overflow-x: hidden;">
 						<div
@@ -414,7 +403,8 @@ body {
 										</div>
 										<div class="panel-footer"
 											style="text-align: center; padding: 0px; font-size: 9pt; height: 60px;">
-											<textarea   rows='2' style='word-break: break-all;' class="form-control" placeholder="图片名" name="ImgName" 
+											<textarea rows='2' style='word-break: break-all;'
+												class="form-control" placeholder="图片名" name="ImgName"
 												<%-- value="${imgMessages.img_name }" --%> disabled="disabled">${imgMessages.img_name }</textarea>
 										</div>
 										<div class="panel-footer"
@@ -434,13 +424,13 @@ body {
 					</div>
 				</div>
 				<div class="modal-footer">
-				<form id="uploadForm" style="float: left">
-							<input type="file" name="FileContent" class="btn btn-info"
-								id="inputfile" style="float: left"></input> <input id="subbtn"
-								type="submit" style="float: left" class="btn btn-info"
-								style="margin-left: 0;" onclick="javascript:imgsubmit()">
-						</form>
-					
+					<form id="uploadForm" style="float: left">
+						<input type="file" name="FileContent" class="btn btn-info"
+							id="inputfile" style="float: left"></input> <input id="subbtn"
+							type="submit" style="float: left" class="btn btn-info"
+							style="margin-left: 0;" onclick="javascript:imgsubmit()">
+					</form>
+
 					<button type="button" class="btn btn-default" data-dismiss="modal"
 						id="closeModel" onclick="javascript:closetitleImgModel()">关闭</button>
 					<button type="button" class="btn btn-primary" id="savebtn"
@@ -450,36 +440,37 @@ body {
 			<!-- /.modal-content -->
 		</div>
 		<!-- /.modal-dialog -->
-   </div>
+	</div>
 
 
-<div class="modal fade" id="addtoUsecarMainModel" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addtoUsecarMainModel" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" id="timesBtn"
-						aria-hidden="true">&times;</button>
+					<button type="button" class="close" data-dismiss="modal"
+						id="timesBtn" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">添加到首页</h4>
 				</div>
 				<div class="modal-body">
-				   
-					<input type="text" value="" style="display: none" id="activityindex"/>
+
+					<input type="text" value="" style="display: none"
+						id="activityindex" />
 					<div class="form-group">
-					<span><b>选择组名</b></span>
-					   <select id="addtomaingroup_select" class="form-control">
-					   </select>
+						<span><b>选择组名</b></span> <select id="addtomaingroup_select"
+							class="form-control">
+						</select>
 					</div>
 					<div class="form-group">
-					<span><b>orderindex</b></span>
-					    <input type="text"  class="form-control" value=""  id="addtomaingroup_orderindex"/>
+						<span><b>orderindex</b></span> <input type="text"
+							class="form-control" value="" id="addtomaingroup_orderindex" />
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal"
 						id="closedelBoxModel">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" id="addtomainBtn"
-						onclick="javascript:addtoUsecarMainConfirm()">确认</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						id="addtomainBtn" onclick="javascript:addtoUsecarMainConfirm()">确认</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -487,23 +478,20 @@ body {
 		<!-- /.modal-dialog -->
 	</div>
 
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../js/businessmanage/businessuserlist.js"></script>
-	<script type="text/javascript" src="../js/mallmanage/uploadGroupImage.js" ></script>
-    <script type="text/javascript">
-	   var buid=$("#useridHidden").val();
-	   lookuser(buid);
-	   $("input,select,button,textarea").prop('disabled',true);
-	   $("#addtoUsecarMainBtn1").prop('disabled',false);
-	   $("#addtoUsecarMainBtn2").prop('disabled',false);
-	   $("#addtoUsecarMainBtn3").prop('disabled',false);
-	   $("#addtoUsecarMainBtn4").prop('disabled',false);
-	   $("#addtomaingroup_select").prop('disabled',false);
-	   $("#addtomaingroup_orderindex").prop('disabled',false);
-	   $("#closedelBoxModel").prop('disabled',false);
-	   $("#editBtn").prop('disabled',false);
-	   $("#addtomainBtn").prop('disabled',false);
-	   $("#timesBtn").prop('disabled',false);
-	</script> 
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../js/businessmanage/businessredirctshoplist.js"></script>
+	<script type="text/javascript"
+		src="../js/mallmanage/uploadGroupImage.js"></script>
+	<script type="text/javascript">
+		var buid = $("#useridHidden").val();
+		lookuser(buid);
+		$("input,select,button,textarea").prop('disabled', true);
+		$("#addtomaingroup_select").prop('disabled', false);
+		$("#addtomaingroup_orderindex").prop('disabled', false);
+		$("#closedelBoxModel").prop('disabled', false);
+		$("#editBtn").prop('disabled', false);
+		$("#addtomainBtn").prop('disabled', false);
+		$("#timesBtn").prop('disabled', false);
+	</script>
 </body>
 </html>

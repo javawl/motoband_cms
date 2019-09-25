@@ -282,8 +282,21 @@ where userid=#{buserid}
 		select * from `business_user_v_3_8_0`
 	</select>
 	<select id="getBUserV3_8_0ByUserid"
-		resultMap="businessUserV3_8_0Model" parameterType="String">
+		resultMap="businessUserV3_8_0Model" parameterType="int">
 		select * from
-		`business_user_v_3_8_0` where state=0 and userid=#{userid}
+		`business_user_v_3_8_0` where state=0 and buid=#{buid}
 	</select>
+	<insert id="insertOrupdateBusinessUserV_3_8_0" parameterType="businessUserV3_8_0Model">
+		INSERT INTO `business_user_v_3_8_0` (`name`, `province`, `city`, `contactphone`, `pics`, `address`, `businesshours`, `des`, `latitude`, `longitude`, `kfuseridlist`, `groupid`, `lables`, `usercount`, `scorecount`, `createtime`, `updatetime`, `state`)
+		values
+<!-- 		(#{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }) -->
+<!-- 	INSERT INTO `business_user_v_3_8_0` ( `name`, `province`, `city`, `contactphone`, `pics`, `address`, `businesshours`, `des`, `latitude`, `longitude`, `kfuseridlist`, `groupid`, `lables`, `usercount`, `scorecount`, `createtime`, `updatetime`, `state`)  -->
+<!-- 	VALUES -->
+	 (#{name}, #{province} #{city}, #{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }, #{address}, #{businesshours}, #{des},#{latitude}, #{longitude}, #{kfuseridlist,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{groupid}, #{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle},#{usercount}, #{scorecount}, #{createtime}, #{updatetime}, #{state})
+<!-- 	 ON -->
+<!-- 	DUPLICATE KEY UPDATE -->
+<!-- 	name=#{name},province=#{province},city=#{city},contactphone=#{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle },pics=#{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }, -->
+<!-- 	address=#{address},businesshours=#{businesshours},des=#{des},latitude=#{latitude},longitude=#{longitude},kfuseridlist=#{kfuseridlist,typeHandler=com.motoband.util.JsonArrayTypeHandle }, -->
+<!-- 	groupid=#{groupid},lables=#{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle },usercount=#{usercount},scorecount=#{scorecount},updatetime=#{updatetime},state=#{state} -->
+	</insert>
 </mapper>
