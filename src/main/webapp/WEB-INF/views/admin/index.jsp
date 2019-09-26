@@ -262,6 +262,8 @@
 									href="javascript:businesscommentlist('../businessmanage/businesscommentlist','${admin.user_guid}')">商家评论管理</a></li>
 									<li id="businessredirctshoplist" style="display: none"><a
 									href="javascript:businessredirctshoplist('../businessmanage/businessredirctshoplist','${admin.user_guid}')">直营店管理</a></li>
+						<li id="businessredirctshopservicelist" style="display: none"><a
+									href="javascript:businessredirctshopservicelist('../businessmanage/businessredirctshopservicelist','${admin.user_guid}')">直营店服务管理</a></li>
 							</ul></li>
 						<%--   <li><a href="#"><i class="fa fa-files-o fa-fw"></i>
 								礼物兑换管理<span class="fa arrow"></span></a>

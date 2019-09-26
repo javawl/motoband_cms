@@ -431,31 +431,8 @@
 					<div class="form-group">
 						<label>关注数</label> <input class="form-control"
 							placeholder="请输入每日执行的关注数" id="isfollowcount"
-							value="2500">
+							value="1666">
 					</div>
-<!-- 					<div class="form-group"> -->
-<!-- 						<label>市</label> <input class="form-control" -->
-<!-- 							placeholder="请输入景点所在的市，如北京市，延边朝鲜族自治州,湘西土家族苗族自治州" id="addcity" -->
-<!-- 							value=""> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label>经纬度</label> <input class="form-control" -->
-<!-- 							placeholder="请输入经纬度,'经度+维度',如111.940666,25.59102" -->
-<!-- 							id="addlonandlat" value=""> -->
-<!-- 					</div> -->
-
-					<!-- 	
-				 <div class="form-group">
-				 <div class="col-sm-12"  style="margin-top: 15px;">
-                        <label>类型:</label>
-						<input type="radio" class="" placeholder="" name="addtype"
-							value="0" >地域 
-						<input type="radio" class="" placeholder="" name="addtype"
-							value="1" >品牌
-						<input type="radio" class="" placeholder="" name="addtype"
-							value="2" >主题
-					</div>
-				 </div> -->
 				</div>
 
 				<div class="modal-footer">

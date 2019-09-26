@@ -12,6 +12,7 @@ import com.motoband.motouser.SimpleUserModel;
 public class BusinessUserV3_8_0Model {
 
 	public int buid;
+	public String buserid;
 	public String name;
 	public String province;
 	public String city;
@@ -43,6 +44,14 @@ public class BusinessUserV3_8_0Model {
 
 	public int getBuid() {
 		return buid;
+	}
+
+	public String getBuserid() {
+		return buserid;
+	}
+
+	public void setBuserid(String buserid) {
+		this.buserid = buserid;
 	}
 
 	public void setBuid(int buid) {

@@ -196,8 +196,8 @@ body {
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">用户管理——编辑页</h1>
-			<input id="useridHidden" type="hidden" value="${buid }" /> <input
-				id="hiddenValue" type="hidden" value="" />
+			<input id="useridHidden" type="hidden" value="${buid }" />
+			 <input id="hiddenValue" type="hidden" value="" />
 
 		</div>
 	</div>
@@ -213,10 +213,10 @@ body {
 						</h3>
 					</div>
 					<div class="form-group">
-						<input class="form-control" placeholder="buid" id="look_buid"
-							value="" readonly="readonly"> <input id="hidden_buid"
-							type="hidden" value="" /> <input id="hidden_state" type="hidden"
-							value="" />
+							<b>商家用户ID</b>
+						<input class="form-control" placeholder="buserid" id="look_buserid"
+							value="" readonly="readonly"> 
+							<input id="hidden_buid"type="hidden" value="" />
 					</div>
 					<div class="form-group">
 						<b>商家名称</b><input class="form-control" placeholder="name"
@@ -275,6 +275,10 @@ body {
 					<div class="form-group">
 						<b>商家客服</b><input class="form-control"
 							placeholder="多客服userid  英文逗号隔开" id="look_kfuseridlist" value="">
+					</div>
+					<div class="form-group">
+						<b>商家客服</b><input class="form-control"
+							placeholder="群组id" id="look_groupid" value="">
 					</div>
 					<div class="form-group">
 						<span><b>店铺简介</b></span>
@@ -484,14 +488,21 @@ body {
 		src="../js/mallmanage/uploadGroupImage.js"></script>
 	<script type="text/javascript">
 		var buid = $("#useridHidden").val();
-		lookuser(buid);
-		$("input,select,button,textarea").prop('disabled', true);
-		$("#addtomaingroup_select").prop('disabled', false);
-		$("#addtomaingroup_orderindex").prop('disabled', false);
-		$("#closedelBoxModel").prop('disabled', false);
-		$("#editBtn").prop('disabled', false);
-		$("#addtomainBtn").prop('disabled', false);
-		$("#timesBtn").prop('disabled', false);
+		if(buid==0){
+			toEdit();
+			$("#hidden_buid").val(0);
+		}else {
+			lookuser(buid);	
+			$("input,select,button,textarea").prop('disabled', true);
+			$("#addtomaingroup_select").prop('disabled', false);
+			$("#addtomaingroup_orderindex").prop('disabled', false);
+			$("#closedelBoxModel").prop('disabled', false);
+			$("#editBtn").prop('disabled', false);
+			$("#addtomainBtn").prop('disabled', false);
+			$("#timesBtn").prop('disabled', false);
+		}
+		
+		
 	</script>
 </body>
 </html>

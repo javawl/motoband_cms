@@ -1249,9 +1249,87 @@ public void updateBUser(Model model, HttpSession session, HttpServletRequest req
 @RequestMapping(value = "/updateBUserV_3_8_0", method = RequestMethod.POST)
 @ResponseBody
 public void updateBUserV_3_8_0(Model model, HttpSession session, HttpServletRequest request,BusinessUserV3_8_0Model user,PrintWriter out) {
+	if(StringUtils.isBlank(user.getBuserid())) {
+		user.setBuserid(MbUtil.getUUID());
+	}
+	if(user.getCreatetime()==0) {
+		user.setCreatetime(System.currentTimeMillis());
+	}
 	user.setUpdatetime(System.currentTimeMillis());
 	businessService.insertOrupdateBusinessUserV_3_8_0(user);
 	  out.write("success");
+}
+
+@RequestMapping(value = "/updateBUserServiceV_3_8_0", method = RequestMethod.POST)
+@ResponseBody
+public void updateBUserServiceV_3_8_0(Model model, HttpSession session, HttpServletRequest request,BusinessServiceV3_8_0Model servicemodel,PrintWriter out) {
+	if(servicemodel.getBuid()<=0) {
+		out.write("fail");
+	}else {
+//		businessService.insertOrupdateBusinessUserV_3_8_0(user);
+		  out.write("success");
+	}
+	
+}
+@RequestMapping(value = "/businessredirctshopservicelist", method = RequestMethod.GET)
+public void businessredirctshopservicelist(Model model, HttpSession session, HttpServletRequest request, String userGuid, 
+		int page,int limit,int order,String orderConditions,int buid) {
+	if (userGuid == null) {
+		Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
+		userGuid = admin.getUser_guid();
+	}
+	PageBean<BusinessServiceV3_8_0Model> pageBean=new PageBean<BusinessServiceV3_8_0Model>();
+	if(page==0){
+		page=1;
+	}
+    if(limit==0){
+    	limit=20;
+    }
+  
+    if(orderConditions==null || orderConditions==""){
+		orderConditions="";
+	}
+	pageBean.setPage(page);
+	pageBean.setLimit(limit);
+	int totalCount=businessService.getRedirctShopServiceCount(buid);
+	
+	int totalPage=0;
+	if(totalCount % limit == 0){
+		totalPage = totalCount / limit;
+	}else{
+		totalPage = totalCount / limit + 1;
+	
+	}
+	pageBean.setTotalPage(totalPage); 
+	int start= (page-1)*limit;
+	List<BusinessUserV3_8_0Model> businessusers=businessService.getRedirctShopList(0,businessService.getRedirctShopCount(),order,orderConditions);
+	List<BusinessServiceV3_8_0Model> businessusersservice=businessService.getRedirctShopServiceList(start,limit,order,orderConditions,buid);
+
+	
+	ArrayList<Integer> limitList =new ArrayList<Integer>();
+	limitList.add(20);
+	limitList.add(50);
+	limitList.add(100);
+	model.addAttribute("limitList", limitList);
+	ArrayList<Integer> typeList =new ArrayList<Integer>();
+	typeList.add(0);
+	typeList.add(1);
+	model.addAttribute("pageBean", pageBean);
+	pageBean.setList(businessusersservice);
+	ArrayList<motoimg> motoimgs = boxService.getMotoImgListByGroupGuid("0");
+	ArrayList<imggroup> imggroups = boxService.getImgGroupList();
+	model.addAttribute("imggroups", imggroups);
+	model.addAttribute("motoimgs", motoimgs);
+	
+//	model.addAttribute("businessTypeModels", businessTypeModels);
+//	model.addAttribute("businessServiceModels", businessServiceModels);
+//	model.addAttribute("brandparentModels", brandparentModels);
+	model.addAttribute("businessusers", businessusers);
+	model.addAttribute("businessusersservice", businessusersservice);
+	model.addAttribute("buid", buid);
+	model.addAttribute("limit", limit);
+	model.addAttribute("order", order);
+	model.addAttribute("orderConditions", orderConditions);
 }
 @RequestMapping(value = "/activitytoUsecarmain", method = RequestMethod.POST)
 public void activitytoUsecarmain(Model model, HttpSession session, HttpServletRequest request, String baid,

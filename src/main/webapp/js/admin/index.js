@@ -209,6 +209,11 @@ function businesscommentlist(url,adminGuid){
 function businessredirctshoplist(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
 }
+
+function businessredirctshopservicelist(url,adminGuid){
+	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0&buid=0");
+}
+
 function businessdataStatistics(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&buserid=-1");
 }

@@ -92,5 +92,10 @@ public interface BusinessMapper {
 	BusinessUserV3_8_0Model getBUserV3_8_0ByUserid(@Param("buid")int buid);
 
 	void insertOrupdateBusinessUserV_3_8_0(BusinessUserV3_8_0Model user);
+
+	int getRedirctShopServiceCount(@Param("buid")int buid);
+
+	List<BusinessServiceV3_8_0Model> selectBusinessServiceV3_8_0List(@Param("start")int start, @Param("limit")int limit, @Param("order")int order,
+			@Param("orderConditions")String orderConditions, @Param("buid")int buid);
     
 }

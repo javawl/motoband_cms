@@ -779,19 +779,21 @@ function lookuser(buid) {
 		success : function(data) {
 			if (data != null && data != '') {
 				var jsondata = eval("(" + data + ")");
-				$("#look_buid").val(jsondata.buid);
-				$("#look_userid").val(jsondata.buid);
+				$("#hidden_buid").val(jsondata.buid);
+				$("#look_buserid").val(jsondata.buserid);
 				$("#look_name").val(jsondata.name);
 				if (jsondata.contactphone != null) {
 //					console.log(jsondata.contactphone);
 					 $("#look_contactphone").val(jsondata.contactphone);
 
-//					$(jsondata.contactphone).each(function(index, element) {
-//						// 遍历
+					$(jsondata.pics).each(function(index, element) {
+						// 遍历
 //						for (k in element) {
-//							console.log(k, element[k]);
+							console.log(index, element[index]);
+							 $("#shoppics"+(index+1)).val(element);
+							 $("#shoppicsshow"+(index+1)).attr("src",element);
 //						}
-//					});
+					});
 				}
 				// $("#look_type").val(jsondata.type);
 				 $("#look_address").val(jsondata.address);
@@ -809,11 +811,6 @@ function lookuser(buid) {
 				// $("#headurlshow").attr("src",jsondata.headurl);
 				// if(jsondata.shoppics!=null && jsondata.shoppics !=''){
 				// var shoppicarr=jsondata.shoppics.split(",");
-				// for(var i=0;i<shoppicarr.length;i++){
-				// $("#shoppics"+(i+1)).val(shoppicarr[i]);
-				// $("#shoppicsshow"+(i+1)).attr("src",shoppicarr[i]);
-				// }
-				// }
 
 				// var str="";
 				// for(var i=0;i<jsondata.usecarmaingroupModels.length;i++){
@@ -823,7 +820,7 @@ function lookuser(buid) {
 				// $("#addtomaingroup_select").empty();
 				// $("#addtomaingroup_select").append(str);
 
-				$("#hidden_buid").val(jsondata.buid);
+				$("#hidden_buserid").val(jsondata.buserid);
 				if(jsondata.state==0){
 					$("input:radio[name='look_state']").eq(1).attr("checked",'checked');
 				}else{
@@ -1002,7 +999,8 @@ function changeservicecheckbox(obj) {
 
 function editUserConfirm() {
 	$("#back").css("display", "");
-	var buid = $("#look_buid").val();
+	var buid = $("#hidden_buid").val();
+	var buserid = $("#look_buserid").val();
 	var name = $("#look_name").val();
 	var contactphone = $("#look_contactphone").val();
 	var address = $("#look_address").val();
@@ -1010,12 +1008,12 @@ function editUserConfirm() {
 	var city = $("#look_city").val();
 	var longitude = $("#look_longitude").val();
 	var latitude = $("#look_latitude").val();
-	var buid = $("#hidden_buid").val();
 	var businesshours = $("#look_businesshours").val();
 	var lables=$("#look_businesslables").val();
 	var kfuseridlist = $("#look_kfuseridlist").val();
 	var des = $("#look_des").val();
 	var state = $("input[name='look_state']:checked").val();
+	var groupid=$("#look_groupid").val();
 
 
 	var pics = [];
@@ -1038,6 +1036,7 @@ function editUserConfirm() {
 
 	var datas = {
 		"buid" : buid,
+		"buserid":buserid,
 		"name" : name,
 		"contactphone" : contactphone,
 		"address" : address,
@@ -1056,7 +1055,8 @@ function editUserConfirm() {
 
 		"kfuseridlist" : kfuseridlist,
 		"des" : des,
-		"pics":pics.toString()
+		"pics":pics.toString(),
+		"groupid":groupid
 	}
 	$.ajax({
 		type : "POST",

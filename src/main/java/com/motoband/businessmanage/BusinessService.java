@@ -209,4 +209,12 @@ public BusinessUserV3_8_0Model getgetBUserV3_8_0ByUserid(int buid) {
 	return businessMapper.getBUserV3_8_0ByUserid(buid);
 }
 
+public int getRedirctShopServiceCount(int buid) {
+	return businessMapper.getRedirctShopServiceCount(buid);
+}
+
+public List<BusinessServiceV3_8_0Model> getRedirctShopServiceList(int start, int limit, int order, String orderConditions,int buid) {
+	return businessMapper.selectBusinessServiceV3_8_0List(start,limit,order,orderConditions,buid);
+}
+
 }

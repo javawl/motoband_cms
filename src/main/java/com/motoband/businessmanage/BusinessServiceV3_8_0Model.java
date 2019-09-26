@@ -19,6 +19,64 @@ public class BusinessServiceV3_8_0Model {
 	public String value;
 	public List<String> lables;//服务标签
 	public int linktype;//1 动态  2 话题   3问答    4 有赞  5 内部链接  6 外部链接  7小程序 8 motogp 9 二手车  10 本地商家  11 话题列表  12 问答列表  13 此刻
-	public int order;//排序 越大越优先展示
-	public int state;//1上线，2下线
+	public int orderindex;//排序 越大越优先展示
+	public int state;//0上线，1下线
+	
+	public int getLinktype() {
+		return linktype;
+	}
+	public int getBsid() {
+		return bsid;
+	}
+	public void setBsid(int bsid) {
+		this.bsid = bsid;
+	}
+	public int getBuid() {
+		return buid;
+	}
+	public void setBuid(int buid) {
+		this.buid = buid;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public List<String> getLables() {
+		return lables;
+	}
+	public void setLables(List<String> lables) {
+		this.lables = lables;
+	}
+	public void setLinktype(int linktype) {
+		this.linktype = linktype;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public int getOrderindex() {
+		return orderindex;
+	}
+	public void setOrderindex(int orderindex) {
+		this.orderindex = orderindex;
+	}
+	
+	
+	
 }

@@ -277,8 +277,7 @@
 
 							<div align="right">
 								<button type="button" class="btn btn-primary btn-lg"
-									data-toggle="modal" data-target="#addBusineRedirctShop"
-									onclick="javascript:addBusineRedirctShop()">增加</button>
+									onclick="javascript:lookUserNewPage(0)">增加</button>
 
 
 
@@ -335,8 +334,9 @@
 							<thead>
 								<tr>
 									<th>id</th>
+<!-- 									<th>buserid</th> -->
 									<th>名称</th>
-									<th>省</th>
+<!-- 									<th>省</th> -->
 									<th>市</th>
 									<th>地址</th>
 									<th>联系电话</th>
@@ -344,8 +344,8 @@
 									<th>经度</th>
 									<th>纬度</th>
 									<th>群号</th>
-									<th>创建时间</th>
-									<th>最后更新时间</th>
+<!-- 									<th>创建时间</th> -->
+<!-- 									<th>最后更新时间</th> -->
 									<th>是否上架</th>
 									<th>operate</th>
 								</tr>
@@ -354,8 +354,9 @@
 								<c:forEach items="${businessusers}" var="user" varStatus="ids">
 									<tr class="${user.buid}">
 										<td>${user.buid}</td>
+<%-- 										<td>${user.buserid}</td> --%>
 										<td>${user.name}</td>
-										<td>${user.province}</td>
+<%-- 										<td>${user.province}</td> --%>
 										<td>${user.city}</td>
 										<td>${user.address}</td>
 										<td>${user.contactphone}</td>
@@ -363,8 +364,8 @@
 										<td>${user.longitude}</td>
 										<td>${user.latitude}</td>
 										<td>${user.groupid}</td>
-										<td>${user.createtime}</td>
-										<td>${user.updatetime}</td>
+<%-- 										<td>${user.createtime}</td> --%>
+<%-- 										<td>${user.updatetime}</td> --%>
 										<c:choose>
 											<c:when test="${user.state==0}">
 												<td>是</td>
