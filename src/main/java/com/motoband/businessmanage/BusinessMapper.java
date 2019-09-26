@@ -97,5 +97,9 @@ public interface BusinessMapper {
 
 	List<BusinessServiceV3_8_0Model> selectBusinessServiceV3_8_0List(@Param("start")int start, @Param("limit")int limit, @Param("order")int order,
 			@Param("orderConditions")String orderConditions, @Param("buid")int buid);
+
+	void insertOrupdateBusinessUserServiceV_3_8_0(BusinessServiceV3_8_0Model servicemodel);
+
+	BusinessServiceV3_8_0Model getBuserServiceV_3_8_0(@Param("bsid")int bsid);
     
 }

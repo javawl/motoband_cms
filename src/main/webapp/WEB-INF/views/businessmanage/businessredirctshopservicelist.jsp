@@ -271,6 +271,7 @@ body {
 			</select> <label>Choose shop: </label> <select class="form-control"
 				id="shopSelect"
 				onchange="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','1')">
+								<option value="0" >全部</option>
 				<c:forEach items="${businessusers}" var="optionlimit"
 					varStatus="ids">
 					<c:choose>
@@ -297,10 +298,10 @@ body {
 							id="dataTables-example">
 							<thead>
 								<tr>
-									<th>id</th>
+									<th>序号</th>
 									<th>图标</th>
-									<th>服务</th>
-									<th>服务</th>
+									<th>服务标签</th>
+									<th>服务名称</th>
 									<th>链接</th>
 									<th>链接类型</th>
 									<th>排序</th>
@@ -313,7 +314,7 @@ body {
 									varStatus="ids">
 									<tr class="${user.bsid}">
 										<td>${user.bsid}</td>
-										<td>${user.icon}</td>
+										<td><img alt="icon" src="${user.icon}"></td>
 										<td>${user.lables}</td>
 										<td>${user.name}</td>
 										<td>${user.value}</td>
@@ -358,6 +359,7 @@ body {
 												<td class="center">未知</td>
 											</c:otherwise>
 										</c:choose>
+										<td>${user.orderindex }</td>
 										<c:choose>
 											<c:when test="${user.state==0}">
 												<td>是</td>
@@ -369,11 +371,11 @@ body {
 												<td>未知</td>
 											</c:otherwise>
 										</c:choose>
-										<td>${user.orderindex }</td>
+
 										<td class="center">
 											<button type="button" class="btn btn-primary btn-lg"
-												data-toggle="modal" data-target="#editopenqijiModel"
-												onclick="javascript:editopenqiji('${user.bsid}')">编辑用户信息</button>
+												data-toggle="modal" data-target="#addbannerModel"
+												onclick="javascript:editaddbannerModel('${user.bsid}')">编辑用户信息</button>
 										</td>
 									</tr>
 								</c:forEach>
@@ -471,11 +473,12 @@ body {
 					<div class="form-group">
 						<input class="form-control" placeholder="" id="bsid" value=""
 							type="hidden">
+												<input class="form-control" placeholder="" id="uuid" value=""
+							type="hidden">
 					</div>
 					<div class="form-group">
 					<label>选择门店 </label> <select class="form-control"
-				id="shopEditInfoSelect"
-				onchange="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','1')">
+				id="shopEditInfoSelect">
 				<c:forEach items="${businessusers}" var="optionlimit"
 					varStatus="ids">
 					<c:choose>

@@ -934,7 +934,7 @@ public void lookuser(Model model, HttpSession session, HttpServletRequest reques
   }
 
 
-@RequestMapping(value = "/lookbusinessredirctshoplist", method = RequestMethod.POST)
+@RequestMapping(value = "/lookbusinessredirctshopolist", method = RequestMethod.POST)
 public void lookbusinessredirctshoplist(Model model, HttpSession session, HttpServletRequest request,int buid,PrintWriter out) throws UnsupportedEncodingException {
 	String jsonString = "";
 	BusinessUserV3_8_0Model businessUserModel=businessService.getgetBUserV3_8_0ByUserid(buid);
@@ -1266,11 +1266,23 @@ public void updateBUserServiceV_3_8_0(Model model, HttpSession session, HttpServ
 	if(servicemodel.getBuid()<=0) {
 		out.write("fail");
 	}else {
-//		businessService.insertOrupdateBusinessUserV_3_8_0(user);
+		if(StringUtils.isBlank(servicemodel.getUuid())) {
+			servicemodel.setUuid(MbUtil.getUUID());
+		}
+		businessService.insertOrupdateBusinessUserServiceV_3_8_0(servicemodel);
 		  out.write("success");
 	}
 	
 }
+@RequestMapping(value = "/getBuserServiceV_3_8_0", method = RequestMethod.POST)
+@ResponseBody
+public void getBuserServiceV_3_8_0(HttpServletRequest request,PrintWriter out,int bsid) {
+	String jsonString = "";
+	BusinessServiceV3_8_0Model businessUserModel=businessService.getBuserServiceV_3_8_0(bsid);
+	jsonString=JSON.toJSONString(businessUserModel);
+    out.write(jsonString);
+}
+
 @RequestMapping(value = "/businessredirctshopservicelist", method = RequestMethod.GET)
 public void businessredirctshopservicelist(Model model, HttpSession session, HttpServletRequest request, String userGuid, 
 		int page,int limit,int order,String orderConditions,int buid) {

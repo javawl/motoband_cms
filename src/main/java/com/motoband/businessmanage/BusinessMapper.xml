@@ -272,6 +272,9 @@ where userid=#{buserid}
 	<select id="getRedirctShopCount"  resultType="Integer"  > 
 		select count(1) from `business_user_v_3_8_0` 
 	</select>
+	<select id="getBuserServiceV_3_8_0" parameterType="int" resultMap="businessServiceV3_8_0Model">
+		select * from `business_service_v_3_8_0` where  bsid=#{bsid}
+	</select>
 	<select id="selectBusinessServiceV3_8_0List"  parameterType="int"
 		resultMap="businessServiceV3_8_0Model">
 		select * from `business_service_v_3_8_0` where  1=1
@@ -309,4 +312,14 @@ where userid=#{buserid}
 			and buid=#{buid}
 		</if>
 	</select>
+	<insert id="insertOrupdateBusinessUserServiceV_3_8_0" parameterType="businessServiceV3_8_0Model">
+	INSERT INTO `business_service_v_3_8_0` (`uuid`, `icon`, `buid`, `name`, `value`, `lables`, `orderindex`, `state`, `linktype`)
+	 VALUES
+	  ( #{uuid}, #{icon}, #{buid}, #{name}, #{value},#{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle},#{orderindex},#{state}, #{linktype})
+	  	 ON
+	DUPLICATE KEY UPDATE
+	icon=#{icon},buid=#{buid},name=#{name},value=#{value},lables=#{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle},orderindex=#{orderindex},state=#{state},linktype=#{linktype}
+	
+	</insert>
+	
 </mapper>

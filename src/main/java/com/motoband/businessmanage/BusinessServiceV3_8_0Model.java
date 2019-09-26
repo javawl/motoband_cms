@@ -1,6 +1,10 @@
 package com.motoband.businessmanage;
 
 import java.util.List;
+import java.util.Map;
+
+import com.github.ltsopensource.core.json.JSON;
+import com.google.common.collect.Maps;
 
 /**
  * 商家提供的服务
@@ -9,6 +13,7 @@ import java.util.List;
 public class BusinessServiceV3_8_0Model {
 
 	public int bsid;
+	public String uuid;
 	/**
 	 * 商家id
 	 * @see com.motoband.model.business.v_3_8_0.BusinessUserV3_8_0Model
@@ -22,6 +27,29 @@ public class BusinessServiceV3_8_0Model {
 	public int orderindex;//排序 越大越优先展示
 	public int state;//0上线，1下线
 	
+	public String modelJsonStr;
+	
+	
+	public String getModelJsonStr() {
+		Map<String,Object> map=Maps.newHashMap();
+		map.put("bsid", bsid);
+		map.put("uuid", uuid);
+		map.put("buid", buid);
+		map.put("icon", icon);
+		map.put("name", name);
+		map.put("value", value);
+		map.put("lables", lables);
+		map.put("linktype", linktype);
+		map.put("orderindex", orderindex);
+		map.put("state", state);
+		return JSON.toJSONString(map);
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 	public int getLinktype() {
 		return linktype;
 	}

@@ -217,4 +217,12 @@ public List<BusinessServiceV3_8_0Model> getRedirctShopServiceList(int start, int
 	return businessMapper.selectBusinessServiceV3_8_0List(start,limit,order,orderConditions,buid);
 }
 
+public void insertOrupdateBusinessUserServiceV_3_8_0(BusinessServiceV3_8_0Model servicemodel) {
+	businessMapper.insertOrupdateBusinessUserServiceV_3_8_0(servicemodel);
+}
+
+public BusinessServiceV3_8_0Model getBuserServiceV_3_8_0(int bsid) {
+	return businessMapper.getBuserServiceV_3_8_0(bsid);
+}
+
 }
