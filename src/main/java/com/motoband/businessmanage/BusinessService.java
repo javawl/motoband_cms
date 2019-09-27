@@ -108,6 +108,10 @@ public List<BusinessUserModel> getBusersBystate(int state) {
 	
 	return businessMapper.getBusersBystate(state);
 }
+public List<BusinessUserV3_8_0Model> getBusersV_3_8_0_Bystate(int state) {
+	
+	return businessMapper.getBusersV_3_8_0_Bystate(state);
+}
 public void resetBuserPassword(String userid, String password) {
 	
 	businessMapper.resetBuserPassword(userid, password);

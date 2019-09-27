@@ -1017,7 +1017,7 @@ function editUserConfirm() {
 
 
 	var pics = [];
-	for(var i=1;i<5;i++){
+	for(var i=1;i<9;i++){
 		var pic= $("#shoppics"+i).val();
 		if(pic!=null&&pic!=""){
 			pics.push(pic)

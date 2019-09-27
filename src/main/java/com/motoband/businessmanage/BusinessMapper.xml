@@ -232,6 +232,9 @@ select * from usecarmaingroup  where groupid=#{groupid}
  select *  from business_user  where state=#{state}
  order by  isapprove desc 
 </select>
+<select id="getBusersV_3_8_0_Bystate" parameterType="String" resultType="com.motoband.businessmanage.BusinessUserV3_8_0Model">
+ select *  from `business_user_v_3_8_0`   where state=#{state}
+</select>
 <delete id="deletbusercomment" parameterType="String">
    delete from business_comment where cid = #{cid}
 </delete>

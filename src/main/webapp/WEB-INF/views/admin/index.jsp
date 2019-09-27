@@ -253,9 +253,9 @@
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li id="businessapply" style="display: none"><a
-									href="javascript:businessapplylist('../businessmanage/businessapplylist','${admin.user_guid}')">商家申请管理</a></li>
+									href="javascript:businessapplylist('../businessmanage/businessapplylist','${admin.user_guid}')">商家申请管理(废弃)</a></li>
 								<li id="businessuser" style="display: none"><a
-									href="javascript:businessuserlist('../businessmanage/businessuserlist','${admin.user_guid}')">商家用户管理</a></li>
+									href="javascript:businessuserlist('../businessmanage/businessuserlist','${admin.user_guid}')">商家用户管理(废弃)</a></li>
 								<%--  <li id="businessuserinfoapply" style="display: none"><a href="javascript:businessuserinfoapplylist('../businessmanage/businessuserinfoapplylist','${admin.user_guid}')">商家信息审核申请</a></li>  --%>
 								<%--  <li id="usecarmain" style="display: none"><a href="javascript:usecarmainlist('../businessmanage/usecarmainlist','${admin.user_guid}')">用车首页管理</a></li>  --%>
 								<li id="businesscommment" style="display: none"><a

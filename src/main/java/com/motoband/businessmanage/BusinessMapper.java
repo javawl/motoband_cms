@@ -73,6 +73,7 @@ public interface BusinessMapper {
 	void uploadapprovepic(@Param("userid")String userid, @Param("approvepic")String approvepic);
 
 	List<BusinessUserModel> getBusersBystate(@Param("state")int state);
+	List<BusinessUserV3_8_0Model> getBusersV_3_8_0_Bystate(@Param("state")int state);
 
 	void deletbusercomment(@Param("cid")String cid);
 

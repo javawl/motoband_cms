@@ -341,6 +341,54 @@ body {
 									id="shoppicsshow4" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
+												<div class="col-sm-3">
+							<b>店内照片5</b>
+							<div>
+								<input id="" type="button" value="设置照片5" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('10')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics4"> <img
+									id="shoppicsshow5" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+																		<div class="col-sm-3">
+							<b>店内照片6</b>
+							<div>
+								<input id="" type="button" value="设置照片6" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('10')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics4"> <img
+									id="shoppicsshow6" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+																		<div class="col-sm-3">
+							<b>店内照片7</b>
+							<div>
+								<input id="" type="button" value="设置照片7" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('10')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics4"> <img
+									id="shoppicsshow7" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
+																		<div class="col-sm-3">
+							<b>店内照片8</b>
+							<div>
+								<input id="" type="button" value="设置照片8" class="btn btn-info"
+									data-toggle="modal" data-target="#titleImgModel"
+									onclick="javascript:insertTitleImgHidden('10')">
+							</div>
+							<div>
+								<input type="text" value="" id="shoppics4"> <img
+									id="shoppicsshow8" src="" style="width: 144px; height: 144px" />
+							</div>
+						</div>
 					</div>
 					<div style="clear: both;">
 						<br>

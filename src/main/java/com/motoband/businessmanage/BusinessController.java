@@ -1496,7 +1496,7 @@ public void businesscommentlist(Model model, HttpSession session, HttpServletReq
 		Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
 		userGuid = admin.getUser_guid();
 	}
-	List<BusinessUserModel> list = businessService.getBusersBystate(1);
+	List<BusinessUserV3_8_0Model> list = businessService.getBusersV_3_8_0_Bystate(0);
 	model.addAttribute("buserlist", list);
 	model.addAttribute("userGuid", userGuid);
 }

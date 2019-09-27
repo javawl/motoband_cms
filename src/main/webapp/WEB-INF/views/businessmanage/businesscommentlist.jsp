@@ -192,7 +192,7 @@
 				<div class="panel-heading"><b>商家评论列表 </b><span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp选择商家:</span>
 				              <select  id="buserSelect" >
 								    <c:forEach items="${buserlist}" var="ugmodel" varStatus="ids">
-										<option value="${ugmodel.userid}">${ugmodel.name}</option>
+										<option value="${ugmodel.buserid}">${ugmodel.name}</option>
 								     </c:forEach>
 							  </select>
 							  <button type="button" class="btn btn-primary btn-lg"
