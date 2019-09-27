@@ -133,7 +133,7 @@ public class BotUserController {
 		BotUserController.isgiftcount=(lcount==null)?0:Integer.parseInt(lcount);
 		lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount");
 		BotUserController.isfollowcount=(lcount==null)?0:Integer.parseInt(lcount);
-//		startjob(0, 5000, 800, 1777);
+		startjob(0, 5000, 800, 1666);
 	}
 
 

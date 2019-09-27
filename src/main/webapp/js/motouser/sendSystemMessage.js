@@ -153,7 +153,7 @@ function addbannerConfirm(){
 	var title=$ ('#ins_title').val ();
 	var subtitle=$ ('#ins_subtitle').val ();
 	var des=$ ('#ins_des').val ();
-	var starttime=$ ('#starttime').val ();
+	var starttime=$ ('#ins_starttime').val ();
 	console.log(starttime);
 	
 	 var linktype=	$("#imageSelectType").val();

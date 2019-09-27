@@ -273,10 +273,12 @@ public class motouserController {
 			}
 		}));
 
-//		List<MessageTaskModel> taskModel = motouserService.getUnFinishTask();
-//		for (MessageTaskModel messageTaskModel : taskModel) {
-//			againTask(messageTaskModel);
-//		}
+		List<MessageTaskModel> taskModel = motouserService.getUnFinishTask();
+		for (MessageTaskModel messageTaskModel : taskModel) {
+			if(messageTaskModel.starttime!=0) {
+				againTask(messageTaskModel);
+			}
+		}
 	}
 
 	private void againTask(MessageTaskModel messageTaskModel) {
@@ -294,6 +296,16 @@ public class motouserController {
 							String pushMsg = "您有一条新的消息，点击查看";
 							if (logger.isErrorEnabled()) {
 								logger.error("开始补救task----" + messageTaskModel.taskid);
+							}
+							long currenttime=System.currentTimeMillis();
+							long sleeptime=1;
+							if(currenttime<messageTaskModel.starttime) {
+								sleeptime=messageTaskModel.starttime-currenttime;
+							}
+							try {
+								Thread.currentThread().sleep(sleeptime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
 							batchSendCMSMessage(messageTaskModel.taskid, model, pushMsg, 0, userids);
 							TaskFinshe(messageTaskModel.taskid);

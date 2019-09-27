@@ -41,6 +41,12 @@ public class MessageTaskModel {
 	public long starttime;//任务开始执行时间
 
 	
+	public long getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(long starttime) {
+		this.starttime = starttime;
+	}
 	/**
 	 * 监听任务执行情况
 	 */

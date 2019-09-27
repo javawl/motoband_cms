@@ -226,6 +226,7 @@ body {
 									<th>secondcarid</th>
 									<th>miniprogramid</th>
 									<th>buserid</th>
+									<th>任务执行时间</th>
 
 									<th>detail</th>
 								</tr>
@@ -302,7 +303,7 @@ body {
 										<td style="word-break: break-all;">${messagetask.secondcarid}</td>
 										<td>${messagetask.miniprogramid}</td>
 										<td style="word-break: break-all;">${messagetask.buserid}</td>
-
+										<td>${messagetask.starttime}</td>
 										<td style='width: 150px; height: auto;'>
 											<div>
 												<font color="blue" id='${messagetask.taskid}_1'>/</font>
@@ -432,7 +433,15 @@ body {
 						<textarea class="form-control" placeholder="描述" id="ins_des"
 							rows="3" style="word-break: break-all"></textarea>
 					</div>
-
+					<div class="form-group">
+						<label class="control-label col-md-3">执行时间</label>
+						<div class="col-md-4">
+							<input class="form-control input-inline input-sm form_datetime"
+								name="starttime" id="starttime" size="12" type="text"
+								placeholder="执行时间" />
+							<input type="hidden" id="ins_starttime">
+						</div>
+					</div>
 
 
 					<div class="form-group">
@@ -479,14 +488,7 @@ body {
 								再提交任务 任务一经提交便开始发送消息 不可撤回 请谨慎操作！！！</font>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">执行时间</label>
-						<div class="col-md-4">
-							<input class="form-control input-inline input-sm form_datetime"
-								name="starttime" id="starttime" size="12" type="text"
-								placeholder="执行时间" />
-						</div>
-					</div>
+
 
 
 
@@ -601,11 +603,16 @@ body {
 			language : 'zh-CN',
 			autoclose : 1,
 			todayBtn : 1,
-			minuteStep : 1,
-			format : 'yyyy-mm-dd hh:ii',
+			minuteStep : 5,
+// 			format : 'yyyy-mm-dd hh:ii:ss',
 			pickerPosition : "bottom",
 			startDate : timeStamp2String(new Date().getTime())
 
+		});
+		$(".form_datetime").datetimepicker().on('changeDate', function(date){
+			var data=new Date(date.date);
+			console.log(data.getTime());
+			$("#ins_starttime").val(data.getTime())
 		});
 		//在Jquery里格式化Date日期时间数据
 		function timeStamp2String(time) {
