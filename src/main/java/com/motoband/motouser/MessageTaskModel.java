@@ -37,6 +37,8 @@ public class MessageTaskModel {
 	public String updatetimeString;
 
 	private TaskListener taskListener;
+	
+	public long starttime;//任务开始执行时间
 
 	
 	/**

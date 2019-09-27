@@ -2120,7 +2120,7 @@ public class motouserController {
 	public void addmsgtask(Model model, HttpSession session, HttpServletRequest request, String name, String title,
 			String subtitle, String des, String userSelectType, String linktype, String imgurl, String linkurl,
 			String gpid, String nid, String keyword, String secondcarid, String buserid, String miniprogramid,
-			String taskid, PrintWriter out) throws UnsupportedEncodingException {
+			String taskid,long starttime, PrintWriter out) throws UnsupportedEncodingException {
 
 		MessageTaskModel banner = new MessageTaskModel();
 		long currenttime = System.currentTimeMillis();
@@ -2162,6 +2162,7 @@ public class motouserController {
 		if (buserid != null && !"".equals(buserid)) {
 			banner.setBuserid(buserid);
 		}
+		banner.starttime=starttime;
 
 		motouserService.addMessageTask(banner);
 		// 处理文件
@@ -2172,8 +2173,19 @@ public class motouserController {
 				public void run() {
 					// 数据存入数据库
 					motouserService.addMessageTaskUserAll(taskid1);
+					long currenttime=System.currentTimeMillis();
+					long sleeptime=1;
+					if(currenttime<starttime) {
+						sleeptime=starttime-currenttime;
+					}
+					try {
+						Thread.currentThread().sleep(sleeptime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					// 处理数据
 					doMessageTaskUser(taskid1);
+
 				}
 			});
 
@@ -2206,6 +2218,16 @@ public class motouserController {
 						motouserService.batchaddMessageTaskUser(map);
 					}
 
+					long currenttime=System.currentTimeMillis();
+					long sleeptime=1;
+					if(currenttime<starttime) {
+						sleeptime=starttime-currenttime;
+					}
+					try {
+						Thread.currentThread().sleep(sleeptime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					// 处理数据
 					doMessageTaskUser(taskid2);
 				}

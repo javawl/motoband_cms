@@ -33,7 +33,8 @@
 
 <link href="../bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-datetimepicker.min.css" />
 
 <script src="../js/consts.js"></script>
 
@@ -313,12 +314,15 @@ body {
 												失败：<font color="red" id='${messagetask.taskid}_3'></font>
 											</div>
 											<div>
-<%-- 												<div class="testbutton" value="预览" onclick="edit('${messagetask}')">预览</div> --%>
-<%-- 												<div class="testbutton" value="预览" onclick="failagain('${messagetask.taskid}')">编辑</div> --%>
-												<div class="testbutton" value="查看进度" onclick="getMsg('${messagetask.taskid}')">查看进度</div>
-												<div class="testbutton" value="重试" onclick="failagain('${messagetask.taskid}')">重试</div>
-												<div class="testbutton" value="强制重新推送" onclick="again('${messagetask.taskid}')">强制重新推送</div>
-												
+												<%-- 												<div class="testbutton" value="预览" onclick="edit('${messagetask}')">预览</div> --%>
+												<%-- 												<div class="testbutton" value="预览" onclick="failagain('${messagetask.taskid}')">编辑</div> --%>
+												<div class="testbutton" value="查看进度"
+													onclick="getMsg('${messagetask.taskid}')">查看进度</div>
+												<div class="testbutton" value="重试"
+													onclick="failagain('${messagetask.taskid}')">重试</div>
+												<div class="testbutton" value="强制重新推送"
+													onclick="again('${messagetask.taskid}')">强制重新推送</div>
+
 
 											</div>
 										</td>
@@ -476,8 +480,12 @@ body {
 						</div>
 					</div>
 					<div class="form-group">
-						<input type="text" placeholder="任务执行时间" id="ins_start_time"
-							value="">
+						<label class="control-label col-md-3">执行时间</label>
+						<div class="col-md-4">
+							<input class="form-control input-inline input-sm form_datetime"
+								name="starttime" id="starttime" size="12" type="text"
+								placeholder="执行时间" />
+						</div>
 					</div>
 
 
@@ -577,6 +585,9 @@ body {
 		</div>
 	</div>
 	<script src="../js/laydate/laydate.js"></script>
+	<script src="../js/bootstrap-datetimepicker.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>jquery 时间格式化
 	<script type="text/javascript">
 		var iframe = document.getElementById("ifr");
 		iframe.onload = function() {
@@ -586,11 +597,34 @@ body {
 			$("#ins_taskid").val(json.taskid);
 
 		}
-		//时间选择器
-		laydate.render({
-			elem : '#ins_start_time',
-			type : 'datetime'
+		$(".form_datetime").datetimepicker({
+			language : 'zh-CN',
+			autoclose : 1,
+			todayBtn : 1,
+			minuteStep : 1,
+			format : 'yyyy-mm-dd hh:ii',
+			pickerPosition : "bottom",
+			startDate : timeStamp2String(new Date().getTime())
+
 		});
+		//在Jquery里格式化Date日期时间数据
+		function timeStamp2String(time) {
+			var datetime = new Date();
+			datetime.setTime(time);
+			var year = datetime.getFullYear();
+			var month = datetime.getMonth() + 1 < 10 ? "0"
+					+ (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+			var date = datetime.getDate() < 10 ? "0" + datetime.getDate()
+					: datetime.getDate();
+			var hour = datetime.getHours() < 10 ? "0" + datetime.getHours()
+					: datetime.getHours();
+			var minute = datetime.getMinutes() < 10 ? "0"
+					+ datetime.getMinutes() : datetime.getMinutes();
+			var second = datetime.getSeconds() < 10 ? "0"
+					+ datetime.getSeconds() : datetime.getSeconds();
+			return year + "-" + month + "-" + date + " " + hour + ":" + minute
+					+ ":" + second;
+		}
 	</script>
 
 

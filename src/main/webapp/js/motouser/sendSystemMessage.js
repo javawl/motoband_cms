@@ -153,6 +153,8 @@ function addbannerConfirm(){
 	var title=$ ('#ins_title').val ();
 	var subtitle=$ ('#ins_subtitle').val ();
 	var des=$ ('#ins_des').val ();
+	var starttime=$ ('#starttime').val ();
+	console.log(starttime);
 	
 	 var linktype=	$("#imageSelectType").val();
 	  switch (parseInt(linktype)){
@@ -233,6 +235,7 @@ function addbannerConfirm(){
 	
 	var datas =
 	{
+			"starttime":starttime,
 		"userSelectType":userSelectType,
 		"title":title,
 		"subtitle":subtitle,
@@ -279,7 +282,20 @@ function addbannerConfirm(){
 	});
 }
 
+function showTimeForm(e){
+//	var t=e.offsetTop; 
+//	var l=e.offsetLeft; 
+//	var w=e.offsetWidth;
+//	var h=e.offsetHeight; 
+//	while(e=e.offsetParent)
+//	{ 
+//		t+=e.offsetTop; 
+//		l+=e.offsetLeft; 
+//	} 
+//
+//    $(".datetimepicker").css("top",t+34+"px");
 
+}
 
 $ ('#grouplist > div').on ("click", function ()
 {
