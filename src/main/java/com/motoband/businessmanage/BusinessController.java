@@ -934,7 +934,7 @@ public void lookuser(Model model, HttpSession session, HttpServletRequest reques
   }
 
 
-@RequestMapping(value = "/lookbusinessredirctshopolist", method = RequestMethod.POST)
+@RequestMapping(value = "/lookbusinessredirctshoplist", method = RequestMethod.POST)
 public void lookbusinessredirctshoplist(Model model, HttpSession session, HttpServletRequest request,int buid,PrintWriter out) throws UnsupportedEncodingException {
 	String jsonString = "";
 	BusinessUserV3_8_0Model businessUserModel=businessService.getgetBUserV3_8_0ByUserid(buid);
