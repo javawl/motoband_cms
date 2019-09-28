@@ -289,7 +289,7 @@ where userid=#{buserid}
 	</select>
 	<select id="getRedirctShopList"
 		resultMap="businessUserV3_8_0Model">
-		select * from `business_user_v_3_8_0`
+		select * from `business_user_v_3_8_0`  order by orderindex desc
 	</select>
 	<select id="getBUserV3_8_0ByUserid"
 		resultMap="businessUserV3_8_0Model" parameterType="int">

@@ -347,6 +347,7 @@
 <!-- 									<th>创建时间</th> -->
 <!-- 									<th>最后更新时间</th> -->
 									<th>是否上架</th>
+									<th>排序</th>
 									<th>operate</th>
 								</tr>
 							</thead>
@@ -377,13 +378,10 @@
 												<td>未知</td>
 											</c:otherwise>
 										</c:choose>
+											<td>${user.orderindex}</td>
 										<td class="center">
 											<button type="button" class="btn btn-primary btn-lg"
 												onclick="javascript:lookUserNewPage('${user.buid}')">查看用户信息</button>
-											<button type="button" class="btn btn-primary btn-lg"
-												data-toggle="modal" data-target="#uploadapprovepicModel"
-												onclick="javascript:uploadapprovepic('${user.buid}')">上传认证图片</button>
-
 										</td>
 									</tr>
 								</c:forEach>

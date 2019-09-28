@@ -39,8 +39,19 @@ public class BusinessUserV3_8_0Model {
 	public int usercount;//评论人数
 	public int scorecount;//评分总数
 	public float bscore;  //评分
+	public int orderindex;
 	
 	public List<BusinessServiceV3_8_0Model> businessservice;
+	
+	
+
+	public int getOrderindex() {
+		return orderindex;
+	}
+
+	public void setOrderindex(int orderindex) {
+		this.orderindex = orderindex;
+	}
 
 	public int getBuid() {
 		return buid;
