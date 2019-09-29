@@ -27,6 +27,14 @@ var format = function(time, format) {
 	})
 }
 
+function closetitleImgModel(){
+	$('#titleImgModel').on('hidden.bs.modal', function() {
+
+		$('#insertMallModel').css({'overflow-y':'scroll'});
+		});
+	
+}
+
 function getUuid() {
 	var len = 32;// 32长度
 	var radix = 16;// 16进制
