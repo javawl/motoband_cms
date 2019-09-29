@@ -72,9 +72,6 @@ $('.tooltip-demo').tooltip({
 	container : "body"
 })
 
-// popover demo
-$("[data-toggle=popover]").popover()
-
 $(document).ready(function() {
 	initUploadForm();
 });
@@ -295,62 +292,7 @@ function XX_selectImg(XX_img_guid) {
 		$('#XX_' + img_guid).find("div[name='XX_selectdiv']").css("display",
 				"none");
 		var flag = $("#hiddenValue").val();
-		if (flag == '1') {
-			$("#titleimg").val();
-		} else if (flag == '2') {
-			$("#headurl").val();
-		} else if (flag == '3') {
-			$("#doorpics1").val();
-		} else if (flag == '4') {
-			$("#doorpics2").val();
-		} else if (flag == '5') {
-			$("#doorpics3").val();
-		} else if (flag == '6') {
-			$("#doorpics4").val();
-		} else if (flag == '7') {
-			$("#shoppics1").val();
-		} else if (flag == '8') {
-			$("#shoppics2").val();
-		} else if (flag == '9') {
-			$("#shoppics3").val();
-		} else if (flag == '10') {
-			$("#shoppics4").val();
-		} else if (flag == '111') {
-			$("#activitypics11").val();
-		} else if (flag == '112') {
-			$("#activitypics12").val();
-		} else if (flag == '113') {
-			$("#activitypics13").val();
-		} else if (flag == '114') {
-			$("#activitypics14").val();
-		} else if (flag == '121') {
-			$("#activitypics21").val();
-		} else if (flag == '122') {
-			$("#activitypics22").val();
-		} else if (flag == '123') {
-			$("#activitypics23").val();
-		} else if (flag == '124') {
-			$("#activitypics24").val();
-		} else if (flag == '131') {
-			$("#activitypics31").val();
-		} else if (flag == '132') {
-			$("#activitypics32").val();
-		} else if (flag == '133') {
-			$("#activitypics33").val();
-		} else if (flag == '134') {
-			$("#activitypics34").val();
-		} else if (flag == '141') {
-			$("#activitypics41").val();
-		} else if (flag == '142') {
-			$("#activitypics42").val();
-		} else if (flag == '143') {
-			$("#activitypics43").val();
-		} else if (flag == '144') {
-			$("#activitypics44").val();
-		} else if (flag == '15') {
-			$("#approvepic").val();
-		}
-
+		$("#shoppics" + flag).val();
 	} else {
 		$("#XX_groupimglist").children("div").removeClass('selected');
 		$("#XX_groupimglist").find("div[name='XX_selectdiv']").css("display",
@@ -359,77 +301,7 @@ function XX_selectImg(XX_img_guid) {
 		$('#XX_' + img_guid).find("div[name='XX_selectdiv']").css("display",
 				"block");
 		var flag = $("#hiddenValue").val();
-		if (flag == '1') {
-			$("#titleimg").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '2') {
-			$("#headurl").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '3') {
-			$("#doorpics1").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '4') {
-			$("#doorpics2").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '5') {
-			$("#doorpics3").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '6') {
-			$("#doorpics4").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '7') {
-			$("#shoppics1").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '8') {
-			$("#shoppics2").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '9') {
-			$("#shoppics3").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '10') {
-			$("#shoppics4").val($('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '111') {
-			$("#activitypics11").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '112') {
-			$("#activitypics12").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '113') {
-			$("#activitypics13").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '114') {
-			$("#activitypics14").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '121') {
-			$("#activitypics21").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '122') {
-			$("#activitypics22").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '123') {
-			$("#activitypics23").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '124') {
-			$("#activitypics24").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '131') {
-			$("#activitypics31").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '132') {
-			$("#activitypics32").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '133') {
-			$("#activitypics33").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '134') {
-			$("#activitypics34").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '141') {
-			$("#activitypics41").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '142') {
-			$("#activitypics42").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '143') {
-			$("#activitypics43").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '144') {
-			$("#activitypics44").val(
-					$('#XX_' + img_guid).find("img").attr("src"));
-		} else if (flag == '15') {
-			$("#approvepic").val($('#XX_' + img_guid).find("img").attr("src"));
-		}
+		$("#shoppics"+flag).val($('#XX_' + img_guid).find("img").attr("src"));
 	}
 
 }
@@ -634,61 +506,7 @@ function XX_addimgdiv(json) {
 
 function insertTitleImg() {
 	var flag = $("#hiddenValue").val();
-	if (flag == '1') {
-		$("#titleimgshow").attr("src", $("#titleimg").val());
-	} else if (flag == '2') {
-		$("#headurlshow").attr("src", $("#headurl").val());
-	} else if (flag == '3') {
-		$("#doorpicsshow1").attr("src", $("#doorpics1").val());
-	} else if (flag == '4') {
-		$("#doorpicsshow2").attr("src", $("#doorpics2").val());
-	} else if (flag == '5') {
-		$("#doorpicsshow3").attr("src", $("#doorpics3").val());
-	} else if (flag == '6') {
-		$("#doorpicsshow4").attr("src", $("#doorpics4").val());
-	} else if (flag == '7') {
-		$("#shoppicsshow1").attr("src", $("#shoppics1").val());
-	} else if (flag == '8') {
-		$("#shoppicsshow2").attr("src", $("#shoppics2").val());
-	} else if (flag == '9') {
-		$("#shoppicsshow3").attr("src", $("#shoppics3").val());
-	} else if (flag == '10') {
-		$("#shoppicsshow4").attr("src", $("#shoppics4").val());
-	} else if (flag == '111') {
-		$("#activitypicsshow11").attr("src", $("#activitypics11").val());
-	} else if (flag == '112') {
-		$("#activitypicsshow12").attr("src", $("#activitypics12").val());
-	} else if (flag == '113') {
-		$("#activitypicsshow13").attr("src", $("#activitypics13").val());
-	} else if (flag == '114') {
-		$("#activitypicsshow14").attr("src", $("#activitypics14").val());
-	} else if (flag == '121') {
-		$("#activitypicsshow21").attr("src", $("#activitypics21").val());
-	} else if (flag == '122') {
-		$("#activitypicsshow22").attr("src", $("#activitypics22").val());
-	} else if (flag == '123') {
-		$("#activitypicsshow23").attr("src", $("#activitypics23").val());
-	} else if (flag == '124') {
-		$("#activitypicsshow24").attr("src", $("#activitypics24").val());
-	} else if (flag == '131') {
-		$("#activitypicsshow31").attr("src", $("#activitypics31").val());
-	} else if (flag == '132') {
-		$("#activitypicsshow32").attr("src", $("#activitypics32").val());
-	} else if (flag == '133') {
-		$("#activitypicsshow33").attr("src", $("#activitypics33").val());
-	} else if (flag == '134') {
-		$("#activitypicsshow34").attr("src", $("#activitypics34").val());
-	} else if (flag == '141') {
-		$("#activitypicsshow41").attr("src", $("#activitypics41").val());
-	} else if (flag == '142') {
-		$("#activitypicsshow42").attr("src", $("#activitypics42").val());
-	} else if (flag == '143') {
-		$("#activitypicsshow43").attr("src", $("#activitypics43").val());
-	} else if (flag == '144') {
-		$("#activitypicsshow44").attr("src", $("#activitypics44").val());
-	} else if (flag == '15') {
-		$("#approvepicshow").attr("src", $("#approvepic").val());
-	}
+		$("#shoppicsshow"+flag).attr("src", $("#shoppics"+flag).val());
 }
 
 function insertHiddleValue(value) {
@@ -783,30 +601,31 @@ function lookuser(buid) {
 				$("#look_buserid").val(jsondata.buserid);
 				$("#look_name").val(jsondata.name);
 				if (jsondata.contactphone != null) {
-//					console.log(jsondata.contactphone);
-					 $("#look_contactphone").val(jsondata.contactphone);
+					// console.log(jsondata.contactphone);
+					$("#look_contactphone").val(jsondata.contactphone);
 
 					$(jsondata.pics).each(function(index, element) {
 						// 遍历
-//						for (k in element) {
-							console.log(index, element[index]);
-							 $("#shoppics"+(index+1)).val(element);
-							 $("#shoppicsshow"+(index+1)).attr("src",element);
-//						}
+						// for (k in element) {
+						console.log(index, element[index]);
+						$("#shoppics" + (index + 1)).val(element);
+						$("#shoppicsshow" + (index + 1)).attr("src", element);
+						// }
 					});
 				}
 				// $("#look_type").val(jsondata.type);
-				 $("#look_address").val(jsondata.address);
-				 $("#look_province").val(jsondata.province);
-				 $("#look_city").val(jsondata.city);
-				 $("#look_createtime").val(format(jsondata.createtime,'yyyy-MM-dd  HH:mm:ss'));
+				$("#look_address").val(jsondata.address);
+				$("#look_province").val(jsondata.province);
+				$("#look_city").val(jsondata.city);
+				$("#look_createtime").val(
+						format(jsondata.createtime, 'yyyy-MM-dd  HH:mm:ss'));
 				// $("#look_businessserviceliststr").val(jsondata.businessserviceliststr);
-				 $("#look_longitude").val(jsondata.longitude);
-				 $("#look_latitude").val(jsondata.latitude);
-				 $("#look_businesshours").val(jsondata.businesshours);
-				 $("#look_businesslables").val(jsondata.lables);
-				 $("#look_kfuseridlist").val(jsondata.kfuseridlist);
-				 $("#look_des").val(jsondata.des);
+				$("#look_longitude").val(jsondata.longitude);
+				$("#look_latitude").val(jsondata.latitude);
+				$("#look_businesshours").val(jsondata.businesshours);
+				$("#look_businesslables").val(jsondata.lables);
+				$("#look_kfuseridlist").val(jsondata.kfuseridlist);
+				$("#look_des").val(jsondata.des);
 				// $("#headurl").val(jsondata.headurl);
 				// $("#headurlshow").attr("src",jsondata.headurl);
 				// if(jsondata.shoppics!=null && jsondata.shoppics !=''){
@@ -821,10 +640,12 @@ function lookuser(buid) {
 				// $("#addtomaingroup_select").append(str);
 
 				$("#hidden_buserid").val(jsondata.buserid);
-				if(jsondata.state==0){
-					$("input:radio[name='look_state']").eq(1).attr("checked",'checked');
-				}else{
-					$("input:radio[name='look_state']").eq(0).attr("checked",'checked');
+				if (jsondata.state == 0) {
+					$("input:radio[name='look_state']").eq(1).attr("checked",
+							'checked');
+				} else {
+					$("input:radio[name='look_state']").eq(0).attr("checked",
+							'checked');
 				}
 				$("#hidden_state").val(jsondata.state);
 
@@ -1009,26 +830,25 @@ function editUserConfirm() {
 	var longitude = $("#look_longitude").val();
 	var latitude = $("#look_latitude").val();
 	var businesshours = $("#look_businesshours").val();
-	var lables=$("#look_businesslables").val();
+	var lables = $("#look_businesslables").val();
 	var kfuseridlist = $("#look_kfuseridlist").val();
 	var des = $("#look_des").val();
 	var state = $("input[name='look_state']:checked").val();
-	var groupid=$("#look_groupid").val();
-
+	var groupid = $("#look_groupid").val();
 
 	var pics = [];
-	for(var i=1;i<9;i++){
-		var pic= $("#shoppics"+i).val();
-		if(pic!=null&&pic!=""){
+	for (var i = 1; i < 9; i++) {
+		var pic = $("#shoppics" + i).val();
+		if (pic != null && pic != "") {
 			pics.push(pic)
 		}
 	}
 
-
-	if (name == null || name == '' || contactphone == null || contactphone == ''
-			 || address == null || address == ''||province == null || province == ''
-			|| city == null || city == '' || longitude == null
-			|| longitude == '' || latitude == null || latitude == '') {
+	if (name == null || name == '' || contactphone == null
+			|| contactphone == '' || address == null || address == ''
+			|| province == null || province == '' || city == null || city == ''
+			|| longitude == null || longitude == '' || latitude == null
+			|| latitude == '') {
 		alert("有数据为空");
 		$("#back").css("display", "none");
 		return;
@@ -1036,7 +856,7 @@ function editUserConfirm() {
 
 	var datas = {
 		"buid" : buid,
-		"buserid":buserid,
+		"buserid" : buserid,
 		"name" : name,
 		"contactphone" : contactphone,
 		"address" : address,
@@ -1044,8 +864,8 @@ function editUserConfirm() {
 		"city" : city,
 		"longitude" : longitude,
 		"latitude" : latitude,
-		"businesshours":businesshours,
-		"lables":lables,
+		"businesshours" : businesshours,
+		"lables" : lables,
 		"state" : state,
 
 		/*
@@ -1055,8 +875,8 @@ function editUserConfirm() {
 
 		"kfuseridlist" : kfuseridlist,
 		"des" : des,
-		"pics":pics.toString(),
-		"groupid":groupid
+		"pics" : pics.toString(),
+		"groupid" : groupid
 	}
 	$.ajax({
 		type : "POST",
@@ -1086,148 +906,8 @@ function editUserConfirm() {
 	});
 }
 
-function addtoUsecarMain(index) {
-	$("#activityindex").val(index);
-	$("#addtomaingroup_orderindex").val("");
-}
-function addNewActivity(index) {
-	if (confirm("你确定要添加一个新的活动么？该操作不可逆，谨慎操作！")) {
-		if (index == 1) {
-			$("#look_activitybaid1").val(getUuid());
-			$("#deleteActivityBtn1").show();
-			$("#addNewActivityBtn1").hide();
-		} else if (index == 2) {
-			$("#look_activitybaid2").val(getUuid());
-			$("#deleteActivityBtn2").show();
-			$("#addNewActivityBtn2").hide();
-		} else if (index == 3) {
-			$("#look_activitybaid3").val(getUuid());
-			$("#deleteActivityBtn3").show();
-			$("#addNewActivityBtn3").hide();
-		} else if (index == 4) {
-			$("#look_activitybaid4").val(getUuid());
-			$("#deleteActivityBtn4").show();
-			$("#addNewActivityBtn4").hide();
-		}
-	}
-}
-function deleteActivity(index) {
-	if (confirm("你确定要删除该活动么？该操作不可逆，谨慎操作！")) {
-		if (index == 1) {
-			$("#look_activitybaid1").val("");
-			$("#look_activitytitle1").val("");
-			$("#look_activitycontent1").val("");
-			$("#activitypics11").val("");
-			$("#activitypics12").val("");
-			$("#activitypics13").val("");
-			$("#activitypics14").val("");
-			$("#activitypicsshow11").attr("src", "");
-			$("#activitypicsshow12").attr("src", "");
-			$("#activitypicsshow13").attr("src", "");
-			$("#activitypicsshow14").attr("src", "");
-			$("#deleteActivityBtn1").hide();
-			$("#addNewActivityBtn1").show();
-		} else if (index == 2) {
-			$("#look_activitybaid2").val("");
-			$("#look_activitytitle2").val("");
-			$("#look_activitycontent2").val("");
-			$("#activitypics21").val("");
-			$("#activitypics22").val("");
-			$("#activitypics23").val("");
-			$("#activitypics24").val("");
-			$("#activitypicsshow21").attr("src", "");
-			$("#activitypicsshow22").attr("src", "");
-			$("#activitypicsshow23").attr("src", "");
-			$("#activitypicsshow24").attr("src", "");
-			$("#deleteActivityBtn2").hide();
-			$("#addNewActivityBtn2").show();
-		} else if (index == 3) {
-			$("#look_activitybaid3").val("");
-			$("#look_activitytitle3").val("");
-			$("#look_activitycontent3").val("");
-			$("#activitypics31").val("");
-			$("#activitypics32").val("");
-			$("#activitypics33").val("");
-			$("#activitypics34").val("");
-			$("#activitypicsshow31").attr("src", "");
-			$("#activitypicsshow32").attr("src", "");
-			$("#activitypicsshow33").attr("src", "");
-			$("#activitypicsshow34").attr("src", "");
-			$("#deleteActivityBtn3").hide();
-			$("#addNewActivityBtn3").show();
-		} else if (index == 4) {
-			$("#look_activitybaid4").val("");
-			$("#look_activitytitle4").val("");
-			$("#look_activitycontent4").val("");
-			$("#activitypics41").val("");
-			$("#activitypics42").val("");
-			$("#activitypics43").val("");
-			$("#activitypics44").val("");
-			$("#activitypicsshow41").attr("src", "");
-			$("#activitypicsshow42").attr("src", "");
-			$("#activitypicsshow43").attr("src", "");
-			$("#activitypicsshow44").attr("src", "");
-			$("#deleteActivityBtn4").hide();
-			$("#addNewActivityBtn4").show();
-		}
-	}
-}
 function toEdit() {
 	$("input,select,button,textarea").prop('disabled', false);
-}
-function addtoUsecarMainConfirm() {
-	if (confirm("你确定要添加该活动到首页么？该操作不可逆，谨慎操作！")) {
-		var index = $("#activityindex").val();
-		var baid = $("#look_activitybaid" + index).val();
-		if (baid == null || baid == '') {
-			alert("活动为空不可添加到首页！");
-			return false;
-		}
-		var groupid = $("#addtomaingroup_select").val();
-		var orderindex = $("#addtomaingroup_orderindex").val();
-		if (groupid == null || groupid == '') {
-			alert("groupid不能为空！");
-			return false;
-		}
-		if (orderindex == null || orderindex == '') {
-			alert("orderindex不能为空！");
-			return false;
-		}
-		var title = $("#look_activitytitle" + index).val();
-		var content = $("#look_activitycontent" + index).val();
-		var pics1 = $("#activitypics" + index + "1").val();
-		var pics2 = $("#activitypics" + index + "2").val();
-		var pics3 = $("#activitypics" + index + "3").val();
-		var pics4 = $("#activitypics" + index + "4").val();
-		var userid = $("#look_userid").val();
-		var datas = {
-			"baid" : baid,
-			"groupid" : groupid,
-			"orderindex" : orderindex,
-			"content" : content,
-			"title" : title,
-			"pics1" : pics1,
-			"pics2" : pics2,
-			"pics3" : pics3,
-			"pics4" : pics4,
-			"buserid" : userid
-		}
-		$.ajax({
-			type : "POST",
-			url : "../businessmanage/activitytoUsecarmain",
-			data : datas,
-			success : function(data) {
-				if (data == 'success') {
-					alert("修改成功！");
-				} else {
-					alert("修改失败！");
-				}
-			},
-			error : function(data) {
-				alert("修改出错！");
-			}
-		});
-	}
 }
 
 function uploadapprovepic(userid) {

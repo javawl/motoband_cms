@@ -196,8 +196,8 @@ body {
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">用户管理——编辑页</h1>
-			<input id="useridHidden" type="hidden" value="${buid }" />
-			 <input id="hiddenValue" type="hidden" value="" />
+			<input id="useridHidden" type="hidden" value="${buid }" /> <input
+				id="hiddenValue" type="hidden" value="" />
 
 		</div>
 	</div>
@@ -213,10 +213,9 @@ body {
 						</h3>
 					</div>
 					<div class="form-group">
-							<b>商家用户ID</b>
-						<input class="form-control" placeholder="buserid" id="look_buserid"
-							value="" readonly="readonly"> 
-							<input id="hidden_buid"type="hidden" value="" />
+						<b>商家用户ID</b> <input class="form-control" placeholder="buserid"
+							id="look_buserid" value="" readonly="readonly"> <input
+							id="hidden_buid" type="hidden" value="" />
 					</div>
 					<div class="form-group">
 						<b>商家名称</b><input class="form-control" placeholder="name"
@@ -277,8 +276,8 @@ body {
 							placeholder="多客服userid  英文逗号隔开" id="look_kfuseridlist" value="">
 					</div>
 					<div class="form-group">
-						<b>商家客服</b><input class="form-control"
-							placeholder="群组id" id="look_groupid" value="">
+						<b>商家群组</b><input class="form-control" placeholder="群组id"
+							id="look_groupid" value="">
 					</div>
 					<div class="form-group">
 						<span><b>店铺简介</b></span>
@@ -298,7 +297,7 @@ body {
 							<div>
 								<input id="" type="button" value="设置照片1" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('7')">
+									onclick="javascript:insertTitleImgHidden('1')">
 							</div>
 							<div>
 								<input type="text" value="" id="shoppics1"> <img
@@ -310,7 +309,7 @@ body {
 							<div>
 								<input id="" type="button" value="设置照片2" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('8')">
+									onclick="javascript:insertTitleImgHidden('2')">
 							</div>
 							<div>
 								<input type="text" value="" id="shoppics2"> <img
@@ -322,7 +321,7 @@ body {
 							<div>
 								<input id="" type="button" value="设置照片3" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('9')">
+									onclick="javascript:insertTitleImgHidden('3')">
 							</div>
 							<div>
 								<input type="text" value="" id="shoppics3"> <img
@@ -334,58 +333,58 @@ body {
 							<div>
 								<input id="" type="button" value="设置照片4" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('10')">
+									onclick="javascript:insertTitleImgHidden('4')">
 							</div>
 							<div>
 								<input type="text" value="" id="shoppics4"> <img
 									id="shoppicsshow4" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
-												<div class="col-sm-3">
+						<div class="col-sm-3">
 							<b>店内照片5</b>
 							<div>
 								<input id="" type="button" value="设置照片5" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('10')">
+									onclick="javascript:insertTitleImgHidden('5')">
 							</div>
 							<div>
-								<input type="text" value="" id="shoppics4"> <img
+								<input type="text" value="" id="shoppics5"> <img
 									id="shoppicsshow5" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
-																		<div class="col-sm-3">
+						<div class="col-sm-3">
 							<b>店内照片6</b>
 							<div>
 								<input id="" type="button" value="设置照片6" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('10')">
+									onclick="javascript:insertTitleImgHidden('6')">
 							</div>
 							<div>
-								<input type="text" value="" id="shoppics4"> <img
+								<input type="text" value="" id="shoppics6"> <img
 									id="shoppicsshow6" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
-																		<div class="col-sm-3">
+						<div class="col-sm-3">
 							<b>店内照片7</b>
 							<div>
 								<input id="" type="button" value="设置照片7" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('10')">
+									onclick="javascript:insertTitleImgHidden('7')">
 							</div>
 							<div>
-								<input type="text" value="" id="shoppics4"> <img
+								<input type="text" value="" id="shoppics7"> <img
 									id="shoppicsshow7" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
-																		<div class="col-sm-3">
+						<div class="col-sm-3">
 							<b>店内照片8</b>
 							<div>
 								<input id="" type="button" value="设置照片8" class="btn btn-info"
 									data-toggle="modal" data-target="#titleImgModel"
-									onclick="javascript:insertTitleImgHidden('10')">
+									onclick="javascript:insertTitleImgHidden('8')">
 							</div>
 							<div>
-								<input type="text" value="" id="shoppics4"> <img
+								<input type="text" value="" id="shoppics8"> <img
 									id="shoppicsshow8" src="" style="width: 144px; height: 144px" />
 							</div>
 						</div>
@@ -536,11 +535,11 @@ body {
 		src="../js/mallmanage/uploadGroupImage.js"></script>
 	<script type="text/javascript">
 		var buid = $("#useridHidden").val();
-		if(buid==0){
+		if (buid == 0) {
 			toEdit();
 			$("#hidden_buid").val(0);
-		}else {
-			lookuser(buid);	
+		} else {
+			lookuser(buid);
 			$("input,select,button,textarea").prop('disabled', true);
 			$("#addtomaingroup_select").prop('disabled', false);
 			$("#addtomaingroup_orderindex").prop('disabled', false);
@@ -549,8 +548,6 @@ body {
 			$("#addtomainBtn").prop('disabled', false);
 			$("#timesBtn").prop('disabled', false);
 		}
-		
-		
 	</script>
 </body>
 </html>
