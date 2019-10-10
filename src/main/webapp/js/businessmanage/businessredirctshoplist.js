@@ -605,6 +605,8 @@ function lookuser(buid) {
 		success : function(data) {
 			if (data != null && data != '') {
 				var jsondata = eval("(" + data + ")");
+				$("#look_groupid").val(jsondata.groupid);
+				$("#look_orderindex").val(jsondata.orderindex);
 				$("#hidden_buid").val(jsondata.buid);
 				$("#look_buserid").val(jsondata.buserid);
 				$("#look_name").val(jsondata.name);
@@ -843,6 +845,7 @@ function editUserConfirm() {
 	var des = $("#look_des").val();
 	var state = $("input[name='look_state']:checked").val();
 	var groupid = $("#look_groupid").val();
+	var orderindex = $("#look_orderindex").val();
 
 	var pics = [];
 	for (var i = 1; i < 9; i++) {
@@ -884,7 +887,8 @@ function editUserConfirm() {
 		"kfuseridlist" : kfuseridlist,
 		"des" : des,
 		"pics" : pics.toString(),
-		"groupid" : groupid
+		"groupid" : groupid,
+		"orderindex":orderindex
 	}
 	$.ajax({
 		type : "POST",

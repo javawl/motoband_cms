@@ -300,14 +300,14 @@ where userid=#{buserid}
 <!-- 		INSERT INTO `business_user_v_3_8_0` (name, province, city,contactphone, pics) -->
 <!-- 		values -->
 <!-- 		(#{name}, #{province} #{city},#{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle},#{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }) -->
-	INSERT INTO `business_user_v_3_8_0` ( `buserid`,`name`, `province`, `city`, `contactphone`, `pics`, `address`, `businesshours`, `des`, `latitude`, `longitude`, `kfuseridlist`, `groupid`, `lables`, `usercount`, `scorecount`, `createtime`, `updatetime`, `state`) 
+	INSERT INTO `business_user_v_3_8_0` ( `buserid`,`name`, `province`, `city`, `contactphone`, `pics`, `address`, `businesshours`, `des`, `latitude`, `longitude`, `kfuseridlist`, `groupid`, `lables`, `usercount`, `scorecount`, `createtime`, `updatetime`, `state`, `orderindex`) 
 	VALUES
-	 (#{buserid},#{name}, #{province}, #{city}, #{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }, #{address}, #{businesshours}, #{des},#{latitude}, #{longitude}, #{kfuseridlist,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{groupid}, #{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle},#{usercount}, #{scorecount}, #{createtime}, #{updatetime}, #{state})
+	 (#{buserid},#{name}, #{province}, #{city}, #{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle }, #{address}, #{businesshours}, #{des},#{latitude}, #{longitude}, #{kfuseridlist,typeHandler=com.motoband.util.JsonArrayTypeHandle}, #{groupid}, #{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle},#{usercount}, #{scorecount}, #{createtime}, #{updatetime}, #{state},#{orderindex})
 	 ON
 	DUPLICATE KEY UPDATE
 	name=#{name},province=#{province},city=#{city},contactphone=#{contactphone,typeHandler=com.motoband.util.JsonArrayTypeHandle },pics=#{pics,typeHandler=com.motoband.util.JsonArrayTypeHandle },
 	address=#{address},businesshours=#{businesshours},des=#{des},latitude=#{latitude},longitude=#{longitude},kfuseridlist=#{kfuseridlist,typeHandler=com.motoband.util.JsonArrayTypeHandle },
-	groupid=#{groupid},lables=#{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle },usercount=#{usercount},scorecount=#{scorecount},updatetime=#{updatetime},state=#{state}
+	groupid=#{groupid},lables=#{lables,typeHandler=com.motoband.util.JsonArrayTypeHandle },usercount=#{usercount},scorecount=#{scorecount},updatetime=#{updatetime},state=#{state},orderindex=#{orderindex}
 	</insert>
 	<select id="getRedirctShopServiceCount"  parameterType="Integer" resultType="Integer">
 				select count(1) from `business_service_v_3_8_0` where 1=1

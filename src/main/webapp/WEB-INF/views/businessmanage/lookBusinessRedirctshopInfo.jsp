@@ -288,6 +288,15 @@ body {
 								rows="3" cols="" placeholder="des"></textarea>
 						</div>
 					</div>
+					<div class="form-group">
+						<span><b>排序(越大越优先)</b></span>
+						<!-- <input class="form-control" placeholder="des" id="look_des"
+							value="" > -->
+						<div>
+							<textarea style="width: 100%;" class="form-group" id="look_orderindex"
+								rows="1" cols="" placeholder="orderindex"></textarea>
+						</div>
+					</div>
 				</div>
 
 				<div class="form-group">
