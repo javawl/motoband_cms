@@ -34,6 +34,7 @@ import com.motoband.carmanage.carModel;
 import com.motoband.carmanage.carService;
 import com.motoband.mallmanage.MallProductModel;
 import com.motoband.secondcar.SecondCarModel;
+import com.motoband.util.BeanUtils;
 import com.motoband.util.Constants;
 import com.motoband.util.Consts;
 import com.motoband.util.MbUtil;
@@ -1257,6 +1258,23 @@ public void updateBUserV_3_8_0(Model model, HttpSession session, HttpServletRequ
 	}
 	user.setUpdatetime(System.currentTimeMillis());
 	businessService.insertOrupdateBusinessUserV_3_8_0(user);
+	//先拿到客服
+	String hget = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, user.getBuserid()+USERKEY_USERMAP, "kfuseridlist");
+	//删除客服时     暂不对删除商家下已有客服的动态进行处理
+	if(user.kfuseridlist!=null&&user.kfuseridlist.size()>0){
+		if(StringUtils.isNotBlank(hget)){
+			String[] hkfusers = hget.split(",");
+			if(hkfusers!=null && hkfusers.length>0){
+				for(int i=0;i<hkfusers.length;i++){
+					RedisManager.getInstance().zrem(Consts.REDIS_SCHEME_USER, hkfusers[i]+USERKEY_BUSINESSUSERLIST, user.getBuserid());
+				}
+			}
+		}
+			for(String kfuserid:user.kfuseridlist){
+				RedisManager.getInstance().zadd(Consts.REDIS_SCHEME_USER, kfuserid+USERKEY_BUSINESSUSERLIST, System.currentTimeMillis(), user.getBuserid());
+			}
+			RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, user.getBuserid()+USERKEY_USERMAP, "kfuseridlist",StringUtils.join(user.kfuseridlist, ","));
+	}
 	  out.write("success");
 }
 

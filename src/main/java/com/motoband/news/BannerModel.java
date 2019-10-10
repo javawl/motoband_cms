@@ -21,6 +21,7 @@ public class BannerModel {
 	
 	public int ntype;//动态的类型   当为跳转类型为动态时  自动赋值
 
+
 	@Override
 	public String toString() {
 		return "BannerModel [bannerid=" + bannerid + ", bannertype=" + bannertype + ", title=" + title + ", subtitle=" + subtitle + ", des=" + des + ", state=" + state + ", linktype=" + linktype + ", imgurl=" + imgurl + ", linkurl=" + linkurl + ", gpid=" + gpid + ", nid=" + nid + ", keyword=" + keyword + ", secondcarid=" + secondcarid + ", miniprogramid=" + miniprogramid + ", buserid=" + buserid
