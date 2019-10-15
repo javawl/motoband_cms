@@ -73,40 +73,40 @@
 //	pageBean.setTotalPage(totalPage); 
 //	int start= (page-1)*limit;
 //	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-////	List<GiftexchangeModel> giftexchangelist=giftexchangeService.getGiftexchangelist(start,limit,order,orderConditions);
-//////	List<MBUserlevelModel> buserlevels=motouserService.getUserLevels();
-////	List<GiftModel> gifts=giftexchangeService.getGiftList();
-//////	Map<String,String> buserlevelsmap = new HashMap<String,String>();
-////	Map<String,String> giftsmap = new HashMap<String,String>();
-//////	for(MBUserlevelModel ml :buserlevels){
-//////		buserlevelsmap.put(String.valueOf(ml.getLevel()), ml.getName());
-//////	}
-////	for(GiftModel g : gifts){
-////		giftsmap.put(String.valueOf(g.getGiftid()), g.getName());
+//	List<GiftexchangeModel> giftexchangelist=giftexchangeService.getGiftexchangelist(start,limit,order,orderConditions);
+////	List<MBUserlevelModel> buserlevels=motouserService.getUserLevels();
+//	List<GiftModel> gifts=giftexchangeService.getGiftList();
+////	Map<String,String> buserlevelsmap = new HashMap<String,String>();
+//	Map<String,String> giftsmap = new HashMap<String,String>();
+////	for(MBUserlevelModel ml :buserlevels){
+////		buserlevelsmap.put(String.valueOf(ml.getLevel()), ml.getName());
 ////	}
-////	for(GiftexchangeModel giftexchangeModel :giftexchangelist){
-////		giftexchangeModel.setValiditystarttimeString(formatter.format(new Date(giftexchangeModel.getValiditystarttime())));
-////		giftexchangeModel.setValidityendtimeString(formatter.format(new Date(giftexchangeModel.getValidityendtime())));
-////		giftexchangeModel.setGiftName(giftsmap.get(String.valueOf(giftexchangeModel.getGiftid())));
-////		//giftexchangeModel.setConditionName(buserlevelsmap.get(String.valueOf(giftexchangeModel.getCondition())));
-////	}
-////	
-////	
-////	
-////	ArrayList<Integer> limitList =new ArrayList<Integer>();
-////	limitList.add(20);
-////	limitList.add(50);
-////	limitList.add(100);
-////	model.addAttribute("limitList", limitList);
-////	ArrayList<Integer> typeList =new ArrayList<Integer>();
-////	typeList.add(0);
-////	typeList.add(1);
-////
-////	model.addAttribute("pageBean", pageBean);
-////
-////	model.addAttribute("giftexchangelist", giftexchangelist);
-////	model.addAttribute("limit", limit);
-////	model.addAttribute("order", order);
-////	model.addAttribute("orderConditions", orderConditions);
+//	for(GiftModel g : gifts){
+//		giftsmap.put(String.valueOf(g.getGiftid()), g.getName());
+//	}
+//	for(GiftexchangeModel giftexchangeModel :giftexchangelist){
+//		giftexchangeModel.setValiditystarttimeString(formatter.format(new Date(giftexchangeModel.getValiditystarttime())));
+//		giftexchangeModel.setValidityendtimeString(formatter.format(new Date(giftexchangeModel.getValidityendtime())));
+//		giftexchangeModel.setGiftName(giftsmap.get(String.valueOf(giftexchangeModel.getGiftid())));
+//		//giftexchangeModel.setConditionName(buserlevelsmap.get(String.valueOf(giftexchangeModel.getCondition())));
+//	}
+//	
+//	
+//	
+//	ArrayList<Integer> limitList =new ArrayList<Integer>();
+//	limitList.add(20);
+//	limitList.add(50);
+//	limitList.add(100);
+//	model.addAttribute("limitList", limitList);
+//	ArrayList<Integer> typeList =new ArrayList<Integer>();
+//	typeList.add(0);
+//	typeList.add(1);
+//
+//	model.addAttribute("pageBean", pageBean);
+//
+//	model.addAttribute("giftexchangelist", giftexchangelist);
+//	model.addAttribute("limit", limit);
+//	model.addAttribute("order", order);
+//	model.addAttribute("orderConditions", orderConditions);
 //}
 //}
