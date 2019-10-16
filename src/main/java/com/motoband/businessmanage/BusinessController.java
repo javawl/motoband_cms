@@ -1568,6 +1568,7 @@ public ModelAndView businesscommentlistinfo(Model model, HttpSession session, Ht
 			carModel carmodel= carService.getCarModelById(String.valueOf(businessCommentModel.getModelid()));
 			businessCommentModel.setTuserName(tuserName);
 			businessCommentModel.setUserName(userName);
+			if(carmodel!=null&&carmodel.getName()!=null)
 			businessCommentModel.setModelName(carmodel.getName());
 			commentlsit.add(businessCommentModel);
 		}
