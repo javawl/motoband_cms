@@ -67,8 +67,22 @@ public class newsModel {
 	
 	
 	public String linkurl;//跳转链接   只存redis 供boxurl等跳转
+	public String discusskeyword;
 	
 	
+	
+	public String getDiscusskeyword() {
+		return discusskeyword;
+	}
+
+
+
+	public void setDiscusskeyword(String discusskeyword) {
+		this.discusskeyword = discusskeyword;
+	}
+
+
+
 	public String getLinkurl() {
 		return linkurl;
 	}
