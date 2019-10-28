@@ -282,6 +282,7 @@
 
 						<input type="file" id="file2" class="btn btn-info"
 							multiple="multiple" accept="image/gif,image/jpg,image/jpeg,image/png,image/bmp"/>
+							(选择完文件后自动上传,上传进度查看下方进度条!)
 							<div class="progress">
 							    <div></div>
 							</div>
