@@ -12,19 +12,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -36,7 +39,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,7 +51,6 @@ import com.motoband.motouser.motouserService;
 import com.motoband.news.newsModel;
 import com.motoband.news.newsService;
 import com.motoband.user.userService;
-import com.motoband.util.CollectionUtil;
 import com.motoband.util.Constants;
 import com.motoband.util.Consts;
 import com.motoband.util.ESManager;
@@ -58,6 +59,15 @@ import com.motoband.util.PageBean;
 import com.motoband.util.PinyinComparator;
 import com.motoband.util.RedisManager;
 import com.qcloud.PicCloud;
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.auth.BasicCOSCredentials;
+import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.http.HttpMethodName;
+import com.qcloud.cos.model.GeneratePresignedUrlRequest;
+import com.qcloud.cos.model.PutObjectResult;
+import com.qcloud.cos.region.Region;
+import com.tencent.cloud.CosStsClient;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -87,7 +97,7 @@ public class boxController {
 	public static final MediaType MediaType_JSON = MediaType.parse("application/json; charset=utf-8");
 
 	private static OkHttpClient httpClient = new OkHttpClient();
-	
+
 	@RequestMapping(value = "/boxlist", method = RequestMethod.GET)
 	public void boxlist(Model model, HttpSession session, HttpServletRequest request, String userGuid, String nowtypeid, int page, int limit, int order, String title, String orderConditions) {
 
@@ -370,21 +380,118 @@ public class boxController {
 	}
 
 	@RequestMapping(value = "/getSignUrl", method = RequestMethod.POST)
-	public void getSignUrl(Model model, HttpSession session, HttpServletRequest request, PrintWriter out) {
-		int APP_ID_V2 = 10013836; // 项目ID
-		String SECRET_ID_V2 = "AKID8TCGA2cH6hkJQ3NriIAkzN0bvIHd9r1w"; // 项目SecretID
-		String SECRET_KEY_V2 = "NZoF8svEjxv9d1ThKdalZsmCoAuOBjX5"; // 项目SecretKey
-		String BUCKET = "motobox"; // 空间名称bucket
-		PicCloud pc = new PicCloud(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
-		String sign = "";
-		long expired = System.currentTimeMillis() / 1000 + 3600 * 24 * 30 * 2;
-		String url = "https://web.image.myqcloud.com/photos/v2/10013836/motobox/0/";
-		sign = pc.getSign(expired);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("sign", sign.toString());
-		jsonObject.put("url", url);
-		out.print(jsonObject.toString());
+	public void getSignUrl(Model model, HttpSession session, HttpServletRequest request, String key, PrintWriter out) {
+		String SECRET_ID_V2 = "AKIDl8fUHCxeOZaB8gzRsipx6AsJKb4NatKS"; // 项目SecretID
+		String SECRET_KEY_V2 = "14FYwQ4PtIeui1qk35XwUoi6gOiaY2SO"; // 项目SecretKey
+//		int APP_ID_V2 = 10013836; // 项目ID
+//		String BUCKET = "motobox"; // 空间名称bucket
+		// 方式一
+		TreeMap<String, Object> config = new TreeMap<String, Object>();
 
+		try {
+
+			// 云 API 密钥 secretId
+			config.put("secretId", SECRET_ID_V2);
+			// 云 API 密钥 secretKey
+			config.put("secretKey", SECRET_KEY_V2);
+
+			// 临时密钥有效时长，单位是秒
+			config.put("durationSeconds", 1800);
+
+			// 换成你的 bucket
+			config.put("bucket", "motobox-10013836");
+			// 换成 bucket 所在地区
+			config.put("region", "ap-shanghai");
+
+			// 这里改成允许的路径前缀，可以根据自己网站的用户登录态判断允许上传的具体路径，
+			// 例子： a.jpg 或者 a/* 或者 * (使用通配符*存在重大安全风险, 请谨慎评估使用)
+			config.put("allowPrefix", "*");
+
+			// 密钥的权限列表。简单上传和分片需要以下的权限，其他权限列表请看
+			// https://cloud.tencent.com/document/product/436/31923
+			String[] allowActions = new String[] {
+					// 简单上传
+					"name/cos:PutObject",
+					// 表单上传
+					"name/cos:PostObject",
+					// 分片上传： 初始化分片
+					"name/cos:InitiateMultipartUpload",
+					// 分片上传： 查询 bucket 中未完成分片上传的UploadId
+					"name/cos:ListMultipartUploads",
+					// 分片上传： 查询已上传的分片
+					"name/cos:ListParts",
+					// 分片上传： 上传分片块
+					"name/cos:UploadPart",
+					// 分片上传： 完成分片上传
+					"name/cos:CompleteMultipartUpload",
+					"name/cos:DeleteObject"};
+			config.put("allowActions", allowActions);
+			// 请求临时密钥信息
+			org.json.JSONObject credential = CosStsClient.getCredential(config);
+			// 请求成功：打印对应的临时密钥信息
+			System.out.println(credential.toString(4));
+			out.print(credential);
+		} catch (Exception e) {
+			// 请求失败，抛出异常
+			throw new IllegalArgumentException("no valid secret !");
+		}
+
+//		PicCloud pc = new PicCloud(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
+//		String sign = "";
+//		long expired = System.currentTimeMillis() / 1000 + 3600 * 24 * 30 * 2;
+//		String url = "https://web.image.myqcloud.com/photos/v2/10013836/motobox/0/";
+////		String url="https://motobox-10013836.pic.ap-shanghai.myqcloud.com";
+//		sign = pc.getSign(expired);
+		// 初始化永久密钥信息
+//		String secretId = "AKID8TCGA2cH6hkJQ3NriIAkzN0bvIHd9r1w";
+//		String secretKey = "NZoF8svEjxv9d1ThKdalZsmCoAuOBjX5";
+//		COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
+//		Region region = new Region("ap-shanghai");
+//		ClientConfig clientConfig = new ClientConfig(region);
+//		// 生成 cos 客户端。
+//		COSClient cosClient = new COSClient(cred, clientConfig);
+//		// 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
+//		String bucketName = "motobox-10013836";
+//		String key = "401825317";
+//		GeneratePresignedUrlRequest req =
+//		        new GeneratePresignedUrlRequest(bucketName, key, HttpMethodName.GET);
+		// 设置签名过期时间(可选), 若未进行设置, 则默认使用 ClientConfig 中的签名过期时间(1小时)
+		// 这里设置签名在半个小时后过期
+//		Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
+//		req.setExpiration(expirationDate);
+//		URL url = cosClient.generatePresignedUrl(req);
+//		System.out.println(url.toString());
+//		cosClient.shutdown();
+//		JSONObject jsonObject = new JSONObject();
+//		jsonObject.put("sign", sign.toString());
+//		jsonObject.put("url", url);
+//		out.print(jsonObject.toString());
+
+	}
+
+	public static void main(String[] args) {
+		// 初始化永久密钥信息
+		String secretId = "AKID8TCGA2cH6hkJQ3NriIAkzN0bvIHd9r1w";
+		String secretKey = "NZoF8svEjxv9d1ThKdalZsmCoAuOBjX5";
+		COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
+		Region region = new Region("ap-shanghai");
+		ClientConfig clientConfig = new ClientConfig(region);
+		// 生成 cos 客户端。
+		COSClient cosClient = new COSClient(cred, clientConfig);
+		// 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
+		String bucketName = "motobox-10013836";
+		String key = "401825317.jpg";
+		cosClient.deleteObject(bucketName, "401825317");
+		GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, key, HttpMethodName.GET);
+		// 设置签名过期时间(可选), 若未进行设置, 则默认使用 ClientConfig 中的签名过期时间(1小时)
+		// 这里设置签名在半个小时后过期
+		Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
+		req.setExpiration(expirationDate);
+		URL url = cosClient.generatePresignedUrl(req);
+		System.out.println(url.toString());
+		PutObjectResult res = cosClient.putObject(bucketName, key, "hello world");
+		System.out.println(JSON.toJSONString(res));
+		cosClient.shutdown();
 	}
 
 	@RequestMapping(value = "/boxsel", method = RequestMethod.GET)
@@ -461,14 +568,14 @@ public class boxController {
 	}
 
 	@RequestMapping(value = "/addNewBoxImg", method = RequestMethod.POST)
-	public void addNewBoxImg(Model model, HttpSession session, HttpServletRequest request, String img_guid, String img_url, String img_opurl, String img_name, String img_groupid, PrintWriter out) {
+	public void addNewBoxImg(Model model, HttpSession session, HttpServletRequest request, String img_guid, String img_url, String img_opurl, String img_name, String img_groupid, PrintWriter out) throws URISyntaxException {
 		long img_time = System.currentTimeMillis();
 		Admin admin = (Admin) session.getAttribute(Constants.SESSION_USER);
 		String img_writerguid = admin.getUser_guid();
 		motoimg motoimg = new motoimg();
 		motoimg.setImg_guid(img_guid);
-		motoimg.setImg_url(img_url);
-		motoimg.setImg_opurl(img_opurl);
+		motoimg.setImg_url(converturl(img_url));
+		motoimg.setImg_opurl(converturl(img_opurl));
 		motoimg.setImg_time(img_time);
 		motoimg.setImg_writerguid(img_writerguid);
 		motoimg.setImg_name(img_name);
@@ -480,8 +587,19 @@ public class boxController {
 
 	}
 
+	private String converturl(String img_url) throws URISyntaxException {
+		if(img_url==null) {
+			return null;
+		}
+		URI u = new URI(img_url);
+		StringBuffer sb = new StringBuffer();
+		sb.append("https://motobox-10013836.image.myqcloud.com").append(u.getPath());
+		return sb.toString();
+	}
+
 	@RequestMapping(value = "/addBoxPage", method = RequestMethod.POST)
-	public void addBoxPage(Model model, HttpSession session, HttpServletRequest request, String box_title, String box_subtitle, String box_writer, String box_type, String box_time, String box_content, String box_status, String box_id, String preview, String imglist, String box_titleimg, String box_boxkind, String box_boxurl, String box_approve, String box_source, String box_submitter, String box_keyword, PrintWriter out) {
+	public void addBoxPage(Model model, HttpSession session, HttpServletRequest request, String box_title, String box_subtitle, String box_writer, String box_type, String box_time, String box_content, String box_status, String box_id, String preview, String imglist, String box_titleimg, String box_boxkind, String box_boxurl, String box_approve, String box_source, String box_submitter,
+			String box_keyword, PrintWriter out) {
 		motobox motobox = new motobox();
 		motobox.setBoxid(box_id);
 		motobox.setTypeid(Integer.parseInt(box_type));
@@ -555,7 +673,7 @@ public class boxController {
 				}
 				String showurl = "http://" + boxService.getBoxUrlIP() + "/" + fileid;
 				// showurl=box_boxurl;
-			//	System.out.println("url===========" + showurl);
+				// System.out.println("url===========" + showurl);
 				localpath = box_boxurl;
 				boxService.updatePath(box_id, localpath, showurl);
 				RedisManager.getInstance().hset(Consts.REDIS_SCHEME_RUN, box_id + "_binfo", "localpath", localpath);
@@ -582,7 +700,7 @@ public class boxController {
 				String showurl = "http://" + boxService.getBoxUrlIP() + "/" + fileid;
 				// showurl=box_boxurl;
 				localpath = box_boxurl;
-			//	System.out.println("url===========" + showurl);
+				// System.out.println("url===========" + showurl);
 
 				boxService.updatePath(box_id, localpath, showurl);
 				RedisManager.getInstance().hset(Consts.REDIS_SCHEME_RUN, box_id + "_binfo", "localpath", localpath);
@@ -746,7 +864,7 @@ public class boxController {
 	@RequestMapping(value = "/sellook", method = RequestMethod.POST)
 	public void sellook(Model model, HttpSession session, HttpServletRequest request, String boxid, PrintWriter out) {
 		long count = boxService.getBoxLook(boxid);
-		//System.out.println(count);
+		// System.out.println(count);
 		out.print(count);
 	}
 
@@ -903,7 +1021,7 @@ public class boxController {
 	}
 
 	@RequestMapping(value = "/releaseNews", method = RequestMethod.POST)
-	public void releaseNews(Model model, HttpSession session, HttpServletRequest request, String typeid, String boxid, PrintWriter out)  {
+	public void releaseNews(Model model, HttpSession session, HttpServletRequest request, String typeid, String boxid, PrintWriter out) {
 
 		if (typeid != null && !"".equals(typeid)) {
 			Boxtype boxtype = boxService.getBoxTypeByTypeid(typeid);
@@ -923,21 +1041,19 @@ public class boxController {
 			motobox mbox = motobox.convertToMotobox(boxMap);
 			map.put("motoboxmodel", JSON.toJSONString(mbox));
 			map.put("picurl", mbox.getTitleimage());
-			BufferedImage image=null;
-			if(mbox.getTitleimage()!=null && !"".equals(mbox.getTitleimage())){
-				  String imageUrl=mbox.getTitleimage();  
-			        image=getBufferedImage(imageUrl);  
-			        if (image!=null)  
-			        {  
-			        	map.put("picheight", String.valueOf(image.getHeight()));
-			        	map.put("picwidth", String.valueOf(image.getWidth()));  
-			        }else{
-			        	map.put("picheight", "350");
-			        	map.put("picwidth", "750"); 
-			        }  
+			BufferedImage image = null;
+			if (mbox.getTitleimage() != null && !"".equals(mbox.getTitleimage())) {
+				String imageUrl = mbox.getTitleimage();
+				image = getBufferedImage(imageUrl);
+				if (image != null) {
+					map.put("picheight", String.valueOf(image.getHeight()));
+					map.put("picwidth", String.valueOf(image.getWidth()));
+				} else {
+					map.put("picheight", "350");
+					map.put("picwidth", "750");
+				}
 			}
-		  
-			
+
 			if (!RedisManager.getInstance().checkkey(Consts.REDIS_SCHEME_NEWS, nid + "_ninfo")) {
 				RedisManager.getInstance().hmset(Consts.REDIS_SCHEME_NEWS, nid + "_ninfo", map);
 				RedisManager.getInstance().zadd(Consts.REDIS_SCHEME_NEWS, userid + "_unlist", time, nid);
@@ -962,13 +1078,13 @@ public class boxController {
 				newsModel.setBoxid(Integer.parseInt(boxid));
 				newsModel.setType(8);
 				newsModel.setPicurl(mbox.getTitleimage());
-				if(mbox.getTitleimage()!=null && !"".equals(mbox.getTitleimage())){
-					 if (image!=null){  
-						 newsModel.setPicheight(image.getHeight());
-						 newsModel.setPicwidth(image.getWidth());
-				        } 
+				if (mbox.getTitleimage() != null && !"".equals(mbox.getTitleimage())) {
+					if (image != null) {
+						newsModel.setPicheight(image.getHeight());
+						newsModel.setPicwidth(image.getWidth());
+					}
 				}
-				 
+
 				newsService.insertNews(newsModel);
 				boxService.updateNewsStatus(1, boxid);
 				RedisManager.getInstance().hset(Consts.REDIS_SCHEME_RUN, boxid + "_binfo", "news", "1");
@@ -980,14 +1096,14 @@ public class boxController {
 				}
 				RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, userid + "_user", "newscount", String.valueOf(userNewsCount));
 				RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, userid + "_user", "updatetime", String.valueOf(System.currentTimeMillis()));
-				
-				//同步ES
-				newsModel newsModel1= new newsModel();
+
+				// 同步ES
+				newsModel newsModel1 = new newsModel();
 				newsModel1.setNid(nid);
 				newsModel1.setPid(Long.toString(time));
 				newsModel1.setMotoboxmodel(mbox);
 				ESManager.syncNewsEs(newsModel1);
-				
+
 				out.write("success");
 			} else {
 				out.write("fail");
@@ -1022,8 +1138,8 @@ public class boxController {
 
 				RequestBody body = RequestBody.create(MediaType_JSON, data);
 				Request req = new Request.Builder().url(urlString).post(body).build();
-				Response resp=httpClient.newCall(req).execute();
-			
+				Response resp = httpClient.newCall(req).execute();
+
 				String result = new String(resp.body().bytes(), "utf-8");
 
 				logger.info("boxAddToRecommendnews response data:[result" + result + "]");
@@ -1066,33 +1182,31 @@ public class boxController {
 
 		out.write(jsonStr);
 	}
-	
-	
-    public static BufferedImage getBufferedImage(String imgUrl) {  
-        URL url = null;  
-        InputStream is = null;  
-        BufferedImage img = null;  
-        try {  
-            url = new URL(imgUrl);  
-            is = url.openStream();  
-            img = ImageIO.read(is);  
-        } catch (MalformedURLException e) {  
-            e.printStackTrace();  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-        } finally {  
-              
-            try {  
-            	if(is!=null){
-            		is.close(); 
-            	}
-                 
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        }  
-        return img;  
-    }  
-  
- 
+
+	public static BufferedImage getBufferedImage(String imgUrl) {
+		URL url = null;
+		InputStream is = null;
+		BufferedImage img = null;
+		try {
+			url = new URL(imgUrl);
+			is = url.openStream();
+			img = ImageIO.read(is);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (is != null) {
+					is.close();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return img;
+	}
+
 }

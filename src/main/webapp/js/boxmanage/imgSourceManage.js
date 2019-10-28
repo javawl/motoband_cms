@@ -1,11 +1,11 @@
 $ (document).ready (function ()
 {
-	initUploadForm ();
+//	initUploadForm ();
 });
-$ ('input[name=FileContent]').change (function ()
-{
-	initUploadForm ();
-});
+//$ ('input[name=FileContent]').change (function ()
+//{
+//	initUploadForm ();
+//});
 
 $ ('body').on ('click', '#downloadBtn', function ()
 {
@@ -23,6 +23,7 @@ function delSingleImgConfirm(){
 	{
 		"img_guid" : img_guid
 	}
+	
 	$.ajax (
 	{
 	    type : "POST",
@@ -35,27 +36,15 @@ function delSingleImgConfirm(){
 			    
 			    if (data == "ok")
 			    {
-				    var manageUrl = img_opurl + "/del";
-				  //  console.log(manageUrl);
-				    $.getJSON ('../boxmanage/uploadBoxImg?type=delete&fileid=' + encodeURIComponent (img_guid),
-				            function (data)
-				            {
-				    	      // console.log(data);
-					            var sign = data.signdel, url = manageUrl + '?sign=' + encodeURIComponent (sign);
-					            $.ajax (
-					            {
-					                type : "POST",
-					                url : url,
-					                data : {},
-					                success : function (data)
-					                {
-					                //	console.log(data);
-						                alert ("删除成功");
-						                $ ("#" + img_guid).css ("display", "none");
-					                },
-					                dataType : 'json'
-					            });
-				            });
+			    	cos.deleteObject({
+			    	    Bucket: Bucket, /* 必须 */
+			    	    Region: Region,    /* 必须 */
+			    	    Key: img_guid                            /* 必须 */
+			    	}, function(err, data) {
+			    	    console.log(err || data);
+			    	    alert ("删除成功");
+		                $ ("#" + img_guid).css ("display", "none");
+			    	});
 			    }
 			    else
 			    {
@@ -69,55 +58,6 @@ function delSingleImgConfirm(){
 	
 }
 
-
-$ ('body').on ('click', '#deleteBtn', function ()
-{
-	var manageUrl = $ ('#url').text ();
-	var fileid = $ ('#fileid').text ();
-	if (!manageUrl)
-	{
-		alert ('尚未获取管理url');
-		return false;
-	}
-	manageUrl = manageUrl + '/del';
-	// 请将以下获取签名的链接换成您部署好的服务端http url
-	// 建议通过业务登陆态检查来增强安全性，避免签名被非法获取
-	$.getJSON ('../boxmanage/uploadBoxImg?type=delete&fileid=' + encodeURIComponent (fileid), function (data)
-	{
-		
-		var sign = data.sign, url = data.url + '?sign=' + encodeURIComponent (sign);
-		$.ajax (
-		{
-		    type : "POST",
-		    url : url,
-		    data : {},
-		    success : function ()
-		    {
-			    var datas =
-			    {
-				    "img_guid" : img_guid
-			    }
-			    $.ajax (
-			    {
-			        type : "POST",
-			        url : "../boxmanage/delBoxImg",
-			        data : datas,
-			        success : function (data)
-			        {
-				        if (data != "" && data != null)
-				        {
-					        alert ("图片删除成功！");
-					        $ ("#page-wrapper").load ("../boxmanage/imgSourceManage");
-				        }
-				        
-			        }
-			    });
-		    },
-		    
-		    dataType : 'json'
-		});
-	});
-});
 
 $ ('body').on ('click', '#queryBtn', function ()
 {
@@ -143,87 +83,91 @@ $ ('body').on ('click', '#queryBtn', function ()
 	    dataType : 'json'
 	});
 });
-function initUploadForm ()
-{
-	// 请将以下获取签名的链接换成您部署好的服务端http url
-	// 建议通过业务登陆态检查来增强安全性，避免签名被非法获取
-	$.getJSON ('../boxmanage/uploadBoxImg', function (data)
-	{
-		var sign = data.sign, url = data.url + '?sign=' + encodeURIComponent (sign);
-		console.log(url);
-		var options =
-		{
-		    type : 'post',
-		    url : url,
-		    dataType : 'json',
-		    success : function (ret)
-		    {
-			    $ ('#downloadUrl').html (ret.data.download_url);
-			    $ ('#fileid').text (ret.data.fileid);
-			    $ ('#url').text (ret.data.url);
-			    $ ('#downloadRet').show ();
-			    var img_guid = ret.data.fileid;
-			    var img_url = ret.data.download_url;
-			    var img_opurl = ret.data.url;
-			    var datas =
-			    {
-			        "img_guid" : img_guid,
-			        "img_url" : img_url,
-			        "img_opurl" : img_opurl
-			    }
-			    $.ajax (
-			    {
-			        type : "POST",
-			        url : "../boxmanage/addNewBoxImg",
-			        data : datas,
-			        success : function (data)
-			        {
-				        if (data != "" && data != null)
-				        {
-					        alert ("添加图片资源成功！");
-					        $ ("#page-wrapper").load ("../boxmanage/imgSourceManage");
-				        }
-				        
-			        }
-			    });
-		    },
-		    error : function (ret)
-		    {
-			    alert (ret.responseText);
-		    }
-		};
-		$ ('#uploadForm').ajaxForm (options);
-	});
-}
-function subfile ()
-{
-	$("#back").css("display","");
-	
-	var url = "", sign = "";
-	$.ajax (
-	{
-	    type : "POST",
-	    url : "../boxmanage/getSignUrl",
-	    success : function (data)
-	    {
-		    if (data != "" && data != null)
-		    {
-			    json = eval ("(" + data + ")");
-			    
-			    url = json.url;
-			    sign = json.sign;
-			    console.log(url+","+sign);
-			    subfile1 (url, sign);
-		    }
-		    
-	    },
-	    error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("上传失败，点击重试");
-            $("#back").css("display","none");
-        }
-	
-	});
-}
+//function initUploadForm ()
+//{
+//	// 请将以下获取签名的链接换成您部署好的服务端http url
+//	// 建议通过业务登陆态检查来增强安全性，避免签名被非法获取
+//	$.getJSON ('../boxmanage/uploadBoxImg', function (data)
+//	{
+//		var sign = data.sign, url = data.url + '?sign=' + encodeURIComponent (sign);
+//		console.log(url);
+//		var options =
+//		{
+//		    type : 'post',
+//		    url : url,
+//		    dataType : 'json',
+//		    success : function (ret)
+//		    {
+//			    $ ('#downloadUrl').html (ret.data.download_url);
+//			    $ ('#fileid').text (ret.data.fileid);
+//			    $ ('#url').text (ret.data.url);
+//			    $ ('#downloadRet').show ();
+//			    var img_guid = ret.data.fileid;
+//			    var img_url = ret.data.download_url;
+//			    var img_opurl = ret.data.url;
+//			    var datas =
+//			    {
+//			        "img_guid" : img_guid,
+//			        "img_url" : img_url,
+//			        "img_opurl" : img_opurl
+//			    }
+//			    $.ajax (
+//			    {
+//			        type : "POST",
+//			        url : "../boxmanage/addNewBoxImg",
+//			        data : datas,
+//			        success : function (data)
+//			        {
+//				        if (data != "" && data != null)
+//				        {
+//					        alert ("添加图片资源成功！");
+//					        $ ("#page-wrapper").load ("../boxmanage/imgSourceManage");
+//				        }
+//				        
+//			        }
+//			    });
+//		    },
+//		    error : function (ret)
+//		    {
+//			    alert (ret.responseText);
+//		    }
+//		};
+//		$ ('#uploadForm').ajaxForm (options);
+//	});
+//}
+//function subfile ()
+//{
+//	$("#back").css("display","");
+//	
+//	var datas = {
+//			"key": key,
+//			
+//		}
+//	var url = "", sign = "";
+//	$.ajax (
+//	{
+//	    type : "POST",
+//	    url : "../boxmanage/getSignUrl",
+//	    success : function (data)
+//	    {
+//		    if (data != "" && data != null)
+//		    {
+//			    json = eval ("(" + data + ")");
+//			    
+//			    url = json.url;
+//			    sign = json.sign;
+//			    console.log(url+","+sign);
+//			    subfile1 (url, sign);
+//		    }
+//		    
+//	    },
+//	    error: function(XMLHttpRequest, textStatus, errorThrown) {
+//            alert("上传失败，点击重试");
+//            $("#back").css("display","none");
+//        }
+//	
+//	});
+//}
 function subfile1 (url, sign)
 {
 	var filelength = document.getElementById ("file2").files.length;
@@ -233,7 +177,7 @@ function subfile1 (url, sign)
 	{
 		filename = document.getElementById ("file2").files[i].name;
 		groupid = $ ("#nowgroupid").val ();
-		newfilename = Math.uuidFast ()
+		newfilename = Math.uuidFast ();
 		var imgurl = url + newfilename + "?sign=" + sign;
 		map[newfilename] = filename;
 		var formData = new FormData ();

@@ -30,6 +30,7 @@
 <!-- Custom Fonts -->
 <link href="../bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+	
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,6 +38,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+ <script type="text/javascript" src="../dist/cos-js-sdk-v5.js"></script>
 <style type="text/css">
 .groupdiv {
 	width: 90%;
@@ -55,6 +57,24 @@
 	filter: alpha(opacity = 50);
 	opacity: 0.5;
 }
+.progress {
+   width: 100%;
+    height: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px 0px;
+    overflow: hidden;
+}
+/* 初始状态设置进度条宽度为0px */
+.progress > div {
+    width: 0px;     
+    height: 100%;
+    background-color: yellowgreen;
+    transition:width 0.2s;
+-moz-transition:width 0.2s; /* Firefox 4 */
+-webkit-transition:width 0.2s; /* Safari and Chrome */
+-o-transition:width 0.2s; /* Opera */
+}
 </style>
 <script>
 	$ ('#grouplist > div').on ("click", function ()
@@ -65,6 +85,113 @@
 	    $ (this).addClass ('groupaction');
 	    
     });
+	var Bucket = 'motobox-10013836';
+	var Region = 'ap-shanghai';
+	// 初始化实例
+	var cos = new COS({getAuthorization: function (options, callback) {
+	        var url = '../boxmanage/getSignUrl';
+	        var xhr = new XMLHttpRequest();
+	        xhr.open('post', url, true);
+	        xhr.crossDomain=true;
+	        xhr.onload = function (e) {
+	            try {
+	                var data = JSON.parse(e.target.responseText);
+// 	                $ ('#downloadRet').show ();
+	            } catch (e) {
+	            }
+	            callback({
+	                TmpSecretId: data.credentials && data.credentials.tmpSecretId,
+	                TmpSecretKey: data.credentials && data.credentials.tmpSecretKey,
+	                XCosSecurityToken: data.credentials && data.credentials.sessionToken,
+	                ExpiredTime: data.expiredTime,
+	            });
+	        };
+	        xhr.send();
+	    }
+	});
+
+	// 监听选文件
+	document.getElementById('file2').onchange = function () {
+
+	    var file = this.files[0];
+	    if (file==null) {
+	    	return;	
+	    }
+		var filename = "", groupid = "";
+		var map = {}, key="";
+		filename = file.name;
+		groupid = $ ("#nowgroupid").val ();
+		key = Math.uuidFast ();
+		map[key] = filename;
+	    // 分片上传文件
+	    cos.sliceUploadFile({
+	        Bucket: Bucket,
+	        Region: Region,
+	        Key: key,
+	        Body: file,
+	        onHashProgress: function (progressData) {
+	            console.log('校验中', JSON.stringify(progressData));
+	        },
+	        onProgress: function (progressData) {
+	            var progressRate = (progressData.loaded / progressData.total) * 100 + '%';
+                //通过设置进度条的宽度达到效果
+                $('.progress > div').css('width', progressRate);
+	            console.log('上传中', JSON.stringify(progressData));
+                if(progressRate =="100%"){
+			        console.log ("添加图片资源成功！");
+                }
+	        },
+	    }, function (err, data) {
+	    	if(err!=null){
+	    		console.log(err)
+	    	}else if(data!=null){
+	    		//Bucket: "motobox-10013836"
+// ETag: ""b84e09d66d9529350766afed77ee0e16-1""
+// Key: "20150102204502_YZyY4.jpeg"
+// Location: "motobox-10013836.cos.ap-shanghai.myqcloud.com/20150102204502_YZyY4.jpeg"
+	    		console.log(data);	
+	    		var url="https://"+data.Location;
+	    		var img_guid = data.Key;
+			    var img_url = url;
+			    var img_opurl = url;
+			    var img_name = map[data.Key];
+			    var datas =
+			    {
+			        
+			        "img_guid" : img_guid,
+			        "img_url" : img_url,
+			        "img_opurl" : img_opurl,
+			        "img_name" : img_name,
+			        "img_groupid" : groupid
+			    
+			    }
+			    $.ajax (
+			    {
+			        type : "POST",
+			        url : "../boxmanage/addNewBoxImg",
+			        data : datas,
+			        success : function (data)
+			        {
+				        if (data != "" && data != null)
+				        {
+					        var json = eval ("(" + data + ")");
+					        addimgdiv (json);
+					        $("#back").css("display","none");
+					        // $ ("#page-wrapper").load
+					        // ("../boxmanage/imgSourceManage");
+				        }
+				        
+			        },
+				    error: function(XMLHttpRequest, textStatus, errorThrown) {
+			            alert("上传失败，点击重试");
+			            $("#back").css("display","none");
+			        }
+			    });
+	    	}
+	        
+	    });
+
+	};
 </script>
 </head>
 <body>
@@ -154,9 +281,13 @@
 						</form>
 
 						<input type="file" id="file2" class="btn btn-info"
-							multiple="multiple" accept="image/gif,image/jpg,image/jpeg,image/png,image/bmp"></input> <input
-							type="button" value="提交" class="btn btn-info"
-							onclick="javascript:subfile()">
+							multiple="multiple" accept="image/gif,image/jpg,image/jpeg,image/png,image/bmp"/>
+							<div class="progress">
+							    <div></div>
+							</div>
+<!-- 							 <input -->
+<!-- 							type="button" value="提交" class="btn btn-info" -->
+<!-- 							onclick="javascript:subfile()"> -->
 
 						<div id="downloadRet" style="display: none">
 							<h4>显示图片</h4>
