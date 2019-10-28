@@ -381,19 +381,14 @@ public class boxController {
 
 	@RequestMapping(value = "/getSignUrl", method = RequestMethod.POST)
 	public void getSignUrl(Model model, HttpSession session, HttpServletRequest request, String key, PrintWriter out) {
-		String SECRET_ID_V2 = "AKIDl8fUHCxeOZaB8gzRsipx6AsJKb4NatKS"; // 项目SecretID
-		String SECRET_KEY_V2 = "14FYwQ4PtIeui1qk35XwUoi6gOiaY2SO"; // 项目SecretKey
-//		int APP_ID_V2 = 10013836; // 项目ID
-//		String BUCKET = "motobox"; // 空间名称bucket
-		// 方式一
 		TreeMap<String, Object> config = new TreeMap<String, Object>();
 
 		try {
 
 			// 云 API 密钥 secretId
-			config.put("secretId", SECRET_ID_V2);
+			config.put("secretId", Consts.SECRETID);
 			// 云 API 密钥 secretKey
-			config.put("secretKey", SECRET_KEY_V2);
+			config.put("secretKey", Consts.SECRETKEY);
 
 			// 临时密钥有效时长，单位是秒
 			config.put("durationSeconds", 1800);
