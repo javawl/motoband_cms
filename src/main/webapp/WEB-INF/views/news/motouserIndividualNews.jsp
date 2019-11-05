@@ -227,13 +227,13 @@ opacity
 						<div>子标题：${tempnews.title }</div>
 						<div>boxurl：${tempnews.linkurl }</div>
 						<div>动态keyword:
-						<c:if test="${empty tempnews.keywords}">
-                           ${tempnews.discusskeyword }
+						<c:if test="${not empty tempnews.topicmodel}">
+                           ${tempnews.topicmodel.keyword }
                         </c:if>
                         <c:if test="${not empty  tempnews.keywords}">
                           ${tempnews.keywords }
                         </c:if>
-                        ${tempnews.keywords }</div>
+                        </div>
 						<div>动态label:${tempnews.labels }</div>
 						<div>动态类型:${tempnews.type }</div>
 						<div>动态评论数:${tempnews.ccount }</div>
@@ -305,7 +305,14 @@ opacity
 								<textarea rows="3" cols="45">${tempnews.content }</textarea>
 							</div>
 						</div>
-						<div>动态keyword:${tempnews.keywords }</div>
+<div>动态keyword:
+						<c:if test="${not empty tempnews.topicmodel}">
+                           ${tempnews.topicmodel.keyword }
+                        </c:if>
+                        <c:if test="${not empty  tempnews.keywords}">
+                          ${tempnews.keywords }
+                        </c:if>
+                        </div>
 						<div>动态label:${tempnews.labels }</div>
 						<div>
 							动态类型:
@@ -397,7 +404,14 @@ opacity
 						<div>标题：${temphots.title}</div>
 						<div>子标题：${temphots.title }</div>
 						<div>boxurl：${temphots.linkurl }</div>
-						<div>动态keyword:${temphots.keywords }</div>
+						<div>动态keyword:
+						<c:if test="${not empty temphots.topicmodel}">
+                           ${temphots.topicmodel.keyword }
+                        </c:if>
+                        <c:if test="${not empty  temphots.keywords}">
+                          ${temphots.keywords }
+                        </c:if>
+                        </div>
 						<div>动态label:${temphots.labels }</div>
 						<div>动态类型:${temphots.type }</div>
 						<div>动态评论数:${temphots.ccount }</div>
@@ -467,7 +481,14 @@ opacity
 								<textarea rows="3" cols="45">${temphots.content }</textarea>
 							</div>
 						</div>
-						<div>动态keyword: ${temphots.keywords }</div>
+												<div>动态keyword:
+						<c:if test="${not empty temphots.topicmodel}">
+                           ${temphots.topicmodel.keyword }
+                        </c:if>
+                        <c:if test="${not empty  temphots.keywords}">
+                          ${temphots.keywords }
+                        </c:if>
+                        </div>
 						<div>动态label:${temphots.labels }</div>
 						<div>
 							动态类型:
