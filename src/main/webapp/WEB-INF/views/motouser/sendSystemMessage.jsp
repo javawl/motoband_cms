@@ -482,8 +482,7 @@ body {
 									enctype="multipart/form-data" target='ifr'
 									onsubmit="return check();">
 									<div style="margin: 30px;">
-										<input id="excel_file" type="file" name="filename"
-											accept="xlsx" size="80" onclick="javascript:clearfilemsg()" />
+										<input id="excel_file" type="file" name="filename" accept=".xls,.xlsx" onclick="javascript:clearfilemsg()" />
 										<br></br> <input id="excel_button" type="submit"
 											value="上传Excel" />
 

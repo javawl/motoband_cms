@@ -156,6 +156,9 @@ function addbannerConfirm(){
 	var subtitle=$ ('#ins_subtitle').val ();
 	var des=$ ('#ins_des').val ();
 	var starttime=$ ('#ins_starttime').val ();
+	if(starttime==null||starttime==""){
+		starttime=-1;
+	}
 	console.log(starttime);
 	
 	 var linktype=	$("#imageSelectType").val();
@@ -244,7 +247,7 @@ function addbannerConfirm(){
 	
 	var datas =
 	{
-			"starttime":starttime,
+		"starttime":starttime,
 		"userSelectType":userSelectType,
 		"title":title,
 		"subtitle":subtitle,

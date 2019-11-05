@@ -179,6 +179,7 @@ public class Consts {
 			MONGO_USERNAME="mongouser";
 			MONGO_PASSWORD="Motoband2015!@#";
 			MONGO_DATABASE="motobandprod";
+			
 		}
 	}
 

@@ -2227,6 +2227,9 @@ public class motouserController {
 							motouserService.batchaddMessageTaskUser(map);
 						}
 					} else {
+						if(useridsset.isEmpty()) {
+							return;
+						}
 						Map<String, Object> map = new HashMap<String, Object>();
 						map.put("list", useridsset);
 						map.put("taskid", taskid2);
