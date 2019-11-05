@@ -243,9 +243,9 @@
      </select>
      <insert id="addMessageTask" parameterType="com.motoband.motouser.MessageTaskModel">
         insert into cms_msg_tasklist
-		(name,taskid,title,subtitle,des,linktype,imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,createtime,starttime)
+		(name,taskid,title,subtitle,des,linktype,imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,createtime,starttime,groupid)
 		values(#{name},#{taskid},#{title},#{subtitle},#{des},#{linktype},
-		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},#{buserid},#{createtime},#{starttime})
+		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},#{buserid},#{createtime},#{starttime},#{groupid})
 		
      </insert>
      

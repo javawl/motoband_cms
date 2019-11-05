@@ -2131,7 +2131,7 @@ public class motouserController {
 	@RequestMapping(value = "/addmsgtask", method = RequestMethod.POST)
 	public void addmsgtask(Model model, HttpSession session, HttpServletRequest request, String name, String title,
 			String subtitle, String des, String userSelectType, String linktype, String imgurl, String linkurl,
-			String gpid, String nid, String keyword, String secondcarid, String buserid, String miniprogramid,
+			String gpid, String nid, String keyword, String secondcarid, String buserid, String groupid,String miniprogramid,
 			String taskid,long starttime, PrintWriter out) throws UnsupportedEncodingException {
 
 		MessageTaskModel banner = new MessageTaskModel();
@@ -2173,6 +2173,9 @@ public class motouserController {
 		}
 		if (buserid != null && !"".equals(buserid)) {
 			banner.setBuserid(buserid);
+		}
+		if(StringUtils.isNotBlank(groupid)) {
+			banner.setGroupid(groupid);
 		}
 		banner.starttime=starttime;
 

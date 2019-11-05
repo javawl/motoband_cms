@@ -31,6 +31,7 @@ public class MessageTaskModel {
 	public String secondcarid;// 二手车id
 	public String miniprogramid;// 小程序id
 	public String buserid;// 商家id
+	public String groupid;// 群id
 
 	public int sumcount;
 	public int handlecount;
@@ -44,6 +45,12 @@ public class MessageTaskModel {
 	public long starttime;//任务开始执行时间
 
 	
+	public String getGroupid() {
+		return groupid;
+	}
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
 	public long getStarttime() {
 		return starttime;
 	}

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.motoband.news.BannerModel;
 import com.motoband.news.LinkTypeEnum;
 import com.motoband.util.Consts;
 import com.motoband.util.RedisManager;
@@ -71,6 +72,7 @@ public class MBMessageManager {
 			
 			int pushType = 0;
 			int PushFlag = 1;
+			BannerModel pushModel=new BannerModel();
 			String switchcheck = null;
 			for (int i = 0; i < sendUserList.size(); i++) {
 				switch (model.msgtype) {
@@ -250,15 +252,19 @@ public class MBMessageManager {
 				
 			}
 			
+			pushModel.linktype=pushType;
+			pushModel.nid=model.nid;
+			pushModel.ntype=model.ntype;
+			pushModel.keyword=model.keyword;
             if(pushList!=null && pushList.size()>0){
-            	List<String> pushRetuenList =sendMessageMethod(model, pushList, pushMsg, pushType, 0);
+            	List<String> pushRetuenList =sendMessageMethod(model, pushList, pushMsg, pushModel, 0);
             	if(pushRetuenList!=null && pushRetuenList.size()>0){
             		returnList.addAll(pushRetuenList);
             	}
             }
             
             if(nopushList!=null && nopushList.size()>0){
-            	List<String>  nopushRetuenList =sendMessageMethod(model, nopushList, pushMsg, pushType, 1);
+            	List<String>  nopushRetuenList =sendMessageMethod(model, nopushList, pushMsg, pushModel, 1);
             	if(nopushRetuenList!=null && nopushRetuenList.size()>0){
             		returnList.addAll(nopushRetuenList);
             	}
@@ -272,7 +278,7 @@ public class MBMessageManager {
 		return returnList;
 	}
 
-	private List<String> sendMessageMethod(MBMessageModel model, List<String> inviteList, String pushMsg, int pushType, int PushFlag) {
+	private List<String> sendMessageMethod(MBMessageModel model, List<String> inviteList, String pushMsg, BannerModel pushModel, int PushFlag) {
 		List<String>   errorrespuseridlist = new ArrayList<String>();
 		TIMMessage timMessage = new TIMMessage();
 		timMessage.To_Account = inviteList;
@@ -284,9 +290,9 @@ public class MBMessageManager {
 		TIMCustomElem timCustomElem = new TIMCustomElem();
 		timCustomElem.Data = JSON.toJSONString(model);
 		timCustomElem.Desc = pushMsg;
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("ptype", pushType);
-		timCustomElem.Ext = JSON.toJSONString(map);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("ptype", pushType);
+		timCustomElem.Ext = JSON.toJSONString(pushModel);
 		timMsgElement.MsgContent = timCustomElem;
 
 		ArrayList<TIMMsgElement> list = new ArrayList<TIMMsgElement>();
@@ -296,7 +302,7 @@ public class MBMessageManager {
 		Map<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("PushFlag", PushFlag);
 		tempMap.put("Desc", pushMsg);
-		tempMap.put("Ext", JSON.toJSONString(map));
+		tempMap.put("Ext", JSON.toJSONString(pushModel));
 		timMessage.OfflinePushInfo = tempMap;
 
 		logger.info(this.getClass().getSimpleName() + "	sendMessage TIMMessage is:" + timMessage.toString());

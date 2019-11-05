@@ -129,6 +129,7 @@ function addbanner(){
 	$("#div5").hide();
 	$("#div6").hide();
 	$("#div7").hide();
+	$("#div8").hide();
 	$("#div1").show();
 	
 	$("#inputUrlnid").val("");
@@ -138,6 +139,7 @@ function addbanner(){
 	$("#inputUrlgpid").val("");
 	$("#inputUrlsecondcarid").val("");
 	$("#inputUrlbuserid").val("");
+	$("#inputUrlgroupid").val("");
 	
 	
 	$ ('#titleimgshowadd').attr ("src", "");
@@ -211,6 +213,13 @@ function addbannerConfirm(){
 			  return false;
 		  }
 		  break;
+	  case 14:
+		  var groupid=$.trim($("#inputUrlgroupid").val());
+		  if (groupid == null || groupid == ""){
+			  alert ("groupid不能为空");
+			  return false;
+		  }
+		  break;
 	  }
 	  var imgurl=	$("#titleimgshowadd").attr("src");
 	  if(imgurl==null || imgurl ==""){
@@ -250,6 +259,7 @@ function addbannerConfirm(){
 		 "secondcarid":secondcarid,
 		 "miniprogramid":miniprogramid,
 		 "buserid":buserid,
+		 "groupid":groupid,
 	    "name" : name
 	   
 	   
