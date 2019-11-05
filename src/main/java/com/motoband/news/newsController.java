@@ -2040,7 +2040,7 @@ public void addnewbannerall(Model model, HttpSession session, HttpServletRequest
 		String bannerid, String title, String subtitle, String des,
 		String bannertype, String linktype, String imgurl, String linkurl,
 		String gpid, String nid, String keyword, String secondcarid,
-		String state, String buserid,String miniprogramid,String orderindex,
+		String state, String buserid,String groupid,String miniprogramid,String orderindex,
 		PrintWriter out) throws UnsupportedEncodingException {
 	
 	BannerModel banner = new BannerModel();
@@ -2074,6 +2074,9 @@ public void addnewbannerall(Model model, HttpSession session, HttpServletRequest
 	}
 	if(buserid!=null && !"".equals(buserid)){
 		banner.setBuserid(buserid);
+	}
+	if(StringUtils.isNotBlank(groupid)) {
+		banner.setGroupid(groupid);
 	}
 	banner.setOrderindex(Long.valueOf(orderindex));
 	

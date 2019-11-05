@@ -101,6 +101,10 @@ function updateScore(bannerid)
 		    		  $("#div7").show();
 		    		  $("#inputUrlbuserid").val(datajson.buserid);
 		    		    break;
+		    	  case 14:
+		    		  $("#div8").show();
+		    		  $("#inputUrlgroupid").val(datajson.groupid);
+		    		    break;
 		    	    
 		    	  }
 		    	
@@ -135,6 +139,7 @@ function addbanner(){
 	$("#inputUrlgpid").val("");
 	$("#inputUrlsecondcarid").val("");
 	$("#inputUrlbuserid").val("");
+	$("#inputUrlgroupid").val("");
 	
 	
 	$ ('#titleimgshowadd').attr ("src", "");
@@ -203,6 +208,13 @@ function addbannerConfirm(){
 			  return false;
 		  }
 		  break;
+	  case 14:
+		  var groupid=$.trim($("#inputUrlgroupid").val());
+		  if (groupid == null || groupid == ""){
+			  alert ("groupid不能为空");
+			  return false;
+		  }
+		  break;
 	  }
 	var bannertype= $("#ins_bannertype").val();
 	  if(bannertype!=7){
@@ -246,6 +258,7 @@ function addbannerConfirm(){
 		 "secondcarid":secondcarid,
 		 "miniprogramid":miniprogramid,
 		 "buserid":buserid,
+		 "groupid":groupid,
 	    "orderindex" : orderindex,
 	    "bannerid":bannerid,
 	   
@@ -834,6 +847,7 @@ function insertTitleImg ()
 		 $("#inputUrlgpid").val("");
 		 $("#inputUrlsecondcarid").val("");
 		 $("#inputUrlbuserid").val("");
+		 $("#inputUrlgroupid").val("");
 		
 		switch (parseInt(obj.value)){
 		  case 1:
@@ -860,6 +874,9 @@ function insertTitleImg ()
 			    break;
 		  case 10:
 			  $("#div7").show();
+			    break;
+		  case 14:
+			  $("#div8").show();
 			    break;
 		}
 }

@@ -488,6 +488,10 @@ body {
 								请输入buserid：<input class="form-control" placeholder=""
 									id="inputUrlbuserid">
 							</div>
+							<div id="div8" style="display: none;">
+								请输入groupid：<input class="form-control" placeholder=""
+									id="inputUrlgroupid">
+							</div>
 						</div>
 					</div>
 

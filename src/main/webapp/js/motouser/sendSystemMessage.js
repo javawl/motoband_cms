@@ -858,6 +858,7 @@ function insertTitleImg ()
 		 $("#inputUrlgpid").val("");
 		 $("#inputUrlsecondcarid").val("");
 		 $("#inputUrlbuserid").val("");
+		 $("#inputUrlgroupid").val("");
 		
 		switch (parseInt(obj.value)){
 		  case 1:
@@ -884,6 +885,9 @@ function insertTitleImg ()
 			    break;
 		  case 10:
 			  $("#div7").show();
+			    break;
+		  case 14:
+			  $("#div8").show();
 			    break;
 		}
 }

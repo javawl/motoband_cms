@@ -513,21 +513,21 @@ body {
 							placeholder="请输入跳转地址" id="value" value="">
 					</div>
 					<label>跳转类型</label> <select class="form-control" id="linktype">
-						<option value='1'>动态</option>
-						<option value='2'>话题</option>
-						<option value='3'>问答</option>
+<!-- 						<option value='1'>动态</option> -->
+<!-- 						<option value='2'>话题</option> -->
+<!-- 						<option value='3'>问答</option> -->
 						<option value='4'>有赞</option>
 						<option value='5'>内部链接</option>
 						<option value='6'>外部链接</option>
-						<option value='7'>小程序</option>
-						<option value='8'>motogp</option>
-						<option value='9'>二手车</option>
-						<option value='10'>本地商家</option>
-						<option value='11'>话题列表</option>
-						<option value='12'>讨论列表</option>
-						<option value='13'>此刻</option>
-						<option value='14'>聊天群</option>
-						<option value='15'>消息列表</option>
+<!-- 						<option value='7'>小程序</option> -->
+<!-- 						<option value='8'>motogp</option> -->
+<!-- 						<option value='9'>二手车</option> -->
+<!-- 						<option value='10'>本地商家</option> -->
+<!-- 						<option value='11'>话题列表</option> -->
+<!-- 						<option value='12'>讨论列表</option> -->
+<!-- 						<option value='13'>此刻</option> -->
+<!-- 						<option value='14'>聊天群</option> -->
+<!-- 						<option value='15'>消息列表</option> -->
 					</select>
 					<div class="form-group">
 						<label>排序(越大越靠前)</label> <input class="form-control"
