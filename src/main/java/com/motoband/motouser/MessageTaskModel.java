@@ -4,6 +4,7 @@ import javax.xml.bind.Marshaller.Listener;
 
 import com.motoband.Events.TaskEvent;
 import com.motoband.interfaces.TaskListener;
+import com.motoband.news.LinkTypeEnum;
 
 public class MessageTaskModel {
 	public long id;
@@ -18,8 +19,10 @@ public class MessageTaskModel {
 	public String subtitle;// 副标题
 	public String des;// 描述
 
-	public int linktype;// 1 动态 2 话题 3问答 4 有赞 5 内部链接 6 外部链接 7小程序 8 motogp 9 二手车 10 本地商家 11 话题列表 12 问答列表
-						// 13 此刻
+	/**
+	 * @see LinkTypeEnum
+	 */
+	public int linktype;
 	public String imgurl;// 图片地址
 	public String linkurl;// 跳转链接
 	public int gpid;// gpid

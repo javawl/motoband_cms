@@ -175,18 +175,19 @@ body {
 		<!-- /.col-lg-12 -->
 	</div>
 
-	
+
 	<!-- /.row -->
 	<div class="row">
 		<div class="row col-lg-2" style="margin-bottom: 5px;">
-			<button type="button" class="btn btn-info"
-			data-toggle="modal" data-target="#versionModel"
+			<button type="button" class="btn btn-info" data-toggle="modal"
+				data-target="#versionModel"
 				onclick="javascript:versionmodel('bannerversion')">刷新banner版本</button>
 			<button type="button" class="btn btn-primary btn-lg"
-					data-toggle="modal" data-target="#addbannerModel"
-					onclick="javascript:addbanner()">添加banner</button>
-			<input type="hidden" value="0" id="hiddenValue"> 
-			<input type="hidden" value="${sessionScope.user.user_guid}" id="userGuidhiddenValue"> 
+				data-toggle="modal" data-target="#addbannerModel"
+				onclick="javascript:addbanner()">添加banner</button>
+			<input type="hidden" value="0" id="hiddenValue"> <input
+				type="hidden" value="${sessionScope.user.user_guid}"
+				id="userGuidhiddenValue">
 		</div>
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -225,13 +226,27 @@ body {
 
 										<td>${bannerMessages.orderindex}</td>
 										<c:choose>
-										   <c:when test="${bannerMessages.bannertype==0}"><td>摩托邦首页</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==1}"><td>商城首页</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==2}"><td>选车首页</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==3}"><td>二手车首页</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==4}"><td>首页活动区域</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==5}"><td>首页滚动区域</td></c:when>
-										   <c:when test="${bannerMessages.bannertype==7}"><td>商城活动提醒</td></c:when>
+											<c:when test="${bannerMessages.bannertype==0}">
+												<td>摩托邦首页</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==1}">
+												<td>商城首页</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==2}">
+												<td>选车首页</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==3}">
+												<td>二手车首页</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==4}">
+												<td>首页活动区域</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==5}">
+												<td>首页滚动区域</td>
+											</c:when>
+											<c:when test="${bannerMessages.bannertype==7}">
+												<td>商城活动提醒</td>
+											</c:when>
 										</c:choose>
 										<td>${bannerMessages.title}</td>
 										<td>${bannerMessages.subtitle}</td>
@@ -240,60 +255,70 @@ body {
 											<c:when test="${bannerMessages.state =='1'}">
 												<td class="center">上线</td>
 											</c:when>
-										    <c:when  test="${bannerMessages.state =='0'}">
+											<c:when test="${bannerMessages.state =='0'}">
 												<td class="center">未上线</td>
 											</c:when>
-										  </c:choose>
-										  <c:choose>
-												<c:when test="${bannerMessages.linktype =='1'}">
-													<td class="center">动态</td>
-												</c:when>
-											    <c:when  test="${bannerMessages.linktype =='2'}">
-													<td class="center">话题</td>
-												</c:when>
-												<c:when test="${bannerMessages.linktype =='3'}">
-													<td class="center">问答</td>
-												</c:when>
-											    <c:when  test="${bannerMessages.linktype =='4'}">
-													<td class="center">有赞</td>
-												</c:when>
-												<c:when test="${bannerMessages.linktype =='5'}">
-													<td class="center">内部链接</td>
-												</c:when>
-											    <c:when  test="${bannerMessages.linktype =='6'}">
-													<td class="center">外部链接</td>
-												</c:when>
-												<c:when test="${bannerMessages.linktype =='7'}">
-													<td class="center">小程序</td>
-												</c:when>
-											    <c:when  test="${bannerMessages.linktype =='8'}">
-													<td class="center">motogp</td>
-												</c:when>
-												<c:when  test="${bannerMessages.linktype =='9'}">
-													<td class="center">二手车</td>
-												</c:when>
-												<c:when  test="${bannerMessages.linktype =='10'}">
-													<td class="center">本地商家</td>
-												</c:when>
-												<c:when  test="${bannerMessages.linktype =='11'}">
-													<td class="center">话题列表</td>
-												</c:when>
-												<c:when  test="${bannerMessages.linktype =='12'}">
-													<td class="center">讨论列表</td>
-												</c:when>
-												<c:otherwise>
-												     <td class="center">未知</td>
-												</c:otherwise>
-										 </c:choose>
-										<td><img src='${bannerMessages.imgurl}' style='width: 100px; height: auto;' /></td>
-										<td style="word-break:break-all;">${bannerMessages.linkurl}</td>
+										</c:choose>
+										<c:choose>
+											<c:when test="${bannerMessages.linktype =='1'}">
+												<td class="center">动态</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='2'}">
+												<td class="center">话题</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='3'}">
+												<td class="center">问答</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='4'}">
+												<td class="center">有赞</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='5'}">
+												<td class="center">内部链接</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='6'}">
+												<td class="center">外部链接</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='7'}">
+												<td class="center">小程序</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='8'}">
+												<td class="center">motogp</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='9'}">
+												<td class="center">二手车</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='10'}">
+												<td class="center">本地商家</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='11'}">
+												<td class="center">话题列表</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='12'}">
+												<td class="center">讨论列表</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='13'}">
+												<td class="center">此刻</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='14'}">
+												<td class="center">聊天群</td>
+											</c:when>
+											<c:when test="${bannerMessages.linktype =='15'}">
+												<td class="center">消息列表</td>
+											</c:when>
+											<c:otherwise>
+												<td class="center">未知</td>
+											</c:otherwise>
+										</c:choose>
+										<td><img src='${bannerMessages.imgurl}'
+											style='width: 100px; height: auto;' /></td>
+										<td style="word-break: break-all;">${bannerMessages.linkurl}</td>
 										<td>${bannerMessages.gpid}</td>
 										<td>${bannerMessages.nid}</td>
 										<td>${bannerMessages.keyword}</td>
 										<td>${bannerMessages.secondcarid}</td>
 										<td>${bannerMessages.miniprogramid}</td>
 										<td>${bannerMessages.buserid}</td>
-										
+
 										<td class="center">
 											<button type="button" class="btn btn-primary btn-lg"
 												data-toggle="modal" data-target="#addbannerModel"
@@ -330,27 +355,15 @@ body {
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	<script>
-		$ (document).ready (function ()
-        {
-	        $ ('#dataTables-example').DataTable (
-	        {
-	            pageLength : 20,//首次加载的数据条数
-	            processing : true,//载入数据的时候是否显示“载入中”
-	            lengthMenu : [
-	                    [
-	                            20, 50, 100, -1
-	                    ], [
-	                            20, 50, 100, "All"
-	                    ]
-	            ],
-	            order : [
-		            [
-		                    0, "desc"
-		            ]
-	            ]
-	        });
-	        
-        });
+		$(document).ready(function() {
+			$('#dataTables-example').DataTable({
+				pageLength : 20,//首次加载的数据条数
+				processing : true,//载入数据的时候是否显示“载入中”
+				lengthMenu : [ [ 20, 50, 100, -1 ], [ 20, 50, 100, "All" ] ],
+				order : [ [ 0, "desc" ] ]
+			});
+
+		});
 	</script>
 
 
@@ -381,9 +394,9 @@ body {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-	
-	<div class="modal fade" id="addbannerModel" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+	<div class="modal fade" id="addbannerModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -391,17 +404,16 @@ body {
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">添加banner</h4>
 				</div>
-				<div class="modal-body" style="height:750px">
-					
+				<div class="modal-body" style="height: 750px">
+
 					<div class="form-group">
-						<input class="form-control"  type="hidden" id="ins_bannerid"
-							value="">
-						<input class="form-control" placeholder="权值(排序)" id="ins_orderindex"
-							value="">
+						<input class="form-control" type="hidden" id="ins_bannerid"
+							value=""> <input class="form-control"
+							placeholder="权值(排序)" id="ins_orderindex" value="">
 					</div>
 					<div class="form-group">
-	                     <label>选择banner类型</label>
-						 <select class="form-control" id="ins_bannertype">
+						<label>选择banner类型</label> <select class="form-control"
+							id="ins_bannertype">
 							<option value='0'>摩托邦首页banner</option>
 							<option value='1'>商城首页banner</option>
 							<option value='2'>选车首页banner</option>
@@ -409,28 +421,28 @@ body {
 							<option value='4'>首页活动banner</option>
 							<option value='5'>首页滚动banner</option>
 							<option value='7'>商城活动提醒banner</option>
-						 </select>
-		             </div>
-					
+						</select>
+					</div>
+
 					<div class="form-group">
 						<div class="col-sm-6">
-						  <input class="form-control" placeholder="标题" id="ins_title"
+							<input class="form-control" placeholder="标题" id="ins_title"
 								value="">
 						</div>
 						<div class="col-sm-6">
-						   <input class="form-control" placeholder="副标题" id="ins_subtitle"
+							<input class="form-control" placeholder="副标题" id="ins_subtitle"
 								value="">
 						</div>
 					</div>
-					
-					<div class="form-group" >
+
+					<div class="form-group">
 						<textarea class="form-control" placeholder="描述" id="ins_des"
-							rows="3" style="word-break :break-all"></textarea>
+							rows="3" style="word-break: break-all"></textarea>
 					</div>
-					
+
 					<div class="form-group">
-						 <label>跳转类型</label>
-						 <select class="form-control"   id="imageSelectType"  onchange="javascript:imgTypeChange(this)"  >
+						<label>跳转类型</label> <select class="form-control"
+							id="imageSelectType" onchange="javascript:imgTypeChange(this)">
 							<option value='1'>动态</option>
 							<option value='2'>话题</option>
 							<option value='3'>问答</option>
@@ -442,46 +454,71 @@ body {
 							<option value='9'>二手车</option>
 							<option value='10'>本地商家</option>
 							<option value='11'>话题列表</option>
+							<option value='13'>此刻</option>
+							<option value='14'>聊天群</option>
+							<option value='15'>消息列表</option>
 							<option value='12'>讨论列表</option>
-						 </select>
-						  <div>
-					        <div id="div1">请输入nid：<input class="form-control" placeholder="" id="inputUrlnid" ></div>
-					        <div id="div2"  style="display:none;">请输入keyword：<input class="form-control" placeholder="" id="inputUrlkeyword" ></div>
-					        <div id="div3"  style="display:none;">请输入linkurl：<input class="form-control" placeholder="" id="inputUrllinkurl" ></div>
-					        <div id="div4"  style="display:none;">请输入miniprogramid：<input class="form-control" placeholder="" id="inputUrlminiprogramid" ></div>
-					        <div id="div5"  style="display:none;">请输入gpid：<input class="form-control" placeholder="" id="inputUrlgpid" ></div>
-					        <div id="div6"  style="display:none;">请输入secondcarid：<input class="form-control" placeholder="" id="inputUrlsecondcarid" ></div>
-					        <div id="div7"  style="display:none;">请输入buserid：<input class="form-control" placeholder="" id="inputUrlbuserid" ></div>
-					    </div>
-                   </div>
-					
+						</select>
+						<div>
+							<div id="div1">
+								请输入nid：<input class="form-control" placeholder=""
+									id="inputUrlnid">
+							</div>
+							<div id="div2" style="display: none;">
+								请输入keyword：<input class="form-control" placeholder=""
+									id="inputUrlkeyword">
+							</div>
+							<div id="div3" style="display: none;">
+								请输入linkurl：<input class="form-control" placeholder=""
+									id="inputUrllinkurl">
+							</div>
+							<div id="div4" style="display: none;">
+								请输入miniprogramid：<input class="form-control" placeholder=""
+									id="inputUrlminiprogramid">
+							</div>
+							<div id="div5" style="display: none;">
+								请输入gpid：<input class="form-control" placeholder=""
+									id="inputUrlgpid">
+							</div>
+							<div id="div6" style="display: none;">
+								请输入secondcarid：<input class="form-control" placeholder=""
+									id="inputUrlsecondcarid">
+							</div>
+							<div id="div7" style="display: none;">
+								请输入buserid：<input class="form-control" placeholder=""
+									id="inputUrlbuserid">
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
-					   <div class="col-sm-6">
-					       <label><font color="red">请选择750x350的图片</font></label>
-						    <div>
-							<input id="" type="button" value="设置banner图片" class="btn btn-info"
-								data-toggle="modal" data-target="#titleImgModel"> <input
-								type="text" value="" id="titleimgadd"> <img
-								id="titleimgshowadd" src="" style="width: 280px; height: 144px" />
-						    </div>
-					   </div>
-					   <div class="col-sm-6">
-					      <div class="form-group">
-					         <label>选择上线状态</label>
-							 <select class="form-control" id="ins_state">
-								<option value='0'>未上线</option>
-								<option value='1'>上线</option>
-							 </select>
-		                  </div>
-		                  
-					   </div>
-				   </div>
-				    
-				    
+						<div class="col-sm-6">
+							<label><font color="red">请选择750x350的图片</font></label>
+							<div>
+								<input id="" type="button" value="设置banner图片"
+									class="btn btn-info" data-toggle="modal"
+									data-target="#titleImgModel"> <input type="text"
+									value="" id="titleimgadd"> <img id="titleimgshowadd"
+									src="" style="width: 280px; height: 144px" />
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>选择上线状态</label> <select class="form-control"
+									id="ins_state">
+									<option value='0'>未上线</option>
+									<option value='1'>上线</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" 
+					<button type="button" class="btn btn-primary"
 						onclick="javascript:addbannerConfirm()">保存</button>
 				</div>
 			</div>
@@ -489,7 +526,7 @@ body {
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
-	
+
 	<!-- Modal -->
 	<div class="modal fade" id="titleImgModel" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -501,8 +538,12 @@ body {
 					<h4 class="modal-title" id="myModalLabel">选择图片</h4>
 				</div>
 				<div class="modal-body" style="padding: 5px;">
-				<div id="back" style="display:none; POSITION:fixed;z-index: 1000;left:0; top:0; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.6); filter:alpha(opacity=60)">
-				<h3><font color="white">上传中，请耐心等待</font></h3></div>
+					<div id="back"
+						style="display: none; POSITION: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); filter: alpha(opacity = 60)">
+						<h3>
+							<font color="white">上传中，请耐心等待</font>
+						</h3>
+					</div>
 					<div class="form-group" id="imglistdiv"
 						style="height: 600px; overflow: auto; overflow-x: hidden;">
 						<div
@@ -548,14 +589,14 @@ body {
 					</div>
 				</div>
 				<div class="modal-footer">
-				     <form id="uploadForm" style="float: left">
-							<input type="file" name="FileContent" class="btn btn-info"
-								id="inputfile" style="float: left"></input> <input id="subbtn"
-								type="submit" style="float: left" class="btn btn-info"
-								style="margin-left: 0;" onclick="javascript:imgsubmit()">
-						</form>
+					<form id="uploadForm" style="float: left">
+						<input type="file" name="FileContent" class="btn btn-info"
+							id="inputfile" style="float: left"></input> <input id="subbtn"
+							type="submit" style="float: left" class="btn btn-info"
+							style="margin-left: 0;" onclick="javascript:imgsubmit()">
+					</form>
 					<button type="button" class="btn btn-default" data-dismiss="modal"
-						id="closeModel" >关闭</button>
+						id="closeModel">关闭</button>
 					<button type="button" class="btn btn-primary" id="savebtn"
 						data-dismiss="modal" onclick="javascript:insertTitleImg()">选择图片</button>
 				</div>
@@ -594,12 +635,14 @@ body {
 	<!-- /.modal -->
 	<script src="../js/news/dataversion.js"></script>
 	<script src="../js/news/newbanner.js"></script>
-	<script src="../js/mallmanage/uploadGroupImage2.js"></script> 
+	<script src="../js/mallmanage/uploadGroupImage2.js"></script>
 	<script type="text/javascript">
- $('#titleImgModel').on('hidden.bs.modal', function() {
-	 $('#addbannerModel').css({'overflow-y':'scroll'});
- });
-</script>
+		$('#titleImgModel').on('hidden.bs.modal', function() {
+			$('#addbannerModel').css({
+				'overflow-y' : 'scroll'
+			});
+		});
+	</script>
 </body>
 
 

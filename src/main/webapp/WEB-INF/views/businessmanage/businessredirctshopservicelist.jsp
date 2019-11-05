@@ -271,7 +271,7 @@ body {
 			</select> <label>Choose shop: </label> <select class="form-control"
 				id="shopSelect"
 				onchange="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','1')">
-								<option value="0" >全部</option>
+				<option value="0">全部</option>
 				<c:forEach items="${businessusers}" var="optionlimit"
 					varStatus="ids">
 					<c:choose>
@@ -355,6 +355,15 @@ body {
 											<c:when test="${user.linktype =='12'}">
 												<td class="center">讨论列表</td>
 											</c:when>
+											<c:when test="${user.linktype =='13'}">
+												<td class="center">此刻</td>
+											</c:when>
+											<c:when test="${user.linktype =='14'}">
+												<td class="center">聊天群</td>
+											</c:when>
+											<c:when test="${user.linktype =='15'}">
+												<td class="center">消息列表</td>
+											</c:when>
 											<c:otherwise>
 												<td class="center">未知</td>
 											</c:otherwise>
@@ -383,75 +392,75 @@ body {
 						</table>
 						<div class="pagination">
 
-						<span><h3>第${ pageBean.page}页/共${ pageBean.totalPage}页</h3></span>
-						<c:if test="${pageBean.page != 1 }">
-							<a class="btn btn-primary"
-								href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','1')">首页</a>
-							<a class="btn btn-primary"
-								href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page-1}')">上一页</a>
-						</c:if>
+							<span><h3>第${ pageBean.page}页/共${ pageBean.totalPage}页</h3></span>
+							<c:if test="${pageBean.page != 1 }">
+								<a class="btn btn-primary"
+									href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','1')">首页</a>
+								<a class="btn btn-primary"
+									href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page-1}')">上一页</a>
+							</c:if>
 
-						<c:choose>
-							<c:when test="${pageBean.totalPage >10}">
+							<c:choose>
+								<c:when test="${pageBean.totalPage >10}">
 
-								<c:forEach var="i" begin="1" end="5">
-									<c:choose>
-										<c:when test="${pageBean.page != i }">
-											<a class="btn btn-primary"
-												href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
-										</c:when>
-										<c:otherwise>
-											<span class="btn btn-danger disabled">${i}</span>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<span>...</span>
-								<c:forEach var="i" begin="${pageBean.totalPage-4}"
-									end="${pageBean.totalPage}">
-									<c:choose>
-										<c:when test="${pageBean.page != i }">
-											<a class="btn btn-primary"
-												href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
-										</c:when>
-										<c:otherwise>
-											<span class="btn btn-danger disabled">${i}</span>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<c:if test="${pageBean.page  != pageBean.totalPage}">
-									<a class="btn btn-primary"
-										href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page+1}')">下一页</a>
-									<a class="btn btn-primary"
-										href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">尾页</a>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="i" begin="1" end="${pageBean.totalPage }">
-									<c:choose>
-										<c:when test="${pageBean.page != i }">
-											<a class="btn btn-primary"
-												href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
-										</c:when>
-										<c:otherwise>
-											<span class="btn btn-danger disabled">${i}</span>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<c:if test="${pageBean.page  != pageBean.totalPage}">
-									<a class="btn btn-primary"
-										href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page+1}')">下一页</a>
-									<a class="btn btn-primary"
-										href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">尾页</a>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
-						<span>&nbsp输入页数：</span> <span><input type="text"
-							id="inputPage" size="5" />&nbsp
-							<button type="button" class="btn btn-success btn-lg"
-								onclick="javascript:inputPageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">跳转</button></span>
+									<c:forEach var="i" begin="1" end="5">
+										<c:choose>
+											<c:when test="${pageBean.page != i }">
+												<a class="btn btn-primary"
+													href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
+											</c:when>
+											<c:otherwise>
+												<span class="btn btn-danger disabled">${i}</span>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<span>...</span>
+									<c:forEach var="i" begin="${pageBean.totalPage-4}"
+										end="${pageBean.totalPage}">
+										<c:choose>
+											<c:when test="${pageBean.page != i }">
+												<a class="btn btn-primary"
+													href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
+											</c:when>
+											<c:otherwise>
+												<span class="btn btn-danger disabled">${i}</span>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${pageBean.page  != pageBean.totalPage}">
+										<a class="btn btn-primary"
+											href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page+1}')">下一页</a>
+										<a class="btn btn-primary"
+											href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">尾页</a>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="i" begin="1" end="${pageBean.totalPage }">
+										<c:choose>
+											<c:when test="${pageBean.page != i }">
+												<a class="btn btn-primary"
+													href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${i}')">${i}</a>
+											</c:when>
+											<c:otherwise>
+												<span class="btn btn-danger disabled">${i}</span>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${pageBean.page  != pageBean.totalPage}">
+										<a class="btn btn-primary"
+											href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.page+1}')">下一页</a>
+										<a class="btn btn-primary"
+											href="javascript:pageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">尾页</a>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							<span>&nbsp输入页数：</span> <span><input type="text"
+								id="inputPage" size="5" />&nbsp
+								<button type="button" class="btn btn-success btn-lg"
+									onclick="javascript:inputPageGoto('/businessmanage/businessredirctshopservicelist','${sessionScope.user.user_guid}','${pageBean.totalPage}')">跳转</button></span>
 
 
-					</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -472,25 +481,24 @@ body {
 				<div class="modal-body">
 					<div class="form-group">
 						<input class="form-control" placeholder="" id="bsid" value=""
-							type="hidden">
-												<input class="form-control" placeholder="" id="uuid" value=""
-							type="hidden">
+							type="hidden"> <input class="form-control" placeholder=""
+							id="uuid" value="" type="hidden">
 					</div>
 					<div class="form-group">
-					<label>选择门店 </label> <select class="form-control"
-				id="shopEditInfoSelect">
-				<c:forEach items="${businessusers}" var="optionlimit"
-					varStatus="ids">
-					<c:choose>
-						<c:when test="${optionlimit.buid==buid }">
-							<option value="${optionlimit.buid}" selected>${optionlimit.name}</option>
-						</c:when>
-						<c:otherwise>
-							<option value="${optionlimit.buid} ">${optionlimit.name}</option>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-			</select>
+						<label>选择门店 </label> <select class="form-control"
+							id="shopEditInfoSelect">
+							<c:forEach items="${businessusers}" var="optionlimit"
+								varStatus="ids">
+								<c:choose>
+									<c:when test="${optionlimit.buid==buid }">
+										<option value="${optionlimit.buid}" selected>${optionlimit.name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${optionlimit.buid} ">${optionlimit.name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
 					</div>
 					<div class="form-group">
 						<label>服务名称</label> <input class="form-control"
@@ -517,6 +525,9 @@ body {
 						<option value='10'>本地商家</option>
 						<option value='11'>话题列表</option>
 						<option value='12'>讨论列表</option>
+						<option value='13'>此刻</option>
+						<option value='14'>聊天群</option>
+						<option value='15'>消息列表</option>
 					</select>
 					<div class="form-group">
 						<label>排序(越大越靠前)</label> <input class="form-control"

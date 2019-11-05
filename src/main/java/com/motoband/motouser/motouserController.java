@@ -2324,7 +2324,7 @@ public class motouserController {
 	private int batchSendCMSMessage(String taskid, MBMessageModel model, String pushMsg, int pici,
 			List<String> userids) {
 		if (userids != null && userids.size() > 0) {
-			List<List<String>> res = CollectionUtil.averageAssign(userids, Runtime.getRuntime().availableProcessors());
+			List<List<String>> res = CollectionUtil.averageAssign(userids, Runtime.getRuntime().availableProcessors()*5);
 //			List<List<String>> res = CollectionUtil.averageAssign(userids, 50);
 			CyclicBarrier cb = new CyclicBarrier(res.size() + 1);
 			AtomicInteger groupcountAtomic = new AtomicInteger(0);

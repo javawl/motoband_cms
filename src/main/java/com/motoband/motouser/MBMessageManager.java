@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.motoband.news.LinkTypeEnum;
 import com.motoband.util.Consts;
 import com.motoband.util.RedisManager;
 import com.motoband.util.tim.TIMCustomElem;
@@ -57,12 +58,12 @@ public class MBMessageManager {
 	
 	
 
-	public List<String> sendMessage(MBMessageModel model, List<String> inviteList, String pushMsg) {
+	public List<String> sendMessage(MBMessageModel model, List<String> sendUserList, String pushMsg) {
 		List<String>  returnList = new ArrayList<String>();
 		try {
 			List<String> pushList=new ArrayList<String>();
 			List<String> nopushList=new ArrayList<String>();
-			if(inviteList==null || inviteList.size()==0){
+			if(sendUserList==null || sendUserList.size()==0){
 				return null;
 			}
 			
@@ -71,180 +72,180 @@ public class MBMessageManager {
 			int pushType = 0;
 			int PushFlag = 1;
 			String switchcheck = null;
-			for (int i = 0; i < inviteList.size(); i++) {
+			for (int i = 0; i < sendUserList.size(); i++) {
 				switch (model.msgtype) {
-					case MBMessageModel.MBMsgType_FollowNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_FOLLOWSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_FollowNotify;
-	
-						break;
-					case MBMessageModel.MBMsgType_NewsLikeNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_LIKESWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_NewsLikeNotify;
-						break;
-					case MBMessageModel.MBMsgType_NewsCommentNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_NewsCommentNotify;
-						break;
-					case MBMessageModel.MBMsgType_NewsCommentReplyNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_NewsCommentReplyNotify;
-						break;
-					case MBMessageModel.MBMsgType_NewsRecommendNotify:
-						pushType = PushManager.PushType_NewsRecommendNotify;
+				case MBMessageModel.MBMsgType_FollowNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_FOLLOWSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_UserRecommendNotify:
-						pushType = PushManager.PushType_UserRecommendNotify;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+
+					break;
+				case MBMessageModel.MBMsgType_NewsLikeNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_LIKESWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_GiftNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_GiftNotify;
-						break;
-					case MBMessageModel.MBMsgType_DiscussInviteNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_DiscussInviteNotify;
-						break;
-					case MBMessageModel.MBMsgType_BusinessCommentNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_BusinessCommentNotify;
-						break;
-					case MBMessageModel.MBMsgType_BusinessReplyCommentNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_BusinessReplyCommentNotify;
-						break;
-					case MBMessageModel.MBMsgType_JoinDiscussNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_JoinDiscussNotify;
-						break;
-					case MBMessageModel.MBMsgType_CommentSecondCarNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_CommentSecondCarNotify;
-						break;
-					case MBMessageModel.MBMsgType_CommentReplySecondCarNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_CommentReplySecondCarNotify;
-						break;
-					case MBMessageModel.MBMsgType_MentionNotify:
-						switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, inviteList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
-						if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
-							PushFlag = 0;
-						}
-						pushType = PushManager.PushType_MentionNotify;
-						break;
-					case MBMessageModel.MBMsgType_JoinVoiceRoom:
-	
-						pushType = PushManager.PushType_JoinVoiceRoom;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_NewsCommentNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_ExitVoiceRoom:
-	
-						pushType = PushManager.PushType_ExitVoiceRoom;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_NewsCommentReplyNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_DissolveVoiceRoom:
-	
-						pushType = PushManager.PushType_DissolveVoiceRoom;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_NewsRecommendNotify:
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_UserRecommendNotify:
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_GiftNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_KickoutVoiceRoom:
-	
-						pushType = PushManager.PushType_KickoutVoiceRoom;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_DiscussInviteNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_UpdateMemeberid:
-	
-						pushType = PushManager.PushType_UpdateMemeberid;
+					}
+					pushType = LinkTypeEnum.DISCUSS.getValue();
+					break;
+				case MBMessageModel.MBMsgType_BusinessCommentNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_JoinLBSTeam:
-	
-						pushType = PushManager.PushType_JoinLBSTeam;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_BusinessReplyCommentNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_ExitLBSTeam:
-	
-						pushType = PushManager.PushType_ExitLBSTeam;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_JoinDiscussNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_DissolveLBSTeam:
-	
-						pushType = PushManager.PushType_DissolveLBSTeam;
+					}
+					pushType = LinkTypeEnum.NEWS.getValue();
+					break;
+				case MBMessageModel.MBMsgType_CommentSecondCarNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_KickoutLBSTeam:
-	
-						pushType = PushManager.PushType_KickoutLBSTeam;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_CommentReplySecondCarNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_COMMENTSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-	
-//					case MBMessageModel.MBMsgType_ContinueVoiceRoom:
-//	
-//						pushType = PushManager.PushType_ContinueVoiceRoom;
-//						PushFlag = 0;
-//						break;
-					case MBMessageModel.MBMsgType_ReplaceVoiceRoomAdmin:
-	
-						pushType = PushManager.PushType_ReplaceVoiceRoomAdmin;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_MentionNotify:
+					switchcheck = RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, sendUserList.get(i) + USERKEY_USER, MAPKEY_SYSTEMSWITCH);
+					if ((switchcheck == null ? "0" : switchcheck).equals("0")) {
 						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_ReplaceLBSTeamAdmin:
-	
-						pushType = PushManager.PushType_ReplaceLBSTeamAdmin;
-						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_Banner:
-						
-						pushType = PushManager.PushType_Banner;
-						PushFlag = 0;
-						break;
-					case MBMessageModel.MBMsgType_YZCustomServiceMessage:
-						
-						pushType = PushManager.PushType_YZ_CustomService_Message;
-						PushFlag = 0;
-						break;
-					default:
-						break;
+					}
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					break;
+				case MBMessageModel.MBMsgType_JoinVoiceRoom:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_ExitVoiceRoom:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_DissolveVoiceRoom:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_KickoutVoiceRoom:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+//				case MBMessageModel.MBMsgType_UpdateMemeberid:
+//
+//					pushType = PushManager.PushType_UpdateMemeberid;
+//					PushFlag = 0;
+//					break;
+				case MBMessageModel.MBMsgType_JoinLBSTeam:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_ExitLBSTeam:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_DissolveLBSTeam:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_KickoutLBSTeam:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+
+//				case MBMessageModel.MBMsgType_ContinueVoiceRoom:
+//
+//					pushType = PushManager.PushType_ContinueVoiceRoom;
+//					PushFlag = 0;
+//					break;
+				case MBMessageModel.MBMsgType_ReplaceVoiceRoomAdmin:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_ReplaceLBSTeamAdmin:
+
+					pushType = LinkTypeEnum.OTHER.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_Banner:
+					
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					PushFlag = 0;
+					break;
+				case MBMessageModel.MBMsgType_YZCustomServiceMessage:
+					
+					pushType = LinkTypeEnum.MESSAGE.getValue();
+					PushFlag = 0;
+					break;
+				default:
+					break;
 				}
 				
 			   if(PushFlag == 0){//0表示推送，1表示不离线推送。
-				   pushList.add(inviteList.get(i));
+				   pushList.add(sendUserList.get(i));
 				}else{
-				   nopushList.add(inviteList.get(i));
+				   nopushList.add(sendUserList.get(i));
 				}
 				
 			}

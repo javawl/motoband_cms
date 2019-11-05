@@ -290,6 +290,15 @@ body {
 											<c:when test="${messagetask.linktype =='12'}">
 												<td class="center">讨论列表</td>
 											</c:when>
+											<c:when test="${messagetask.linktype =='13'}">
+												<td class="center">此刻</td>
+											</c:when>
+											<c:when test="${messagetask.linktype =='14'}">
+												<td class="center">聊天群</td>
+											</c:when>
+											<c:when test="${messagetask.linktype =='15'}">
+												<td class="center">消息列表</td>
+											</c:when>
 											<c:otherwise>
 												<td class="center">未知</td>
 											</c:otherwise>
@@ -380,6 +389,9 @@ body {
 							<option value='10'>本地商家</option>
 							<option value='11'>话题列表</option>
 							<option value='12'>讨论列表</option>
+							<option value='13'>此刻</option>
+							<option value='14'>聊天群</option>
+							<option value='15'>消息列表</option>
 						</select>
 						<div>
 							<div id="div1">
@@ -438,8 +450,7 @@ body {
 						<div class="col-md-4">
 							<input class="form-control input-inline input-sm form_datetime"
 								name="starttime" id="starttime" size="12" type="text"
-								placeholder="执行时间" />
-							<input type="hidden" id="ins_starttime">
+								placeholder="执行时间" /> <input type="hidden" id="ins_starttime">
 						</div>
 					</div>
 
@@ -589,7 +600,8 @@ body {
 	<script src="../js/laydate/laydate.js"></script>
 	<script src="../js/bootstrap-datetimepicker.js" type="text/javascript"
 		charset="utf-8"></script>
-	<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>jquery 时间格式化
+	<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+	jquery 时间格式化
 	<script type="text/javascript">
 		var iframe = document.getElementById("ifr");
 		iframe.onload = function() {
@@ -604,13 +616,13 @@ body {
 			autoclose : 1,
 			todayBtn : 1,
 			minuteStep : 5,
-// 			format : 'yyyy-mm-dd hh:ii:ss',
+			// 			format : 'yyyy-mm-dd hh:ii:ss',
 			pickerPosition : "bottom",
 			startDate : timeStamp2String(new Date().getTime())
 
 		});
-		$(".form_datetime").datetimepicker().on('changeDate', function(date){
-			var data=new Date(date.date);
+		$(".form_datetime").datetimepicker().on('changeDate', function(date) {
+			var data = new Date(date.date);
 			console.log(data.getTime());
 			$("#ins_starttime").val(data.getTime())
 		});

@@ -4,58 +4,58 @@ public class PushManager {
 	private static final PushManager pushManager = new PushManager();
 //	private static final Tracer _tracer = Tracer.create(PushManager.class);
 
-	public static final int PushType_Other = 0;
-	public static final int PushType_FollowNotify = 3;
-	public static final int PushType_NewsLikeNotify = 4;
-	public static final int PushType_NewsCommentNotify = 5;
-	public static final int PushType_NewsCommentReplyNotify = 6;
-	public static final int PushType_IMMessageNotify = 18;
-
-	public static final int PushType_NewsRecommendNotify = 20;// 动态加精
-	public static final int PushType_UserRecommendNotify = 21;// 用户加推荐
-	public static final int PushType_MallNotify = 30;
-	public static final int PushType_TopicNotify = 31;
-	public static final int PushType_MGPNotify = 32;
-	public static final int PushType_NewsNormalNotify = 35;
-	public static final int PushType_NewsStoryNotify = 36;
-	public static final int PushType_NewsBoxNotify = 37;
-	public static final int PushType_RunNotify = 38;
-
-	public static final int PushType_DiscussInviteNotify = 39;// 讨论邀请
-	public static final int PushType_DiscussNotify = 40;// 讨论推送
-	public static final int PushType_NewsDiscussNotify = 41;// 讨论类型动态推送 ：参与讨论
-
-	public static final int PushType_BusinessCommentNotify = 42; // 评价商家
-	public static final int PushType_BusinessReplyCommentNotify = 43;// 商家回复
-	public static final int PushType_GiftNotify = 45;// 收到礼物
-	public static final int PushType_GiftGivenNotify = 46;// 转增礼物
-	public static final int PushType_JoinDiscussNotify = 47;//参与讨论
-	public static final int PushType_CommentSecondCarNotify = 48;//留言二手车
-	public static final int PushType_CommentReplySecondCarNotify = 49;//回复二手车留言
-	public static final int PushType_YZMallNotify=50;//有赞商城通知
-	public static final int PushType_YZMallProductNotify=51;//有赞商城商品通知
-	public static final int PushType_SecondCarNotify=52;//二手车
-	
-	public static final int PushType_MentionNotify=54;//@通知
-	
-	//2.8.0
-	public static final int PushType_JoinVoiceRoom=56;//加入语音房间
-	public static final int PushType_ExitVoiceRoom=57;//退出语音房间
-	public static final int PushType_DissolveVoiceRoom=58;//解散语音房间
-	public static final int PushType_KickoutVoiceRoom=59;//被踢出语音房间
-	public static final int PushType_UpdateMemeberid=60;//更新Memeberid
-	
-	public static final int PushType_JoinLBSTeam=61;//加入组队
-	public static final int PushType_ExitLBSTeam=62;//退出组队
-	public static final int PushType_DissolveLBSTeam=63;//解散组队
-	public static final int PushType_KickoutLBSTeam=64;//被踢出组队
-	//3.2.0
-//	public static final int PushType_ContinueVoiceRoom=65;//续语音房间
-	public static final int PushType_YZ_CustomService_Message=66;//有赞客服消息
-	public static final int PushType_ReplaceVoiceRoomAdmin=67;//更换语音房主
-	public static final int PushType_ReplaceLBSTeamAdmin=68;//更换组队房主
-	
-	
+//	public static final int PushType_Other = 0;
+//	public static final int PushType_FollowNotify = 3;
+//	public static final int PushType_NewsLikeNotify = 4;
+//	public static final int PushType_NewsCommentNotify = 5;
+//	public static final int PushType_NewsCommentReplyNotify = 6;
+//	public static final int PushType_IMMessageNotify = 18;
+//
+//	public static final int PushType_NewsRecommendNotify = 20;// 动态加精
+//	public static final int PushType_UserRecommendNotify = 21;// 用户加推荐
+//	public static final int PushType_MallNotify = 30;
+//	public static final int PushType_TopicNotify = 31;
+//	public static final int PushType_MGPNotify = 32;
+//	public static final int PushType_NewsNormalNotify = 35;
+//	public static final int PushType_NewsStoryNotify = 36;
+//	public static final int PushType_NewsBoxNotify = 37;
+//	public static final int PushType_RunNotify = 38;
+//
+//	public static final int PushType_DiscussInviteNotify = 39;// 讨论邀请
+//	public static final int PushType_DiscussNotify = 40;// 讨论推送
+//	public static final int PushType_NewsDiscussNotify = 41;// 讨论类型动态推送 ：参与讨论
+//
+//	public static final int PushType_BusinessCommentNotify = 42; // 评价商家
+//	public static final int PushType_BusinessReplyCommentNotify = 43;// 商家回复
+//	public static final int PushType_GiftNotify = 45;// 收到礼物
+//	public static final int PushType_GiftGivenNotify = 46;// 转增礼物
+//	public static final int PushType_JoinDiscussNotify = 47;//参与讨论
+//	public static final int PushType_CommentSecondCarNotify = 48;//留言二手车
+//	public static final int PushType_CommentReplySecondCarNotify = 49;//回复二手车留言
+//	public static final int PushType_YZMallNotify=50;//有赞商城通知
+//	public static final int PushType_YZMallProductNotify=51;//有赞商城商品通知
+//	public static final int PushType_SecondCarNotify=52;//二手车
+//	
+//	public static final int PushType_MentionNotify=54;//@通知
+//	
+//	//2.8.0
+//	public static final int PushType_JoinVoiceRoom=56;//加入语音房间
+//	public static final int PushType_ExitVoiceRoom=57;//退出语音房间
+//	public static final int PushType_DissolveVoiceRoom=58;//解散语音房间
+//	public static final int PushType_KickoutVoiceRoom=59;//被踢出语音房间
+//	public static final int PushType_UpdateMemeberid=60;//更新Memeberid
+//	
+//	public static final int PushType_JoinLBSTeam=61;//加入组队
+//	public static final int PushType_ExitLBSTeam=62;//退出组队
+//	public static final int PushType_DissolveLBSTeam=63;//解散组队
+//	public static final int PushType_KickoutLBSTeam=64;//被踢出组队
+//	//3.2.0
+////	public static final int PushType_ContinueVoiceRoom=65;//续语音房间
+//	public static final int PushType_YZ_CustomService_Message=66;//有赞客服消息
+//	public static final int PushType_ReplaceVoiceRoomAdmin=67;//更换语音房主
+//	public static final int PushType_ReplaceLBSTeamAdmin=68;//更换组队房主
+//	
+//	
 	public static final int PushType_Banner=69;//banner类型消息
 	
 	
