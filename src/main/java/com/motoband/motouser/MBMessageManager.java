@@ -72,7 +72,7 @@ public class MBMessageManager {
 			
 			int pushType = 0;
 			int PushFlag = 1;
-			BannerModel pushModel=new BannerModel();
+//			BannerModel pushModel=new BannerModel();
 			String switchcheck = null;
 			for (int i = 0; i < sendUserList.size(); i++) {
 				switch (model.msgtype) {
@@ -232,7 +232,7 @@ public class MBMessageManager {
 					break;
 				case MBMessageModel.MBMsgType_Banner:
 					
-					pushType = LinkTypeEnum.MESSAGE.getValue();
+					pushType =model.bannermodel.linktype;
 					PushFlag = 0;
 					break;
 				case MBMessageModel.MBMsgType_YZCustomServiceMessage:
@@ -252,19 +252,21 @@ public class MBMessageManager {
 				
 			}
 			
-			pushModel.linktype=pushType;
-			pushModel.nid=model.nid;
-			pushModel.ntype=model.ntype;
-			pushModel.keyword=model.keyword;
+//			pushModel.linktype=pushType;
+//			pushModel.nid=model.nid;
+//			pushModel.ntype=model.ntype;
+//			pushModel.keyword=model.getBannermodel().keyword;
+//			pushModel.buserid=model.getBannermodel().getBuserid();
+//			pushModel.groupid=model.getBannermodel().getGroupid();
             if(pushList!=null && pushList.size()>0){
-            	List<String> pushRetuenList =sendMessageMethod(model, pushList, pushMsg, pushModel, 0);
+            	List<String> pushRetuenList =sendMessageMethod(model, pushList, pushMsg, model.getBannermodel(), 0);
             	if(pushRetuenList!=null && pushRetuenList.size()>0){
             		returnList.addAll(pushRetuenList);
             	}
             }
             
             if(nopushList!=null && nopushList.size()>0){
-            	List<String>  nopushRetuenList =sendMessageMethod(model, nopushList, pushMsg, pushModel, 1);
+            	List<String>  nopushRetuenList =sendMessageMethod(model, nopushList, pushMsg, model.getBannermodel(), 1);
             	if(nopushRetuenList!=null && nopushRetuenList.size()>0){
             		returnList.addAll(nopushRetuenList);
             	}

@@ -100,7 +100,15 @@ public class MBMessageModel {
 	public String fromuserid;
 	public String fromnickname;
 	
+	public String groupid;
 	
+	
+	public String getGroupid() {
+		return groupid;
+	}
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
 	public int getMsgtype() {
 		return msgtype;
 	}

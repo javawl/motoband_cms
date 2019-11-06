@@ -2572,6 +2572,7 @@ public class motouserController {
 			bannermodel.setSecondcarid(messageTaskModel.getSecondcarid());
 			bannermodel.setMiniprogramid(messageTaskModel.getMiniprogramid());
 			bannermodel.setBuserid(messageTaskModel.getBuserid());
+			bannermodel.setGroupid(messageTaskModel.getGroupid());
 		}
 		model.setBannermodel(bannermodel);
 		model.setMsgtype(MBMessageModel.MBMsgType_Banner);
