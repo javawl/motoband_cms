@@ -1,6 +1,7 @@
 package com.motoband.motouser;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.Marshaller.Listener;
@@ -52,14 +53,15 @@ public class MessageTaskModel {
 	
 	public String getStarttimestr() {
 		if(starttime!=0) {
-			this.starttimestr =DateFormat.getDateTimeInstance().format(new Date(starttime));
+			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			this.starttimestr =format.format(new Date(starttime));
 		}
 		return starttimestr;
 	}
 	public void setStarttimestr(String starttimestr) {
 		if(starttime!=0) {
-			this.starttimestr =DateFormat.getDateTimeInstance().format(new Date(starttime));
-		}
+			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			this.starttimestr =format.format(new Date(starttime));		}
 	}
 	public String getGroupid() {
 		return groupid;
