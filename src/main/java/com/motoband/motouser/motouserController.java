@@ -2083,7 +2083,12 @@ public class motouserController {
 			map.put("failcount", motouserService.getUserTaskCount(taskid, 2));
 			map.put("successcount", motouserService.getUserTaskCount(taskid, 1));
 		} else {
-			map = queue.take();
+//			map = queue.take();
+			MessageTaskModel model = motouserService.getTaskMsgByTaskid(taskid);
+			map.put("state", model.state);
+			map.put("sumcount", motouserService.getUserTaskCount(taskid, -1));
+			map.put("failcount", motouserService.getUserTaskCount(taskid, 2));
+			map.put("successcount", motouserService.getUserTaskCount(taskid, 1));
 		}
 		return map;
 	}
@@ -2488,9 +2493,9 @@ public class motouserController {
 			queue = Queues.newArrayBlockingQueue(20000);
 		}
 		Map<String, Object> map = Maps.newHashMap();
-		map.put("sumcount", motouserService.getMessageTaskAllUserByTaskid(taskid));
-		map.put("successcount", motouserService.getUserTaskCount(taskid, 1));
-		map.put("failcount", motouserService.getUserTaskCount(taskid, 2));
+//		map.put("sumcount", motouserService.getMessageTaskAllUserByTaskid(taskid));
+//		map.put("successcount", motouserService.getUserTaskCount(taskid, 1));
+//		map.put("failcount", motouserService.getUserTaskCount(taskid, 2));
 		map.put("state", motouserService.getTaskMsgByTaskid(taskid).getState());
 		try {
 			queue.put(map);
