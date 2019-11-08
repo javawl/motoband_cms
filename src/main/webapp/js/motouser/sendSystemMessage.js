@@ -188,6 +188,7 @@ function addbannerConfirm(){
 		  }
 	    break;
 	  case 7:
+		  var linkurl=$.trim($("#inputUrllinkurl").val());
 		  var miniprogramid=$.trim($("#inputUrlminiprogramid").val());
 		  if(miniprogramid==null || miniprogramid ==""){
 			  alert("miniprogramid不能为空");
