@@ -52,16 +52,21 @@ public class MessageTaskModel {
 	public String starttimestr;
 	
 	public String getStarttimestr() {
-		if(starttime!=0) {
+		if(starttime>0) {
 			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			this.starttimestr =format.format(new Date(starttime));
+		}else {
+			this.starttimestr="实时";
 		}
 		return starttimestr;
 	}
 	public void setStarttimestr(String starttimestr) {
-		if(starttime!=0) {
+		if(starttime>0) {
 			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			this.starttimestr =format.format(new Date(starttime));		}
+			this.starttimestr =format.format(new Date(starttime));		
+	}else {
+		this.starttimestr="实时";
+	}
 	}
 	public String getGroupid() {
 		return groupid;
