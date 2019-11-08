@@ -127,13 +127,21 @@ public class BotUserController {
 	@PostConstruct
 	public void init() {
 //		botService=botService2;
-		String lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount");
-		BotUserController.islikecount=(lcount==null)?0:Integer.parseInt(lcount);
-		lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount");
-		BotUserController.isgiftcount=(lcount==null)?0:Integer.parseInt(lcount);
-		lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount");
-		BotUserController.isfollowcount=(lcount==null)?0:Integer.parseInt(lcount);
-		startjob(0, 5000, 800, 1666);
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				String lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "islikecount");
+				BotUserController.islikecount=(lcount==null)?0:Integer.parseInt(lcount);
+				lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isgiftcount");
+				BotUserController.isgiftcount=(lcount==null)?0:Integer.parseInt(lcount);
+				lcount=RedisManager.getInstance().hget(Consts.REDIS_SCHEME_USER, "cms_bot_task", "isfollowcount");
+				BotUserController.isfollowcount=(lcount==null)?0:Integer.parseInt(lcount);
+				startjob(0, 5000, 800, 1666);
+			}
+			
+		};
+		new Thread(r).start();
+
 	}
 
 
