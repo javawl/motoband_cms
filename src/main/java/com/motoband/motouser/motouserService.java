@@ -195,8 +195,8 @@ public List<MessageTaskModel> getUnFinishTask() {
 }
 
 public boolean checkTask(String taskid) {
-//	return motouserMapper.getMessageTaskAllUserByTaskid(taskid)==(motouserMapper.getMessageTaskSucessUserByTaskid(taskid)+motouserMapper.getMessageTaskFailUserByTaskid(taskid));
-	return motouserMapper.getTaskMsgByTaskid(taskid).getState()==1;
+	return motouserMapper.getMessageTaskAllUserByTaskid(taskid)==(motouserMapper.getMessageTaskSucessUserByTaskid(taskid)+motouserMapper.getMessageTaskFailUserByTaskid(taskid));
+//	return motouserMapper.getTaskMsgByTaskid(taskid).getState()==1;
 }
 
 public List<String> getUnFinishTaskUsers(String taskid) {
