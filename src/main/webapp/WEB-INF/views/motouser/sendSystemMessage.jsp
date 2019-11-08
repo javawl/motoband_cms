@@ -316,7 +316,7 @@ body {
 										<td style="word-break: break-all;">${messagetask.secondcarid}</td>
 										<td>${messagetask.miniprogramid}</td>
 										<td style="word-break: break-all;">${messagetask.buserid}</td>
-										<td> ${messagetask.starttimestr}"</td>
+										<td> ${messagetask.starttimestr}</td>
 										<td style='width: 150px; height: auto;'>
 											<div>
 												<font color="blue" id='${messagetask.taskid}_1'>/</font>
