@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%-- <jsp:useBean id="dateValue" class="java.util.Date"/> --%>
+
+
 <%
 	String ctx = request.getContextPath();
 	request.setAttribute("path", ctx);
@@ -312,7 +316,7 @@ body {
 										<td style="word-break: break-all;">${messagetask.secondcarid}</td>
 										<td>${messagetask.miniprogramid}</td>
 										<td style="word-break: break-all;">${messagetask.buserid}</td>
-										<td>${messagetask.starttime}</td>
+										<td> ${messagetask.starttimestr}"</td>
 										<td style='width: 150px; height: auto;'>
 											<div>
 												<font color="blue" id='${messagetask.taskid}_1'>/</font>

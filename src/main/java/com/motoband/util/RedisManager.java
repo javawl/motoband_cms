@@ -53,6 +53,28 @@ public class RedisManager {
 
 	}
 
+	/**
+	 * 
+	 * @Description key得剩余过期时间
+	 * @param schemeName
+	 * @param key
+	 * @return 以秒为单位的整数值
+	 */
+	public long ttl(String schemeName, String key) {
+		Jedis jedis = null;
+		JedisPool pool = null;
+		try {
+			pool = poolMap.get(schemeName);
+			jedis = pool.getResource();
+			long b = jedis.ttl(key);
+			return b;
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+	}
+	
 	/***
 	 * 测试制定key是否存在
 	 * 

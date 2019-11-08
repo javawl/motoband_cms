@@ -151,6 +151,13 @@ function addbanner(){
 //	
 //}
 function addbannerConfirm(){
+	 var flag=false;
+	 if(confirm("请确认推送用户是否正确")){
+		 flag=true;
+	 }
+	 if(!flag){
+		 return;
+	 }
 	var name=$ ('#ins_name').val ();
 	var title=$ ('#ins_title').val ();
 	var subtitle=$ ('#ins_subtitle').val ();

@@ -2194,12 +2194,16 @@ public class motouserController {
 						sleeptime=starttime-currenttime;
 					}
 					try {
+						RedisManager.getInstance().string_set(Consts.REDIS_SCHEME_RUN, taskid1+"_cms_task", String.valueOf(starttime));
+						RedisManager.getInstance().lpush(Consts.REDIS_SCHEME_RUN, "cms_task_list", taskid1);
+						RedisManager.getInstance().setExpireAt(Consts.REDIS_SCHEME_RUN, taskid1+"_cms_task", starttime);
 						Thread.currentThread().sleep(sleeptime);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 					// 处理数据
 					doMessageTaskUser(taskid1);
+					RedisManager.getInstance().lrem(Consts.REDIS_SCHEME_RUN, "cms_task_list", taskid1);
 
 				}
 			});
@@ -2241,6 +2245,9 @@ public class motouserController {
 					if(currenttime<starttime) {
 						sleeptime=starttime-currenttime;
 					}
+					RedisManager.getInstance().string_set(Consts.REDIS_SCHEME_RUN, taskid2+"_cms_task", String.valueOf(starttime));
+					RedisManager.getInstance().lpush(Consts.REDIS_SCHEME_RUN, "cms_task_list", taskid2);
+					RedisManager.getInstance().setExpireAt(Consts.REDIS_SCHEME_RUN, taskid2+"_cms_task", starttime);
 					try {
 						Thread.currentThread().sleep(sleeptime);
 					} catch (InterruptedException e) {

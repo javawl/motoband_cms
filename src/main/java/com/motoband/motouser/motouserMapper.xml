@@ -283,7 +283,7 @@
      </update>
      
      <select id="getUnFinishTask" resultType="com.motoband.motouser.MessageTaskModel">
-          select taskid from  cms_msg_tasklist  where state=0
+          select taskid,starttime from  cms_msg_tasklist  where state=0
      </select>
      
    	 <select id="getUnFinishTaskUsers" resultType="String">

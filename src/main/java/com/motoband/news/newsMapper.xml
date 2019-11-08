@@ -195,13 +195,15 @@
 	</delete>
 	<insert id="addnewBannerall" parameterType="com.motoband.news.BannerModel">
 	    insert into banner_new
-		(bannerid,bannertype,title,subtitle,des,state,linktype,imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,orderindex,groupid)
+		(bannerid,bannertype,title,subtitle,des,state,linktype,
+		imgurl,linkurl,gpid,nid,keyword,secondcarid,miniprogramid,buserid,orderindex,groupid)
 		values(#{bannerid},#{bannertype},#{title},#{subtitle},#{des},#{state},#{linktype},
-		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},#{buserid},#{orderindex},#{groupid})
+		#{imgurl},#{linkurl},#{gpid},#{nid},#{keyword},#{secondcarid},#{miniprogramid},
+		#{buserid},#{orderindex},#{groupid})
 		ON DUPLICATE KEY UPDATE
 		bannertype=#{bannertype},title=#{title},subtitle=#{subtitle},des=#{des},state=#{state},linktype=#{linktype},
 		imgurl=#{imgurl},linkurl=#{linkurl},gpid=#{gpid},nid=#{nid},keyword=#{keyword},secondcarid=#{secondcarid},miniprogramid=#{miniprogramid},
-		buserid=#{buserid},orderindex=#{orderindex},groupid={groupid}
+		buserid=#{buserid},orderindex=#{orderindex},groupid=#{groupid}
 	</insert>
 	<update id="updateTopicIsMain">
 		update topic set ismain=#{ismain} where topicid=#{topicid}

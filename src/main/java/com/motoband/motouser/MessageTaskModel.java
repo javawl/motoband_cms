@@ -1,10 +1,14 @@
 package com.motoband.motouser;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import javax.xml.bind.Marshaller.Listener;
 
 import com.motoband.Events.TaskEvent;
 import com.motoband.interfaces.TaskListener;
 import com.motoband.news.LinkTypeEnum;
+import com.qcloud.cos.utils.DateUtils;
 
 public class MessageTaskModel {
 	public long id;
@@ -40,11 +44,23 @@ public class MessageTaskModel {
 	public String createtimeString;
 	public String updatetimeString;
 
+
 	private TaskListener taskListener;
 	
 	public long starttime;//任务开始执行时间
-
+	public String starttimestr;
 	
+	public String getStarttimestr() {
+		if(starttime!=0) {
+			this.starttimestr =DateFormat.getDateTimeInstance().format(new Date(starttime));
+		}
+		return starttimestr;
+	}
+	public void setStarttimestr(String starttimestr) {
+		if(starttime!=0) {
+			this.starttimestr =DateFormat.getDateTimeInstance().format(new Date(starttime));
+		}
+	}
 	public String getGroupid() {
 		return groupid;
 	}
