@@ -24,7 +24,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -59,14 +58,6 @@ import com.motoband.util.PageBean;
 import com.motoband.util.PinyinComparator;
 import com.motoband.util.RedisManager;
 import com.qcloud.PicCloud;
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.BasicCOSCredentials;
-import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.http.HttpMethodName;
-import com.qcloud.cos.model.GeneratePresignedUrlRequest;
-import com.qcloud.cos.model.PutObjectResult;
-import com.qcloud.cos.region.Region;
 import com.tencent.cloud.CosStsClient;
 
 import okhttp3.MediaType;
@@ -424,7 +415,6 @@ public class boxController {
 			// 请求临时密钥信息
 			org.json.JSONObject credential = CosStsClient.getCredential(config);
 			// 请求成功：打印对应的临时密钥信息
-			System.out.println(credential.toString(4));
 			out.print(credential);
 		} catch (Exception e) {
 			// 请求失败，抛出异常
@@ -465,28 +455,28 @@ public class boxController {
 	}
 
 	public static void main(String[] args) {
-		// 初始化永久密钥信息
-		String secretId = "AKID8TCGA2cH6hkJQ3NriIAkzN0bvIHd9r1w";
-		String secretKey = "NZoF8svEjxv9d1ThKdalZsmCoAuOBjX5";
-		COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
-		Region region = new Region("ap-shanghai");
-		ClientConfig clientConfig = new ClientConfig(region);
-		// 生成 cos 客户端。
-		COSClient cosClient = new COSClient(cred, clientConfig);
-		// 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
-		String bucketName = "motobox-10013836";
-		String key = "401825317.jpg";
-		cosClient.deleteObject(bucketName, "401825317");
-		GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, key, HttpMethodName.GET);
-		// 设置签名过期时间(可选), 若未进行设置, 则默认使用 ClientConfig 中的签名过期时间(1小时)
-		// 这里设置签名在半个小时后过期
-		Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
-		req.setExpiration(expirationDate);
-		URL url = cosClient.generatePresignedUrl(req);
-		System.out.println(url.toString());
-		PutObjectResult res = cosClient.putObject(bucketName, key, "hello world");
-		System.out.println(JSON.toJSONString(res));
-		cosClient.shutdown();
+//		// 初始化永久密钥信息
+//		String secretId = "AKID8TCGA2cH6hkJQ3NriIAkzN0bvIHd9r1w";
+//		String secretKey = "NZoF8svEjxv9d1ThKdalZsmCoAuOBjX5";
+//		COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
+//		Region region = new Region("ap-shanghai");
+//		ClientConfig clientConfig = new ClientConfig(region);
+//		// 生成 cos 客户端。
+//		COSClient cosClient = new COSClient(cred, clientConfig);
+//		// 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
+//		String bucketName = "motobox-10013836";
+//		String key = "401825317.jpg";
+//		cosClient.deleteObject(bucketName, "401825317");
+//		GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, key, HttpMethodName.GET);
+//		// 设置签名过期时间(可选), 若未进行设置, 则默认使用 ClientConfig 中的签名过期时间(1小时)
+//		// 这里设置签名在半个小时后过期
+//		Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
+//		req.setExpiration(expirationDate);
+//		URL url = cosClient.generatePresignedUrl(req);
+//		System.out.println(url.toString());
+//		PutObjectResult res = cosClient.putObject(bucketName, key, "hello world");
+//		System.out.println(JSON.toJSONString(res));
+//		cosClient.shutdown();
 	}
 
 	@RequestMapping(value = "/boxsel", method = RequestMethod.GET)

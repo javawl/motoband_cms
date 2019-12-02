@@ -23,11 +23,11 @@
 			<artifactId>cos-sts-java</artifactId>
 			<version>3.0.5</version>
 		</dependency>
-		<dependency>
-			<groupId>com.qcloud</groupId>
-			<artifactId>cos_api</artifactId>
-			<version>5.6.8</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.qcloud</groupId> -->
+<!-- 			<artifactId>cos_api</artifactId> -->
+<!-- 			<version>5.6.8</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.youzan</groupId>
 			<artifactId>youzan</artifactId>

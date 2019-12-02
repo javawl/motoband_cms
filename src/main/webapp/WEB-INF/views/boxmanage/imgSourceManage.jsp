@@ -112,85 +112,85 @@
 
 	// 监听选文件
 	document.getElementById('file2').onchange = function () {
-
-	    var file = this.files[0];
-	    if (file==null) {
-	    	return;	
-	    }
-		var filename = "", groupid = "";
-		var map = {}, key="";
-		filename = file.name;
-		groupid = $ ("#nowgroupid").val ();
-		key = Math.uuidFast ();
-		map[key] = filename;
-	    // 分片上传文件
-	    cos.sliceUploadFile({
-	        Bucket: Bucket,
-	        Region: Region,
-	        Key: key,
-	        Body: file,
-	        onHashProgress: function (progressData) {
-	            console.log('校验中', JSON.stringify(progressData));
-	        },
-	        onProgress: function (progressData) {
-	            var progressRate = (progressData.loaded / progressData.total) * 100 + '%';
-                //通过设置进度条的宽度达到效果
-                $('.progress > div').css('width', progressRate);
-	            console.log('上传中', JSON.stringify(progressData));
-                if(progressRate =="100%"){
-			        console.log ("添加图片资源成功！");
-                }
-	        },
-	    }, function (err, data) {
-	    	if(err!=null){
-	    		console.log(err)
-	    	}else if(data!=null){
-	    		//Bucket: "motobox-10013836"
-// ETag: ""b84e09d66d9529350766afed77ee0e16-1""
-// Key: "20150102204502_YZyY4.jpeg"
-// Location: "motobox-10013836.cos.ap-shanghai.myqcloud.com/20150102204502_YZyY4.jpeg"
-	    		console.log(data);	
-	    		var url="https://"+data.Location;
-	    		var img_guid = data.Key;
-			    var img_url = url;
-			    var img_opurl = url;
-			    var img_name = map[data.Key];
-			    var datas =
-			    {
-			        
-			        "img_guid" : img_guid,
-			        "img_url" : img_url,
-			        "img_opurl" : img_opurl,
-			        "img_name" : img_name,
-			        "img_groupid" : groupid
-			    
+		for (var i = 0; i < this.files.length; i++) {
+			 var file = this.files[i];
+			    if (file==null) {
+			    	return;	
 			    }
-			    $.ajax (
-			    {
-			        type : "POST",
-			        url : "../boxmanage/addNewBoxImg",
-			        data : datas,
-			        success : function (data)
-			        {
-				        if (data != "" && data != null)
-				        {
-					        var json = eval ("(" + data + ")");
-					        addimgdiv (json);
-					        $("#back").css("display","none");
-					        // $ ("#page-wrapper").load
-					        // ("../boxmanage/imgSourceManage");
-				        }
-				        
+				var filename = "", groupid = "";
+				var map = {}, key="";
+				filename = file.name;
+				groupid = $ ("#nowgroupid").val ();
+				key = Math.uuidFast ();
+				map[key] = filename;
+			    // 分片上传文件
+			    cos.sliceUploadFile({
+			        Bucket: Bucket,
+			        Region: Region,
+			        Key: key,
+			        Body: file,
+			        onHashProgress: function (progressData) {
+			            console.log('校验中', JSON.stringify(progressData));
 			        },
-				    error: function(XMLHttpRequest, textStatus, errorThrown) {
-			            alert("上传失败，点击重试");
-			            $("#back").css("display","none");
-			        }
+			        onProgress: function (progressData) {
+			            var progressRate = (progressData.loaded / progressData.total) * 100 + '%';
+		                //通过设置进度条的宽度达到效果
+		                $('.progress > div').css('width', progressRate);
+			            console.log('上传中', JSON.stringify(progressData));
+		                if(progressRate =="100%"){
+					        console.log ("添加图片资源成功！");
+		                }
+			        },
+			    }, function (err, data) {
+			    	if(err!=null){
+			    		console.log(err)
+			    	}else if(data!=null){
+			    		//Bucket: "motobox-10013836"
+		// ETag: ""b84e09d66d9529350766afed77ee0e16-1""
+		// Key: "20150102204502_YZyY4.jpeg"
+		// Location: "motobox-10013836.cos.ap-shanghai.myqcloud.com/20150102204502_YZyY4.jpeg"
+			    		console.log(data);	
+			    		var url="https://"+data.Location;
+			    		var img_guid = data.Key;
+					    var img_url = url;
+					    var img_opurl = url;
+					    var img_name = map[data.Key];
+					    var datas =
+					    {
+					        
+					        "img_guid" : img_guid,
+					        "img_url" : img_url,
+					        "img_opurl" : img_opurl,
+					        "img_name" : img_name,
+					        "img_groupid" : groupid
+					    
+					    }
+					    $.ajax (
+					    {
+					        type : "POST",
+					        url : "../boxmanage/addNewBoxImg",
+					        data : datas,
+					        success : function (data)
+					        {
+						        if (data != "" && data != null)
+						        {
+							        var json = eval ("(" + data + ")");
+							        addimgdiv (json);
+							        $("#back").css("display","none");
+							        // $ ("#page-wrapper").load
+							        // ("../boxmanage/imgSourceManage");
+						        }
+						        
+					        },
+						    error: function(XMLHttpRequest, textStatus, errorThrown) {
+					            alert("上传失败，点击重试");
+					            $("#back").css("display","none");
+					        }
+					    });
+			    	}
+			        
 			    });
-	    	}
-	        
-	    });
-
+		}
 	};
 </script>
 </head>

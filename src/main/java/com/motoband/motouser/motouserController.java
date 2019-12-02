@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.poi.ss.formula.udf.AggregatingUDFFinder;
@@ -62,6 +63,7 @@ import com.motoband.news.newsService;
 import com.motoband.util.CollectionUtil;
 import com.motoband.util.Constants;
 import com.motoband.util.Consts;
+import com.motoband.util.DESedeCoder;
 import com.motoband.util.ESManager;
 import com.motoband.util.ExcelUtils;
 import com.motoband.util.MbUtil;
@@ -1298,12 +1300,20 @@ public class motouserController {
 		}
 	}
 
+	public static void main(String[] args) {
+		System.out.println(Base64.encodeBase64String(
+				DESedeCoder.encrypt("123456".getBytes())).replaceAll(
+				"\r\n", ""));
+	}
 	@RequestMapping(value = "/resetUserPSW", method = RequestMethod.POST)
 	public void resetUserPSW(Model model, HttpSession session, HttpServletRequest request, String userid,
 			PrintWriter out) throws Exception {
 		if (userid != null && !"".equals(userid)) {
-			String password = MD5.stringToMD5("123456");
-			password = MD5.stringToMD5(password);
+			String password = Base64.encodeBase64String(
+					DESedeCoder.encrypt("123456".getBytes())).replaceAll(
+					"\r\n", "");
+//			String password = MD5.stringToMD5("123456");
+//			password = MD5.stringToMD5(password);
 			RedisManager.getInstance().hset(Consts.REDIS_SCHEME_USER, userid + USERKEY_USER, "password", password);
 			motouserService.updateUserPSWByUserid(userid, password);
 

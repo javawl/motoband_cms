@@ -1,15 +1,11 @@
 package com.motoband.motouser;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.xml.bind.Marshaller.Listener;
 
 import com.motoband.Events.TaskEvent;
 import com.motoband.interfaces.TaskListener;
 import com.motoband.news.LinkTypeEnum;
-import com.qcloud.cos.utils.DateUtils;
 
 public class MessageTaskModel {
 	public long id;

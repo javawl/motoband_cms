@@ -273,3 +273,4 @@ function opendevicelog(url,adminGuid){
 	$ ("#page-wrapper").load (url + "?userGuid=" + adminGuid+"&page=1&limit=20&order=0");
 	loading.hide();
 }
+

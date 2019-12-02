@@ -260,9 +260,9 @@
 								<%--  <li id="usecarmain" style="display: none"><a href="javascript:usecarmainlist('../businessmanage/usecarmainlist','${admin.user_guid}')">用车首页管理</a></li>  --%>
 								<li id="businesscommment" style="display: none"><a
 									href="javascript:businesscommentlist('../businessmanage/businesscommentlist','${admin.user_guid}')">商家评论管理</a></li>
-									<li id="businessredirctshoplist" style="display: none"><a
+								<li id="businessredirctshoplist" style="display: none"><a
 									href="javascript:businessredirctshoplist('../businessmanage/businessredirctshoplist','${admin.user_guid}')">直营店管理</a></li>
-						<li id="businessredirctshopservicelist" style="display: none"><a
+								<li id="businessredirctshopservicelist" style="display: none"><a
 									href="javascript:businessredirctshopservicelist('../businessmanage/businessredirctshopservicelist','${admin.user_guid}')">直营店服务管理</a></li>
 							</ul></li>
 						<%--   <li><a href="#"><i class="fa fa-files-o fa-fw"></i>
